@@ -1,5 +1,5 @@
 import React from 'react';
-import { LanguageTopic } from '../types';
+import { LanguageTopic } from '../types/index';
 
 interface CodeCardProps {
   topic: LanguageTopic;
@@ -48,7 +48,7 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, onClick }) => {
             Topics Covered:
           </h4>
           <div className="space-y-1">
-            {topic.topics.slice(0, 3).map((topicItem, index) => (
+            {topic.topics.slice(0, 3).map((topicItem: string, index: number) => (
               <div key={index} className="flex items-center text-xs text-gray-600">
                 <span className="text-gray-400 mr-2">•</span>
                 <span className="line-clamp-1">{topicItem}</span>
