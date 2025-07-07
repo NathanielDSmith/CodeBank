@@ -1,4 +1,4 @@
-import { Section, PageContent } from '../types/index';
+import { Section } from '../types/index';
 
 export const reactSections: Section[] = [
   { id: 'components', title: 'Components', icon: '🧩' },
@@ -15,61 +15,18 @@ export const reactSections: Section[] = [
   { id: 'testing', title: 'Testing', icon: '🧪' }
 ];
 
-export const reactContent: PageContent = {
-  components: [
-    {
-      title: 'How to create a component',
-      examples: [
-        {
-          title: 'Functional Component',
-          code: 'function MyComponent() {\n  return <div>Hello World</div>;\n}'
-        },
-        {
-          title: 'Arrow Function Component',
-          code: 'const MyComponent = () => {\n  return <div>Hello World</div>;\n};'
-        }
-      ]
-    },
-    {
-      title: 'How to export/import components',
-      examples: [
-        {
-          title: 'Default Export',
-          code: 'export default MyComponent;'
-        },
-        {
-          title: 'Named Export',
-          code: 'export { MyComponent };'
-        }
-      ]
-    }
-  ],
-  state: [
-    {
-      title: 'How to add state to component',
-      examples: [
-        {
-          title: 'useState Hook',
-          code: 'const [count, setCount] = useState(0);'
-        },
-        {
-          title: 'Multiple State Variables',
-          code: 'const [name, setName] = useState("");\nconst [age, setAge] = useState(0);'
-        }
-      ]
-    },
-    {
-      title: 'How to update state',
-      examples: [
-        {
-          title: 'Direct Update',
-          code: 'setCount(count + 1);'
-        },
-        {
-          title: 'Functional Update',
-          code: 'setCount(prevCount => prevCount + 1);'
-        }
-      ]
-    }
-  ]
+// Lazy loading function for content
+export const loadReactContent = async (sectionId: string) => {
+  try {
+    const module = await import(`./react/${sectionId}`);
+    return module.default;
+  } catch (error) {
+    console.error(`Failed to load content for section: ${sectionId}`, error);
+    return null;
+  }
+};
+
+// Preload function for better UX
+export const preloadReactSection = (sectionId: string) => {
+  import(`./react/${sectionId}`);
 }; 
