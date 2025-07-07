@@ -1,17 +1,82 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PageHeader from '../components/PageHeader';
 import SidePanel from '../components/SidePanel';
 import CodeBlock from '../components/CodeBlock';
 import ContentSection from '../components/ContentSection';
 import { usePageNavigation } from '../hooks/usePageNavigation';
-import { javascriptSections, javascriptContent } from '../data/javascriptContent';
+import { javascriptSections, loadJavaScriptContent, preloadJavaScriptSection } from '../data/javascriptContent';
+
+interface Example {
+  title: string;
+  code: string;
+}
+
+interface Section {
+  title: string;
+  examples: Example[];
+}
 
 const JavaScriptBasics: React.FC = () => {
   const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('variables');
+  const [content, setContent] = useState<Section[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      setLoading(true);
+      setError(null);
+      
+      try {
+        const sectionContent = await loadJavaScriptContent(activeSection);
+        setContent(sectionContent);
+      } catch (err) {
+        setError('Failed to load content');
+        console.error('Error loading content:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadContent();
+  }, [activeSection]);
+
+  // Preload next section for better UX
+  useEffect(() => {
+    const currentIndex = javascriptSections.findIndex(s => s.id === activeSection);
+    if (currentIndex < javascriptSections.length - 1) {
+      const nextSection = javascriptSections[currentIndex + 1];
+      preloadJavaScriptSection(nextSection.id);
+    }
+  }, [activeSection]);
 
   const renderContent = () => {
-    const content = javascriptContent[activeSection];
-    
+    if (loading) {
+      return (
+        <div className="text-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading content...</p>
+        </div>
+      );
+    }
+
+    if (error) {
+      return (
+        <div className="text-center py-12">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            {javascriptSections.find(s => s.id === activeSection)?.title}
+          </h2>
+          <p className="text-red-600 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Retry
+          </button>
+        </div>
+      );
+    }
+
     if (!content) {
       return (
         <div className="text-center py-12">
@@ -34,7 +99,7 @@ const JavaScriptBasics: React.FC = () => {
         {content.map((section, index) => (
           <ContentSection key={index} title={section.title}>
             <div className="space-y-4">
-              {section.examples.map((example, exampleIndex) => (
+              {section.examples.map((example: Example, exampleIndex: number) => (
                 <div key={exampleIndex}>
                   <h4 className="font-medium text-gray-800 mb-2">{example.title}</h4>
                   <CodeBlock code={example.code} />

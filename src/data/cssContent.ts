@@ -1,4 +1,4 @@
-import { Section, PageContent } from '../types/index';
+import { Section } from '../types/index';
 
 export const cssSections: Section[] = [
   { id: 'centering', title: 'Centering', icon: '🎯' },
@@ -15,61 +15,18 @@ export const cssSections: Section[] = [
   { id: 'utilities', title: 'Utility Classes', icon: '🛠️' }
 ];
 
-export const cssContent: PageContent = {
-  centering: [
-    {
-      title: 'How to center things',
-      examples: [
-        {
-          title: 'Flexbox Centering',
-          code: '.container {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}'
-        },
-        {
-          title: 'Grid Centering',
-          code: '.container {\n  display: grid;\n  place-items: center;\n}'
-        },
-        {
-          title: 'Text Centering',
-          code: '.text-center {\n  text-align: center;\n}'
-        }
-      ]
-    },
-    {
-      title: 'How to center vertically',
-      examples: [
-        {
-          title: 'Using Flexbox',
-          code: '.container {\n  display: flex;\n  align-items: center;\n  min-height: 100vh;\n}'
-        },
-        {
-          title: 'Using Grid',
-          code: '.container {\n  display: grid;\n  align-items: center;\n  min-height: 100vh;\n}'
-        }
-      ]
-    }
-  ],
-  flexbox: [
-    {
-      title: 'How to make responsive grid',
-      examples: [
-        {
-          title: 'Basic Flexbox Grid',
-          code: '.grid {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 1rem;\n}'
-        },
-        {
-          title: 'Responsive Flex Items',
-          code: '.item {\n  flex: 1;\n  min-width: 200px;\n}'
-        }
-      ]
-    },
-    {
-      title: 'How to make sticky header',
-      examples: [
-        {
-          title: 'Sticky Header',
-          code: '.header {\n  position: sticky;\n  top: 0;\n  z-index: 100;\n}'
-        }
-      ]
-    }
-  ]
+// Lazy loading function for content
+export const loadCssContent = async (sectionId: string) => {
+  try {
+    const module = await import(`./css/${sectionId}`);
+    return module.default;
+  } catch (error) {
+    console.error(`Failed to load content for section: ${sectionId}`, error);
+    return null;
+  }
+};
+
+// Preload function for better UX
+export const preloadCssSection = (sectionId: string) => {
+  import(`./css/${sectionId}`);
 }; 
