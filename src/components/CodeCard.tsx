@@ -21,15 +21,26 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, onClick }) => {
     return colors[color] || 'bg-gray-100 text-gray-800 border-gray-200';
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onClick();
+    }
+  };
+
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1 border border-gray-200 overflow-hidden"
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-label={`View ${topic.title} guide`}
+      className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1 border border-gray-200 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
     >
       <div className="p-6">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center">
-            <span className="text-2xl mr-3">{topic.icon}</span>
+            <span className="text-2xl mr-3" aria-hidden="true">{topic.icon}</span>
             <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">
               {topic.title}
             </h3>
@@ -50,7 +61,7 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, onClick }) => {
           <div className="space-y-1">
             {topic.topics.slice(0, 3).map((topicItem: string, index: number) => (
               <div key={index} className="flex items-center text-xs text-gray-600">
-                <span className="text-gray-400 mr-2">•</span>
+                <span className="text-gray-400 mr-2" aria-hidden="true">•</span>
                 <span className="line-clamp-1">{topicItem}</span>
               </div>
             ))}
@@ -64,7 +75,7 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, onClick }) => {
         
         <div className="flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors">
           <span className="text-xs">View Full Guide</span>
-          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </div>

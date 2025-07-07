@@ -134,6 +134,70 @@ const HomePage: React.FC = () => {
       ],
       icon: "⏱️",
       color: "emerald"
+    },
+    {
+      id: 9,
+      title: "Python Basics",
+      description: "Essential Python syntax and patterns for beginners",
+      category: "Backend",
+      topics: [
+        "Variables & Data Types",
+        "Functions & Loops",
+        "Lists & Dictionaries",
+        "String Manipulation",
+        "File I/O",
+        "Error Handling"
+      ],
+      icon: "🐍",
+      color: "green"
+    },
+    {
+      id: 10,
+      title: "TypeScript Basics",
+      description: "Type-safe JavaScript for scalable apps",
+      category: "Frontend",
+      topics: [
+        "Types & Interfaces",
+        "Functions & Generics",
+        "Type Assertions",
+        "Enums & Tuples",
+        "Type Narrowing",
+        "Modules"
+      ],
+      icon: "🟦",
+      color: "blue"
+    },
+    {
+      id: 11,
+      title: "Vue Common Tasks",
+      description: "Everyday Vue.js patterns and solutions",
+      category: "Frontend",
+      topics: [
+        "Components & Props",
+        "Reactivity & Data",
+        "Directives",
+        "Event Handling",
+        "Computed & Watchers",
+        "Vue Router"
+      ],
+      icon: "🟩",
+      color: "emerald"
+    },
+    {
+      id: 12,
+      title: "Ruby on Rails",
+      description: "Rails basics and common web development tasks",
+      category: "Backend",
+      topics: [
+        "MVC Structure",
+        "Routing",
+        "ActiveRecord",
+        "Migrations",
+        "Controllers & Views",
+        "RESTful APIs"
+      ],
+      icon: "💎",
+      color: "red"
     }
   ];
 
@@ -142,7 +206,12 @@ const HomePage: React.FC = () => {
     const routeMap: { [key: string]: string } = {
       "JavaScript Basics": "/javascript-basics",
       "React Common Tasks": "/react-common-tasks",
-      "CSS Layout Tricks": "/css-layout-tricks"
+      "CSS Layout Tricks": "/css-layout-tricks",
+      "Git Daily Commands": "/git-daily-commands",
+      "Python Basics": "/python",
+      "TypeScript Basics": "/typescript",
+      "Vue Common Tasks": "/vue",
+      "Ruby on Rails": "/rails"
     };
     
     const route = routeMap[topic.title];
