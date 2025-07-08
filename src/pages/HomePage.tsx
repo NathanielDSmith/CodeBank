@@ -208,6 +208,7 @@ const HomePage: React.FC = () => {
       "React Common Tasks": "/react-common-tasks",
       "CSS Layout Tricks": "/css-layout-tricks",
       "HTML Structure": "/html-structure",
+      "String Manipulation": "/string-manipulation",
       "Git Daily Commands": "/git-daily-commands",
       "Python Basics": "/python",
       "TypeScript Basics": "/typescript",
