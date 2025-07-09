@@ -51,26 +51,35 @@ const StringManipulation: React.FC = () => {
     }
   };
 
-  const handleSectionHover = (sectionId: string) => {
-    preloadStringSection(sectionId);
-  };
-
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-black relative overflow-hidden">
+        {/* Matrix digital rain background */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="matrix-rain"></div>
+        </div>
+        
+        {/* Scan lines effect */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="scanlines"></div>
+        </div>
+        
+        {/* Grid overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-green-900/5 to-green-900/10"></div>
+        
         <PageHeader 
           title="String Manipulation" 
           icon="📝"
         />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6">
-            <h3 className="text-lg font-medium text-red-800 mb-2">Error Loading Content</h3>
-            <p className="text-red-700">{error}</p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+          <div className="bg-red-900/50 border border-red-500/30 rounded-lg p-6 backdrop-blur-sm">
+            <h3 className="text-lg font-medium text-red-400 mb-2 font-mono">ERROR: Content Load Failed</h3>
+            <p className="text-red-300 font-mono">{error}</p>
             <button 
               onClick={() => window.location.reload()}
-              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 font-mono transition-colors duration-300"
             >
-              Retry
+              RETRY
             </button>
           </div>
         </div>
@@ -79,13 +88,26 @@ const StringManipulation: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Matrix digital rain background */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="matrix-rain"></div>
+      </div>
+      
+      {/* Scan lines effect */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="scanlines"></div>
+      </div>
+      
+      {/* Grid overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-green-900/5 to-green-900/10"></div>
+      
       <PageHeader 
         title="String Manipulation" 
         icon="📝"
       />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         <div className="flex gap-8">
           {/* Side Panel */}
           <div className="w-64 flex-shrink-0">
@@ -103,24 +125,24 @@ const StringManipulation: React.FC = () => {
             {loading ? (
               <div className="space-y-6">
                 <div className="animate-pulse">
-                  <div className="h-8 bg-gray-200 rounded w-1/3 mb-4"></div>
+                  <div className="h-8 bg-green-500/20 rounded w-1/3 mb-4"></div>
                   <div className="space-y-4">
-                    <div className="h-4 bg-gray-200 rounded w-full"></div>
-                    <div className="h-4 bg-gray-200 rounded w-5/6"></div>
-                    <div className="h-4 bg-gray-200 rounded w-4/6"></div>
+                    <div className="h-4 bg-green-500/20 rounded w-full"></div>
+                    <div className="h-4 bg-green-500/20 rounded w-5/6"></div>
+                    <div className="h-4 bg-green-500/20 rounded w-4/6"></div>
                   </div>
                 </div>
                 <div className="animate-pulse">
-                  <div className="h-6 bg-gray-200 rounded w-1/4 mb-3"></div>
-                  <div className="bg-gray-100 rounded-lg p-4">
-                    <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
-                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-6 bg-green-500/20 rounded w-1/4 mb-3"></div>
+                  <div className="bg-black/50 border border-green-500/30 rounded-lg p-4">
+                    <div className="h-4 bg-green-500/20 rounded w-full mb-2"></div>
+                    <div className="h-4 bg-green-500/20 rounded w-3/4"></div>
                   </div>
                 </div>
               </div>
             ) : (
               <div className="space-y-8">
-                <h2 className="text-2xl font-bold text-gray-900">
+                <h2 className="text-2xl font-bold text-green-400 font-mono matrix-glow">
                   {stringSections.find(section => section.id === selectedSection)?.title}
                 </h2>
 
@@ -128,12 +150,12 @@ const StringManipulation: React.FC = () => {
                   <ContentSection key={index} title={section.title}>
                     <div className="space-y-4">
                       {section.examples.map((example, exampleIndex) => (
-                        <div key={exampleIndex} className="bg-white rounded-lg border border-gray-200 p-6">
-                          <h4 className="text-lg font-medium text-gray-900 mb-3">
+                        <div key={exampleIndex} className="bg-black/50 border border-green-500/30 rounded-lg p-6">
+                          <h4 className="text-lg font-medium text-green-300 mb-3 font-mono">
                             {example.title}
                           </h4>
-                          <pre className="bg-gray-50 rounded-lg p-4 overflow-x-auto">
-                            <code className="text-sm text-gray-800">
+                          <pre className="bg-gray-900 border border-green-500/30 rounded-lg p-4 overflow-x-auto">
+                            <code className="text-sm text-green-400 font-mono">
                               {example.code}
                             </code>
                           </pre>

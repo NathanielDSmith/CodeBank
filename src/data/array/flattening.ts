@@ -1,0 +1,17 @@
+const flatteningContent = [
+  {
+    title: 'Flattening Arrays',
+    examples: [
+      {
+        title: 'Basic flattening techniques',
+        code: '// Flattening nested arrays\nlet nestedArrays = [[1, 2], [3, 4], [5, 6]];\n\n// Using flat() (ES2019)\nlet flattened = nestedArrays.flat(); // [1, 2, 3, 4, 5, 6]\n\n// Using reduce()\nlet flattenedReduce = nestedArrays.reduce((acc, arr) => acc.concat(arr), []);\n// [1, 2, 3, 4, 5, 6]\n\n// Using spread operator\nlet flattenedSpread = [].concat(...nestedArrays); // [1, 2, 3, 4, 5, 6]\n\n// Deep flattening\nlet deepNested = [[1, [2, 3]], [4, [5, 6]], [7, [8, 9]]];\n\n// Using flat() with depth\nlet deepFlattened = deepNested.flat(2); // [1, 2, 3, 4, 5, 6, 7, 8, 9]\n\n// Recursive flattening\nfunction flattenDeep(arr) {\n  return arr.reduce((acc, item) => {\n    return acc.concat(Array.isArray(item) ? flattenDeep(item) : item);\n  }, []);\n}\n\nlet deepFlattenedRecursive = flattenDeep(deepNested);\n// [1, 2, 3, 4, 5, 6, 7, 8, 9]\n\n// Flattening with filter\nlet mixedArray = [1, [2, 3], null, [4, 5], undefined, [6, 7]];\nlet cleanFlattened = mixedArray\n  .filter(item => item !== null && item !== undefined)\n  .flat(); // [1, 2, 3, 4, 5, 6, 7]'
+      },
+      {
+        title: 'Grouping arrays',
+        code: '// Grouping by property\nlet users = [\n  { name: "Alice", age: 25, city: "NYC" },\n  { name: "Bob", age: 30, city: "LA" },\n  { name: "Charlie", age: 25, city: "NYC" },\n  { name: "Diana", age: 35, city: "LA" }\n];\n\n// Group by city\nlet groupedByCity = users.reduce((acc, user) => {\n  if (!acc[user.city]) acc[user.city] = [];\n  acc[user.city].push(user);\n  return acc;\n}, {});\n// { NYC: [{ name: "Alice", age: 25, city: "NYC" }, { name: "Charlie", age: 25, city: "NYC" }],\n//   LA: [{ name: "Bob", age: 30, city: "LA" }, { name: "Diana", age: 35, city: "LA" }] }\n\n// Group by age range\nlet groupedByAge = users.reduce((acc, user) => {\n  let ageGroup = user.age < 30 ? "Young" : "Adult";\n  if (!acc[ageGroup]) acc[ageGroup] = [];\n  acc[ageGroup].push(user);\n  return acc;\n}, {});\n\n// Group with multiple criteria\nlet products = [\n  { name: "Laptop", price: 999, category: "Electronics", inStock: true },\n  { name: "Book", price: 15, category: "Books", inStock: false },\n  { name: "Phone", price: 699, category: "Electronics", inStock: true },\n  { name: "Desk", price: 200, category: "Furniture", inStock: true }\n];\n\n// Group by category and stock status\nlet groupedByCategoryAndStock = products.reduce((acc, product) => {\n  let key = `${product.category}-${product.inStock ? "inStock" : "outOfStock"}`;\n  if (!acc[key]) acc[key] = [];\n  acc[key].push(product);\n  return acc;\n}, {});\n\n// Group with custom grouping function\nfunction groupBy(array, keyFunc) {\n  return array.reduce((acc, item) => {\n    let key = keyFunc(item);\n    if (!acc[key]) acc[key] = [];\n    acc[key].push(item);\n    return acc;\n  }, {});\n}\n\n// Group by first letter of name\nlet groupedByFirstLetter = groupBy(users, user => user.name[0]);\n\n// Group by age range\nlet groupedByAgeRange = groupBy(users, user => {\n  if (user.age < 25) return "18-24";\n  if (user.age < 35) return "25-34";\n  return "35+";\n});'
+      }
+    ]
+  }
+];
+
+export default flatteningContent; 

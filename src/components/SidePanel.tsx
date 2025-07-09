@@ -14,8 +14,8 @@ const SidePanel: React.FC<SidePanelProps> = ({
 
   return (
     <div className="w-64 flex-shrink-0">
-      <div className="bg-white rounded-lg shadow-lg p-6 sticky top-8">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Table of Contents</h3>
+      <div className="bg-black/70 backdrop-blur-sm rounded-lg border border-green-500/30 p-6 sticky top-8">
+        <h3 className="text-lg font-semibold text-green-400 mb-4 font-mono">NAVIGATION</h3>
         
         {/* Search Box */}
         <div className="mb-4">
@@ -25,10 +25,10 @@ const SidePanel: React.FC<SidePanelProps> = ({
           <input
             id="search-topics"
             type="text"
-            placeholder="Search topics..."
+            placeholder="grep -r 'pattern' /*"
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 bg-black/50 border border-green-500/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500/20 focus:border-green-400 text-green-300 font-mono placeholder-green-500/50"
             aria-label="Search topics in table of contents"
           />
         </div>
@@ -38,10 +38,10 @@ const SidePanel: React.FC<SidePanelProps> = ({
             <button
               key={section.id}
               onClick={() => onSectionChange(section.id)}
-              className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
+              className={`w-full text-left px-3 py-2 rounded-lg transition-all duration-300 font-mono ${
                 activeSection === section.id
-                  ? 'bg-blue-100 text-blue-800 border border-blue-200'
-                  : 'text-gray-600 hover:bg-gray-100'
+                  ? 'bg-green-500/20 text-green-300 border border-green-400 shadow-lg'
+                  : 'text-green-400 hover:bg-green-500/10 hover:text-green-300 border border-transparent hover:border-green-500/50'
               }`}
               aria-current={activeSection === section.id ? 'page' : undefined}
             >
@@ -51,7 +51,7 @@ const SidePanel: React.FC<SidePanelProps> = ({
           ))}
           
           {filteredSections.length === 0 && (
-            <div className="text-gray-500 text-sm py-2" role="status">
+            <div className="text-green-500 text-sm py-2 font-mono" role="status">
               No topics found matching "{searchTerm}"
             </div>
           )}

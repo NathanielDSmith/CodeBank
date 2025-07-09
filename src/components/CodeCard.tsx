@@ -8,17 +8,20 @@ interface CodeCardProps {
 
 const CodeCard: React.FC<CodeCardProps> = ({ topic, onClick }) => {
   const getColorClasses = (color: string) => {
+    // Matrix theme - all categories get green styling with different intensities
     const colors: { [key: string]: string } = {
-      'yellow': 'bg-yellow-100 text-yellow-800 border-yellow-200',
-      'blue': 'bg-blue-100 text-blue-800 border-blue-200',
-      'green': 'bg-green-100 text-green-800 border-green-200',
-      'purple': 'bg-purple-100 text-purple-800 border-purple-200',
-      'gray': 'bg-gray-100 text-gray-800 border-gray-200',
-      'cyan': 'bg-cyan-100 text-cyan-800 border-cyan-200',
-      'emerald': 'bg-emerald-100 text-emerald-800 border-emerald-200',
-      'indigo': 'bg-indigo-100 text-indigo-800 border-indigo-200'
+      'yellow': 'bg-green-600 text-black font-bold',
+      'blue': 'bg-green-500 text-black font-bold',
+      'green': 'bg-green-400 text-black font-bold',
+      'purple': 'bg-green-700 text-green-100 font-bold',
+      'gray': 'bg-green-800 text-green-200 font-bold',
+      'cyan': 'bg-green-500 text-black font-bold',
+      'emerald': 'bg-green-400 text-black font-bold',
+      'indigo': 'bg-green-600 text-black font-bold',
+      'orange': 'bg-green-500 text-black font-bold',
+      'red': 'bg-green-700 text-green-100 font-bold'
     };
-    return colors[color] || 'bg-gray-100 text-gray-800 border-gray-200';
+    return colors[color] || 'bg-green-600 text-black font-bold';
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -35,47 +38,51 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, onClick }) => {
       tabIndex={0}
       role="button"
       aria-label={`View ${topic.title} guide`}
-      className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1 border border-gray-200 overflow-hidden focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      className="group bg-black/70 backdrop-blur-sm rounded-lg border border-green-500/50 hover:border-green-400 transition-all duration-500 cursor-pointer transform hover:-translate-y-1 hover:scale-105 overflow-hidden focus:outline-none focus:ring-4 focus:ring-green-500/20 font-mono"
     >
       <div className="p-6">
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center">
-            <span className="text-2xl mr-3" aria-hidden="true">{topic.icon}</span>
-            <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">
+        <div className="mb-6">
+          <div className="flex items-start justify-between mb-4">
+            <div className="text-3xl mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+              {topic.icon}
+            </div>
+            <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-bold flex-shrink-0 ${getColorClasses(topic.color)}`}>
+              {topic.category}
+            </span>
+          </div>
+          <div className="min-w-0">
+            <h3 className="text-lg font-bold text-green-400 line-clamp-2 group-hover:text-green-300 transition-colors">
               {topic.title}
             </h3>
           </div>
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getColorClasses(topic.color)}`}>
-            {topic.category}
-          </span>
         </div>
         
-        <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+        <p className="text-green-300 text-sm mb-6 line-clamp-2 leading-relaxed">
           {topic.description}
         </p>
         
-        <div className="mb-4">
-          <h4 className="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide">
-            Topics Covered:
+        <div className="mb-6">
+          <h4 className="text-xs font-bold text-green-400 mb-3 uppercase tracking-wider">
+            TOPICS COVERED:
           </h4>
-          <div className="space-y-1">
+          <div className="space-y-2">
             {topic.topics.slice(0, 3).map((topicItem: string, index: number) => (
-              <div key={index} className="flex items-center text-xs text-gray-600">
-                <span className="text-gray-400 mr-2" aria-hidden="true">•</span>
-                <span className="line-clamp-1">{topicItem}</span>
+              <div key={index} className="flex items-start text-sm text-green-300 group-hover:text-green-200 transition-colors">
+                <span className="text-green-400 mr-2 text-sm flex-shrink-0 mt-0.5" aria-hidden="true">$</span>
+                <span className="line-clamp-2 font-medium leading-relaxed">{topicItem}</span>
               </div>
             ))}
             {topic.topics.length > 3 && (
-              <div className="text-xs text-gray-500 mt-1">
-                +{topic.topics.length - 3} more topics
+              <div className="text-xs text-green-400 font-semibold mt-2">
+                +{topic.topics.length - 3} MORE TOPICS
               </div>
             )}
           </div>
         </div>
         
-        <div className="flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors">
-          <span className="text-xs">View Full Guide</span>
-          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <div className="flex items-center justify-center text-green-400 group-hover:text-green-300 transition-colors font-semibold">
+          <span className="text-sm font-mono">ACCESS GUIDE</span>
+          <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </div>
