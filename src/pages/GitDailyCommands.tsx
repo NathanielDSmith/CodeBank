@@ -24,10 +24,10 @@ const GitDailyCommands: React.FC = () => {
     if (!content) {
       return (
         <div className="text-center py-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl font-bold text-green-400 mb-4">
             {gitSections.find(s => s.id === activeSection)?.title}
           </h2>
-          <p className="text-gray-600">
+          <p className="text-green-300">
             Content for {gitSections.find(s => s.id === activeSection)?.title} will be added here...
           </p>
         </div>
@@ -36,7 +36,7 @@ const GitDailyCommands: React.FC = () => {
 
     return (
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+        <h2 className="text-2xl font-bold text-green-400 mb-4">
           {gitSections.find(s => s.id === activeSection)?.title}
         </h2>
         
@@ -45,7 +45,7 @@ const GitDailyCommands: React.FC = () => {
             <div className="space-y-4">
               {section.examples.map((example, exampleIndex) => (
                 <div key={exampleIndex}>
-                  <h4 className="font-medium text-gray-800 mb-2">{example.title}</h4>
+                  <h4 className="font-medium text-green-300 mb-2">{example.title}</h4>
                   <CodeBlock code={example.code} language="bash" />
                 </div>
               ))}

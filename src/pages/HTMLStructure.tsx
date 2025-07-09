@@ -56,7 +56,7 @@ const HTMLStructure: React.FC = () => {
       return (
         <div className="text-center py-12">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading content...</p>
+          <p className="text-green-300">Loading content...</p>
         </div>
       );
     }
@@ -64,10 +64,10 @@ const HTMLStructure: React.FC = () => {
     if (error) {
       return (
         <div className="text-center py-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl font-bold text-green-400 mb-4">
             {htmlSections.find(s => s.id === activeSection)?.title}
           </h2>
-          <p className="text-red-600 mb-4">{error}</p>
+          <p className="text-red-400 mb-4">{error}</p>
           <button 
             onClick={() => window.location.reload()}
             className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700"
@@ -81,10 +81,10 @@ const HTMLStructure: React.FC = () => {
     if (!content) {
       return (
         <div className="text-center py-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl font-bold text-green-400 mb-4">
             {htmlSections.find(s => s.id === activeSection)?.title}
           </h2>
-          <p className="text-gray-600">
+          <p className="text-green-300">
             Content for {htmlSections.find(s => s.id === activeSection)?.title} will be added here...
           </p>
         </div>
@@ -93,7 +93,7 @@ const HTMLStructure: React.FC = () => {
 
     return (
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+        <h2 className="text-2xl font-bold text-green-400 mb-4">
           {htmlSections.find(s => s.id === activeSection)?.title}
         </h2>
         
@@ -102,7 +102,7 @@ const HTMLStructure: React.FC = () => {
             <div className="space-y-4">
               {section.examples.map((example: Example, exampleIndex: number) => (
                 <div key={exampleIndex}>
-                  <h4 className="font-medium text-gray-800 mb-2">{example.title}</h4>
+                  <h4 className="font-medium text-green-300 mb-2">{example.title}</h4>
                   <CodeBlock code={example.code} />
                 </div>
               ))}
