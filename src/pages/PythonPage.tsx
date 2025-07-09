@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { usePageNavigation } from '../hooks/usePageNavigation';
 import { pythonSections, pythonContent } from '../data/pythonContent';
 import PageHeader from '../components/PageHeader';
@@ -6,8 +6,17 @@ import SidePanel from '../components/SidePanel';
 import ContentSection from '../components/ContentSection';
 import CodeBlock from '../components/CodeBlock';
 
+interface Section {
+  title: string;
+  examples: { title: string; code: string }[];
+}
+
 const PythonPage: React.FC = () => {
   const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('basics');
+  const [content, setContent] = useState<Section[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
 
   const renderContent = () => {
     const content = pythonContent[activeSection];
@@ -72,6 +81,8 @@ const PythonPage: React.FC = () => {
             searchTerm={searchTerm}
             onSectionChange={handleSectionChange}
             onSearchChange={handleSearchChange}
+            isOpen={isSidePanelOpen}
+            onToggle={() => setIsSidePanelOpen(!isSidePanelOpen)}
           />
           
           <div className="flex-1">

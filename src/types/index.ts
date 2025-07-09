@@ -36,6 +36,8 @@ export interface SidePanelProps {
   searchTerm: string;
   onSectionChange: (sectionId: string) => void;
   onSearchChange: (searchTerm: string) => void;
+  isOpen?: boolean;
+  onToggle?: () => void;
 }
 
 export interface CodeBlockProps {

@@ -21,6 +21,7 @@ const ObjectManipulation: React.FC = () => {
   const [content, setContent] = useState<Section[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
 
   useEffect(() => {
     const loadContent = async () => {
@@ -151,6 +152,8 @@ const ObjectManipulation: React.FC = () => {
             searchTerm={searchTerm}
             onSectionChange={handleSectionChange}
             onSearchChange={handleSearchChange}
+            isOpen={isSidePanelOpen}
+            onToggle={() => setIsSidePanelOpen(!isSidePanelOpen)}
           />
           
           <div className="flex-1">

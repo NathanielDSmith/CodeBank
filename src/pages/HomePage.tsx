@@ -414,9 +414,8 @@ const HomePage: React.FC = () => {
               <div className="flex-shrink-0">
                 <h1 className="text-4xl font-mono font-bold text-green-400 matrix-glow">
                   <span className="text-green-300">[</span>
-                  <span className="glitch-text">CodeBank</span>
+                  <span className="glitch-text" data-text="CodeBank">CodeBank</span>
                   <span className="text-green-300">]</span>
-                  <span className="cursor-blink text-green-400 ml-1">_</span>
                 </h1>
               </div>
             </div>
@@ -435,7 +434,7 @@ const HomePage: React.FC = () => {
             <h2 className="text-5xl md:text-6xl font-mono font-black text-green-400 mb-6 leading-tight">
               <span className="text-green-300">$</span> INITIALIZE
               <span className="block text-green-300 animate-pulse typing-effect">
-                DATABASE_CONNECTION<span className="cursor-blink text-green-400 ml-1">|</span>
+                DATABASE_CONNECTION
               </span>
             </h2>
             <p className="text-xl md:text-2xl text-green-300 max-w-4xl mx-auto leading-relaxed font-mono">
@@ -455,7 +454,7 @@ const HomePage: React.FC = () => {
         <div className="mb-12 relative">
           <div className="relative bg-black/50 backdrop-blur-sm rounded-lg border border-green-500/30 p-8 overflow-hidden">
             <div className="relative z-10">
-              <h3 className="text-2xl font-mono font-bold text-center mb-8 text-green-400 glitch-text">
+              <h3 className="text-2xl font-mono font-bold text-center mb-8 text-green-400 glitch-text" data-text="Database Statistics">
                 Database Statistics
               </h3>
               
@@ -468,10 +467,15 @@ const HomePage: React.FC = () => {
                     onClick={() => {
                       setSelectedCategory(category);
                       setSearchTerm('');
-                      // Scroll to the filtered content
+                      // Scroll to the filtered content with mobile-friendly positioning
                       const filteredContent = document.getElementById('filtered-content');
                       if (filteredContent) {
-                        filteredContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        const offset = window.innerWidth < 768 ? 80 : 20; // More offset on mobile
+                        const elementPosition = filteredContent.offsetTop - offset;
+                        window.scrollTo({
+                          top: elementPosition,
+                          behavior: 'smooth'
+                        });
                       }
                     }}
                   >
@@ -508,7 +512,7 @@ const HomePage: React.FC = () => {
 
         {/* Featured Guides */}
         <div className="mb-12">
-          <h3 className="text-2xl font-mono font-bold text-center mb-8 text-green-400 glitch-text">
+          <h3 className="text-2xl font-mono font-bold text-center mb-8 text-green-400 glitch-text" data-text="Quick Access">
             Quick Access
           </h3>
           <div className="flex justify-center gap-6">
@@ -534,7 +538,7 @@ const HomePage: React.FC = () => {
         </div>
 
         {/* Search and Filter Controls */}
-        <div id="filtered-content" className="mb-12 space-y-6 animate-fade-in">
+        <div className="mb-12 space-y-6 animate-fade-in">
           {/* Search Bar */}
           <div className="relative max-w-3xl mx-auto">
             <div className="relative group">
@@ -628,8 +632,9 @@ const HomePage: React.FC = () => {
         </div>
 
         {/* Cards Grid */}
-        {filteredTopics.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div id="filtered-content" className="mb-8">
+          {filteredTopics.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredTopics.map((topic, index) => (
               <div
                 key={topic.id}
@@ -646,10 +651,11 @@ const HomePage: React.FC = () => {
         ) : (
           <div className="text-center py-16 animate-fade-in">
             <div className="text-gray-300 text-8xl mb-6 animate-pulse-slow">🔍</div>
-                            <h3 className="text-2xl font-semibold text-green-400 mb-4 font-mono">NO DATA FOUND</h3>
-                <p className="text-green-300 text-lg font-mono">Try adjusting your search terms or category filter</p>
+            <h3 className="text-2xl font-semibold text-green-400 mb-4 font-mono">NO DATA FOUND</h3>
+            <p className="text-green-300 text-lg font-mono">Try adjusting your search terms or category filter</p>
           </div>
         )}
+        </div>
       </main>
     </div>
   );

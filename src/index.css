@@ -262,22 +262,60 @@ code {
   pointer-events: none;
 }
 
-/* Matrix glitch text effect */
-@keyframes glitchText {
-  0%, 100% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
+/* Matrix elegant text effect - subtle and smooth */
+@keyframes elegantGlow {
+  0%, 100% { 
+    text-shadow: 
+      0 0 5px rgba(0, 255, 0, 0.5),
+      0 0 10px rgba(0, 255, 0, 0.3),
+      0 0 15px rgba(0, 255, 0, 0.1);
+  }
+  50% { 
+    text-shadow: 
+      0 0 8px rgba(0, 255, 0, 0.7),
+      0 0 15px rgba(0, 255, 0, 0.5),
+      0 0 20px rgba(0, 255, 0, 0.3);
+  }
 }
 
 .glitch-text {
-  animation: glitchText 0.3s ease-in-out infinite;
-  text-shadow: 
-    2px 0 #00ff00,
-    -2px 0 #00ff00,
-    0 2px #00ff00,
-    0 -2px #00ff00;
+  animation: elegantGlow 3s ease-in-out infinite;
+  position: relative;
+}
+
+.glitch-text::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 0, 0.1) 50%, transparent 70%);
+  background-size: 200% 200%;
+  animation: shimmer 4s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: -200% 0; }
+  50% { background-position: 200% 0; }
+}
+
+/* Alternative: Even more subtle effect for users who prefer minimal animation */
+@keyframes subtlePulse {
+  0%, 100% { 
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+  }
+  50% { 
+    text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+  }
+}
+
+.glitch-text-subtle {
+  animation: subtlePulse 4s ease-in-out infinite;
 }
 
 /* Matrix hover effects - more subtle */

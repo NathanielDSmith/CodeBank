@@ -3,6 +3,7 @@ import { arraySections, loadArrayContent, preloadArraySection } from '../data/ar
 import PageHeader from '../components/PageHeader';
 import SidePanel from '../components/SidePanel';
 import ContentSection from '../components/ContentSection';
+import { usePageNavigation } from '../hooks/usePageNavigation';
 
 interface ArrayContent {
   title: string;
@@ -13,18 +14,18 @@ interface ArrayContent {
 }
 
 const ArrayOperations: React.FC = () => {
-  const [selectedSection, setSelectedSection] = useState<string>('basics');
+  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('basics');
   const [content, setContent] = useState<ArrayContent[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
 
   useEffect(() => {
     const loadContent = async () => {
       setLoading(true);
       setError(null);
       try {
-        const sectionContent = await loadArrayContent(selectedSection);
+        const sectionContent = await loadArrayContent(activeSection);
         if (sectionContent) {
           setContent(sectionContent);
         } else {
@@ -38,16 +39,7 @@ const ArrayOperations: React.FC = () => {
       }
     };
     loadContent();
-  }, [selectedSection]);
-
-  const handleSectionChange = (sectionId: string) => {
-    setSelectedSection(sectionId);
-    // Preload next section for better UX
-    const currentIndex = arraySections.findIndex(section => section.id === sectionId);
-    if (currentIndex < arraySections.length - 1) {
-      preloadArraySection(arraySections[currentIndex + 1].id);
-    }
-  };
+  }, [activeSection]);
 
   if (error) {
     return (
@@ -104,10 +96,12 @@ const ArrayOperations: React.FC = () => {
           <div className="w-64 flex-shrink-0">
             <SidePanel
               sections={arraySections}
-              activeSection={selectedSection}
+              activeSection={activeSection}
               searchTerm={searchTerm}
               onSectionChange={handleSectionChange}
-              onSearchChange={setSearchTerm}
+              onSearchChange={handleSearchChange}
+              isOpen={isSidePanelOpen}
+              onToggle={() => setIsSidePanelOpen(!isSidePanelOpen)}
             />
           </div>
           {/* Main Content */}
@@ -133,7 +127,7 @@ const ArrayOperations: React.FC = () => {
             ) : (
               <div className="space-y-8">
                 <h2 className="text-2xl font-bold text-green-400 font-mono matrix-glow">
-                  {arraySections.find(section => section.id === selectedSection)?.title}
+                  {arraySections.find(section => section.id === activeSection)?.title}
                 </h2>
                 {content.map((section, index) => (
                   <ContentSection key={index} title={section.title}>

@@ -21,6 +21,7 @@ const TypeScriptPage: React.FC = () => {
   const [content, setContent] = useState<TypeScriptContentSection[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
 
   useEffect(() => {
     const loadContent = async () => {
@@ -137,6 +138,8 @@ const TypeScriptPage: React.FC = () => {
             searchTerm={searchTerm}
             onSectionChange={handleSectionChange}
             onSearchChange={handleSearchChange}
+            isOpen={isSidePanelOpen}
+            onToggle={() => setIsSidePanelOpen(!isSidePanelOpen)}
           />
           
           <div className="flex-1">

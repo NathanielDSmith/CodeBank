@@ -3,6 +3,7 @@ import { stringSections, loadStringContent, preloadStringSection } from '../data
 import PageHeader from '../components/PageHeader';
 import SidePanel from '../components/SidePanel';
 import ContentSection from '../components/ContentSection';
+import { usePageNavigation } from '../hooks/usePageNavigation';
 
 interface StringContent {
   title: string;
@@ -13,11 +14,11 @@ interface StringContent {
 }
 
 const StringManipulation: React.FC = () => {
-  const [selectedSection, setSelectedSection] = useState<string>('basics');
+  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('basics');
   const [content, setContent] = useState<StringContent[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
 
   useEffect(() => {
     const loadContent = async () => {
@@ -25,7 +26,7 @@ const StringManipulation: React.FC = () => {
       setError(null);
       
       try {
-        const sectionContent = await loadStringContent(selectedSection);
+        const sectionContent = await loadStringContent(activeSection);
         if (sectionContent) {
           setContent(sectionContent);
         } else {
@@ -40,16 +41,7 @@ const StringManipulation: React.FC = () => {
     };
 
     loadContent();
-  }, [selectedSection]);
-
-  const handleSectionChange = (sectionId: string) => {
-    setSelectedSection(sectionId);
-    // Preload next section for better UX
-    const currentIndex = stringSections.findIndex(section => section.id === sectionId);
-    if (currentIndex < stringSections.length - 1) {
-      preloadStringSection(stringSections[currentIndex + 1].id);
-    }
-  };
+  }, [activeSection]);
 
   if (error) {
     return (
@@ -113,10 +105,12 @@ const StringManipulation: React.FC = () => {
           <div className="w-64 flex-shrink-0">
             <SidePanel
               sections={stringSections}
-              activeSection={selectedSection}
+              activeSection={activeSection}
               searchTerm={searchTerm}
               onSectionChange={handleSectionChange}
-              onSearchChange={setSearchTerm}
+              onSearchChange={handleSearchChange}
+              isOpen={isSidePanelOpen}
+              onToggle={() => setIsSidePanelOpen(!isSidePanelOpen)}
             />
           </div>
 
@@ -143,7 +137,7 @@ const StringManipulation: React.FC = () => {
             ) : (
               <div className="space-y-8">
                 <h2 className="text-2xl font-bold text-green-400 font-mono matrix-glow">
-                  {stringSections.find(section => section.id === selectedSection)?.title}
+                  {stringSections.find(section => section.id === activeSection)?.title}
                 </h2>
 
                 {content.map((section, index) => (
