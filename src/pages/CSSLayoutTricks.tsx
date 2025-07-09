@@ -70,13 +70,15 @@ const CSSLayoutTricks: React.FC = () => {
     if (error) {
       return (
         <div className="text-center py-12">
-          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Content</h2>
-          <p className="text-gray-600">{error}</p>
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-green-400 mb-4 font-mono">
+            {cssSections.find(s => s.id === activeSection)?.title}
+          </h2>
+          <p className="text-red-400 mb-4 font-mono">{error}</p>
           <button 
             onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 font-mono transition-colors duration-300"
           >
-            Retry
+            RETRY
           </button>
         </div>
       );
@@ -85,10 +87,10 @@ const CSSLayoutTricks: React.FC = () => {
     if (!content) {
       return (
         <div className="text-center py-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-green-400 mb-4 font-mono">
             {cssSections.find(s => s.id === activeSection)?.title}
           </h2>
-          <p className="text-gray-600">
+          <p className="text-green-300 font-mono">
             Content for {cssSections.find(s => s.id === activeSection)?.title} will be added here...
           </p>
         </div>
@@ -97,7 +99,7 @@ const CSSLayoutTricks: React.FC = () => {
 
     return (
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+        <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-green-400 mb-4 font-mono matrix-glow">
           {cssSections.find(s => s.id === activeSection)?.title}
         </h2>
         
@@ -105,8 +107,8 @@ const CSSLayoutTricks: React.FC = () => {
           <ContentSection key={index} title={section.title}>
             <div className="space-y-4">
               {section.examples.map((example: Example, exampleIndex: number) => (
-                <div key={exampleIndex}>
-                  <h4 className="font-medium text-gray-800 mb-2">{example.title}</h4>
+                <div key={exampleIndex} className="bg-black/50 border border-green-500/30 rounded-lg p-3 sm:p-4">
+                  <h4 className="text-sm sm:text-base font-medium text-green-300 mb-2 font-mono">{example.title}</h4>
                   <CodeBlock code={example.code} language="css" />
                 </div>
               ))}

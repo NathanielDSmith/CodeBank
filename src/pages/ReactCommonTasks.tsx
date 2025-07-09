@@ -97,7 +97,7 @@ const ReactCommonTasks: React.FC = () => {
 
     return (
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-green-400 mb-4 font-mono matrix-glow">
+        <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-green-400 mb-4 font-mono matrix-glow">
           {reactSections.find(s => s.id === activeSection)?.title}
         </h2>
         
