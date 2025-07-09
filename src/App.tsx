@@ -14,6 +14,7 @@ import RailsPage from './pages/RailsPage';
 import PythonPage from './pages/PythonPage';
 import TypeScriptPage from './pages/TypeScriptPage';
 import VuePage from './pages/VuePage';
+import ObjectManipulation from './pages/ObjectManipulation';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/python" element={<PythonPage />} />
         <Route path="/typescript" element={<TypeScriptPage />} />
         <Route path="/vue" element={<VuePage />} />
+        <Route path="/object-manipulation" element={<ObjectManipulation />} />
       </Routes>
     </Router>
   );

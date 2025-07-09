@@ -297,6 +297,7 @@ const HomePage: React.FC = () => {
       "HTML Structure": "/html-structure",
       "String Manipulation": "/string-manipulation",
       "Array Operations": "/array-operations",
+      "Object Manipulation": "/object-manipulation",
       "Git Daily Commands": "/git-daily-commands",
       "Python Basics": "/python",
       "TypeScript Basics": "/typescript",
@@ -462,10 +463,19 @@ const HomePage: React.FC = () => {
                 {Object.entries(categoryStats).map(([category, count], index) => (
                   <div 
                     key={category} 
-                    className="group relative"
+                    className="group relative cursor-pointer"
                     style={{ animationDelay: `${index * 200}ms` }}
+                    onClick={() => {
+                      setSelectedCategory(category);
+                      setSearchTerm('');
+                      // Scroll to the filtered content
+                      const filteredContent = document.getElementById('filtered-content');
+                      if (filteredContent) {
+                        filteredContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    }}
                   >
-                    <div className="relative bg-black/70 border border-green-500/50 rounded p-4 hover:border-green-400 transition-all duration-500 transform hover:-translate-y-1 hover:scale-105">
+                    <div className="relative bg-black/70 border border-green-500/50 rounded p-4 hover:border-green-400 hover:bg-black/80 transition-all duration-500 transform hover:-translate-y-1 hover:scale-105 active:scale-95">
                       <div className="text-center">
                         <div className="text-4xl font-mono font-bold text-green-400 mb-2 group-hover:text-green-300 transition-colors">
                           {count}
@@ -474,6 +484,10 @@ const HomePage: React.FC = () => {
                           {category}
                         </div>
                         <div className="mt-2 w-6 h-0.5 bg-green-500 mx-auto opacity-60 group-hover:opacity-100 group-hover:w-8 transition-all duration-300"></div>
+                        {/* Click indicator */}
+                        <div className="mt-1 text-xs text-green-500/70 font-mono opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          CLICK TO FILTER
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -520,7 +534,7 @@ const HomePage: React.FC = () => {
         </div>
 
         {/* Search and Filter Controls */}
-        <div className="mb-12 space-y-6 animate-fade-in">
+        <div id="filtered-content" className="mb-12 space-y-6 animate-fade-in">
           {/* Search Bar */}
           <div className="relative max-w-3xl mx-auto">
             <div className="relative group">
