@@ -13,7 +13,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, icon }) => {
             </Link>
             <div className="flex items-center">
               <span className="text-lg sm:text-2xl lg:text-3xl mr-1 sm:mr-2 lg:mr-3 text-green-400">{icon}</span>
-              <h1 className="text-sm sm:text-xl lg:text-3xl font-bold text-green-400 font-mono matrix-glow break-words">{title}</h1>
+              <h1 className="text-xs sm:text-lg lg:text-3xl font-bold text-green-400 font-mono matrix-glow break-words">{title}</h1>
             </div>
           </div>
         </div>
