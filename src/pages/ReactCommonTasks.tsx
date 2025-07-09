@@ -117,10 +117,23 @@ const ReactCommonTasks: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Matrix digital rain background */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="matrix-rain"></div>
+      </div>
+      
+      {/* Scan lines effect */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="scanlines"></div>
+      </div>
+      
+      {/* Grid overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-green-900/5 to-green-900/10"></div>
+      
       <PageHeader title="React Common Tasks" icon="⚛️" />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         <div className="flex gap-8">
           <SidePanel
             sections={reactSections}
