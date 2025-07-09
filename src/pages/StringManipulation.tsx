@@ -99,8 +99,8 @@ const StringManipulation: React.FC = () => {
         icon="📝"
       />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        <div className="flex gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 relative z-10">
+        <div className="flex gap-4 sm:gap-8">
           {/* Side Panel */}
           <div className="w-64 flex-shrink-0">
             <SidePanel
@@ -115,7 +115,7 @@ const StringManipulation: React.FC = () => {
           </div>
 
           {/* Main Content */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             {loading ? (
               <div className="space-y-6">
                 <div className="animate-pulse">

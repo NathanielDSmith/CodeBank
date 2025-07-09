@@ -17,7 +17,7 @@ const SidePanel: React.FC<SidePanelProps> = ({
   return (
     <>
       {/* Mobile Toggle Button */}
-      <div className="lg:hidden fixed top-20 right-4 z-50">
+      <div className="lg:hidden fixed top-28 right-4 z-50">
         <button
           onClick={onToggle}
           className="bg-black/80 backdrop-blur-sm border border-green-500/50 rounded-lg p-3 text-green-400 hover:text-green-300 transition-colors duration-300"

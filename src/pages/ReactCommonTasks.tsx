@@ -134,8 +134,8 @@ const ReactCommonTasks: React.FC = () => {
       
       <PageHeader title="React Common Tasks" icon="⚛️" />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        <div className="flex gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 relative z-10">
+        <div className="flex gap-4 sm:gap-8">
           <SidePanel
             sections={reactSections}
             activeSection={activeSection}
@@ -146,7 +146,7 @@ const ReactCommonTasks: React.FC = () => {
             onToggle={() => setIsSidePanelOpen(!isSidePanelOpen)}
           />
           
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             {renderContent()}
           </div>
         </div>
