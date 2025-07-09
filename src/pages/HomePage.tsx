@@ -632,8 +632,8 @@ const HomePage: React.FC = () => {
         ) : (
           <div className="text-center py-16 animate-fade-in">
             <div className="text-gray-300 text-8xl mb-6 animate-pulse-slow">🔍</div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-4">No guides found</h3>
-            <p className="text-gray-600 text-lg">Try adjusting your search terms or category filter</p>
+                            <h3 className="text-2xl font-semibold text-green-400 mb-4 font-mono">NO DATA FOUND</h3>
+                <p className="text-green-300 text-lg font-mono">Try adjusting your search terms or category filter</p>
           </div>
         )}
       </main>
