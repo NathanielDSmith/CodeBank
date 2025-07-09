@@ -59,7 +59,7 @@ const DockerPage: React.FC = () => {
     if (error) {
       return (
         <div className="text-center py-12">
-          <h2 className="text-2xl font-bold text-green-400 mb-4 font-mono">
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-green-400 mb-4 font-mono">
             {dockerSections.find(s => s.id === activeSection)?.title}
           </h2>
           <p className="text-red-400 mb-4 font-mono">{error}</p>
@@ -76,7 +76,7 @@ const DockerPage: React.FC = () => {
     if (!content) {
       return (
         <div className="text-center py-12">
-          <h2 className="text-2xl font-bold text-green-400 mb-4 font-mono">
+          <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-green-400 mb-4 font-mono">
             {dockerSections.find(s => s.id === activeSection)?.title}
           </h2>
           <p className="text-green-300 font-mono">
@@ -88,7 +88,7 @@ const DockerPage: React.FC = () => {
 
     return (
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-green-400 mb-4 font-mono matrix-glow">
+        <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-green-400 mb-4 font-mono matrix-glow">
           {dockerSections.find(s => s.id === activeSection)?.title}
         </h2>
         
@@ -96,8 +96,8 @@ const DockerPage: React.FC = () => {
           <ContentSection key={index} title={section.title}>
             <div className="space-y-4">
               {section.examples.map((example, exampleIndex) => (
-                <div key={exampleIndex} className="bg-black/50 border border-green-500/30 rounded-lg p-4">
-                  <h4 className="font-medium text-green-300 mb-2 font-mono">{example.title}</h4>
+                <div key={exampleIndex} className="bg-black/50 border border-green-500/30 rounded-lg p-3 sm:p-4">
+                  <h4 className="text-sm sm:text-base font-medium text-green-300 mb-2 font-mono">{example.title}</h4>
                   <CodeBlock code={example.code} language="dockerfile" />
                 </div>
               ))}
