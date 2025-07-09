@@ -15,6 +15,7 @@ import PythonPage from './pages/PythonPage';
 import TypeScriptPage from './pages/TypeScriptPage';
 import VuePage from './pages/VuePage';
 import ObjectManipulation from './pages/ObjectManipulation';
+import DockerPage from './pages/DockerPage';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/typescript" element={<TypeScriptPage />} />
         <Route path="/vue" element={<VuePage />} />
         <Route path="/object-manipulation" element={<ObjectManipulation />} />
+        <Route path="/docker-basics" element={<DockerPage />} />
       </Routes>
     </Router>
   );
