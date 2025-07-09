@@ -10,6 +10,24 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
+  background-color: #000;
+  color: #00ff00;
+}
+
+/* Handle safe areas for modern devices */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Ensure the root element covers the full viewport */
+#root {
+  min-height: 100vh;
+  background-color: #000;
 }
 
 code {
@@ -472,5 +490,20 @@ code {
   
   .text-sm {
     font-size: 0.75rem !important;
+  }
+}
+
+/* Ensure black background everywhere */
+html, body, #root {
+  background-color: #000 !important;
+}
+
+/* Handle iOS safe areas and dynamic island */
+@supports (padding: max(0px)) {
+  html {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 }
