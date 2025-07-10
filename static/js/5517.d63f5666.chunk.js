@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkcodebank=self.webpackChunkcodebank||[]).push([[5517],{5517:(e,n,o)=>{o.r(n),o.d(n,{default:()=>t});const t=[{title:"Coming Soon",examples:[{title:"Content will be added here",code:"// Content coming soon..."}]}]}}]);
-//# sourceMappingURL=5517.d63f5666.chunk.js.map
