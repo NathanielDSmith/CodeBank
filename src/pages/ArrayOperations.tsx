@@ -5,18 +5,20 @@ import SidePanel from '../components/SidePanel';
 import ContentSection from '../components/ContentSection';
 import { usePageNavigation } from '../hooks/usePageNavigation';
 
-interface ArrayContent {
+interface Example {
   title: string;
-  examples: {
-    title: string;
-    code: string;
-  }[];
+  code: string;
+}
+
+interface Section {
+  title: string;
+  examples: Example[];
 }
 
 const ArrayOperations: React.FC = () => {
   const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('basics');
-  const [content, setContent] = useState<ArrayContent[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [content, setContent] = useState<Section[] | null>(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
 
@@ -24,21 +26,28 @@ const ArrayOperations: React.FC = () => {
     const loadContent = async () => {
       setLoading(true);
       setError(null);
+      
       try {
         const sectionContent = await loadArrayContent(activeSection);
-        if (sectionContent) {
-          setContent(sectionContent);
-        } else {
-          setError('Failed to load content');
-        }
+        setContent(sectionContent);
       } catch (err) {
-        setError('Error loading content');
-        console.error('Error loading array content:', err);
+        setError('Failed to load content');
+        console.error('Error loading content:', err);
       } finally {
         setLoading(false);
       }
     };
+
     loadContent();
+  }, [activeSection]);
+
+  // Preload next section for better UX
+  useEffect(() => {
+    const currentIndex = arraySections.findIndex(s => s.id === activeSection);
+    if (currentIndex < arraySections.length - 1) {
+      const nextSection = arraySections[currentIndex + 1];
+      preloadArraySection(nextSection.id);
+    }
   }, [activeSection]);
 
   if (error) {
@@ -107,24 +116,11 @@ const ArrayOperations: React.FC = () => {
           {/* Main Content */}
           <div className="flex-1 min-w-0">
             {loading ? (
-              <div className="space-y-6">
-                <div className="animate-pulse">
-                  <div className="h-8 bg-green-500/20 rounded w-1/3 mb-4"></div>
-                  <div className="space-y-4">
-                    <div className="h-4 bg-green-500/20 rounded w-full"></div>
-                    <div className="h-4 bg-green-500/20 rounded w-5/6"></div>
-                    <div className="h-4 bg-green-500/20 rounded w-4/6"></div>
-                  </div>
-                </div>
-                <div className="animate-pulse">
-                  <div className="h-6 bg-green-500/20 rounded w-1/4 mb-3"></div>
-                  <div className="bg-black/50 border border-green-500/30 rounded-lg p-4">
-                    <div className="h-4 bg-green-500/20 rounded w-full mb-2"></div>
-                    <div className="h-4 bg-green-500/20 rounded w-3/4"></div>
-                  </div>
-                </div>
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto mb-4"></div>
+                <p className="text-green-400 font-mono">INITIALIZING...</p>
               </div>
-            ) : (
+            ) : content ? (
               <div className="space-y-8">
                 <h2 className="text-2xl font-bold text-green-400 font-mono matrix-glow">
                   {arraySections.find(section => section.id === activeSection)?.title}
@@ -132,7 +128,7 @@ const ArrayOperations: React.FC = () => {
                 {content.map((section, index) => (
                   <ContentSection key={index} title={section.title}>
                     <div className="space-y-4">
-                      {section.examples.map((example, exampleIndex) => (
+                      {section.examples.map((example: Example, exampleIndex: number) => (
                         <div key={exampleIndex} className="bg-black/50 border border-green-500/30 rounded-lg p-6">
                           <h4 className="text-lg font-medium text-green-300 mb-3 font-mono">
                             {example.title}
@@ -147,6 +143,15 @@ const ArrayOperations: React.FC = () => {
                     </div>
                   </ContentSection>
                 ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <h2 className="text-2xl font-bold text-green-400 mb-4 font-mono">
+                  {arraySections.find(section => section.id === activeSection)?.title}
+                </h2>
+                <p className="text-green-300 font-mono">
+                  Content for {arraySections.find(section => section.id === activeSection)?.title} will be added here...
+                </p>
               </div>
             )}
           </div>
