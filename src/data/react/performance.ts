@@ -1,105 +1,96 @@
 export default [
   {
-    title: 'React Performance Optimization',
+    title: 'React Performance Basics',
     examples: [
       {
-        title: 'React.memo for Component Memoization',
+        title: 'Using React.memo',
         code: `import React from 'react';
 
-const ExpensiveComponent = React.memo(({ data }) => {
+const UserCard = React.memo(({ user }) => {
   return (
     <div>
-      {data.map(item => (
-        <div key={item.id}>{item.name}</div>
-      ))}
+      <h3>{user.name}</h3>
+      <p>{user.email}</p>
     </div>
   );
 });
 
-// Only re-renders if props change
-export default ExpensiveComponent;`
+// This component only re-renders when user prop changes
+export default UserCard;`
       },
       {
-        title: 'useMemo for Expensive Calculations',
+        title: 'useMemo for Calculations',
         code: `import { useMemo } from 'react';
 
-function UserList({ users, filter }) {
-  const filteredUsers = useMemo(() => {
-    return users.filter(user => 
-      user.name.toLowerCase().includes(filter.toLowerCase())
+function TodoList({ todos, filter }) {
+  const filteredTodos = useMemo(() => {
+    return todos.filter(todo => 
+      todo.text.toLowerCase().includes(filter.toLowerCase())
     );
-  }, [users, filter]);
+  }, [todos, filter]);
   
   return (
-    <div>
-      {filteredUsers.map(user => (
-        <div key={user.id}>{user.name}</div>
+    <ul>
+      {filteredTodos.map(todo => (
+        <li key={todo.id}>{todo.text}</li>
       ))}
-    </div>
+    </ul>
   );
 }`
       },
       {
-        title: 'useCallback for Function Memoization',
+        title: 'useCallback for Functions',
         code: `import { useCallback } from 'react';
 
-function ParentComponent() {
-  const [count, setCount] = useState(0);
-  
-  const handleClick = useCallback(() => {
-    console.log('Button clicked');
-  }, []); // Empty dependency array
+function TodoItem({ todo, onToggle }) {
+  const handleToggle = useCallback(() => {
+    onToggle(todo.id);
+  }, [todo.id, onToggle]);
   
   return (
-    <div>
-      <button onClick={() => setCount(count + 1)}>
-        Count: {count}
-      </button>
-      <ChildComponent onButtonClick={handleClick} />
-    </div>
+    <li>
+      <input
+        type="checkbox"
+        checked={todo.completed}
+        onChange={handleToggle}
+      />
+      {todo.text}
+    </li>
   );
 }`
       },
       {
-        title: 'Code Splitting with React.lazy',
+        title: 'Lazy Loading Components',
         code: `import { lazy, Suspense } from 'react';
 
-const LazyComponent = lazy(() => import('./LazyComponent'));
+const UserProfile = lazy(() => import('./UserProfile'));
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <LazyComponent />
-    </Suspense>
+    <div>
+      <h1>My App</h1>
+      <Suspense fallback={<div>Loading profile...</div>}>
+        <UserProfile />
+      </Suspense>
+    </div>
   );
-}
-
-// LazyComponent.js
-export default function LazyComponent() {
-  return <div>This component is loaded lazily</div>;
 }`
       },
       {
-        title: 'Virtual Scrolling for Large Lists',
-        code: `import { FixedSizeList as List } from 'react-window';
-
-function VirtualizedList({ items }) {
-  const Row = ({ index, style }) => (
-    <div style={style}>
-      {items[index].name}
-    </div>
-  );
-  
+        title: 'Key Prop for Lists',
+        code: `function TodoList({ todos }) {
   return (
-    <List
-      height={400}
-      itemCount={items.length}
-      itemSize={35}
-    >
-      {Row}
-    </List>
+    <ul>
+      {todos.map(todo => (
+        <li key={todo.id}>
+          {todo.text}
+        </li>
+      ))}
+    </ul>
   );
-}`
+}
+
+// Always use unique, stable keys for better performance`
       }
     ]
   }

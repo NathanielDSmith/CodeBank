@@ -1,91 +1,70 @@
 export default [
   {
-    title: 'React Testing with Jest & RTL',
+    title: 'Basic React Testing',
     examples: [
       {
-        title: 'Component Testing',
+        title: 'Simple Component Test',
         code: `import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import Button from './Button';
 
-test('renders button with correct text', () => {
+test('shows button text', () => {
   render(<Button>Click me</Button>);
   expect(screen.getByText('Click me')).toBeInTheDocument();
-});
-
-test('calls onClick when clicked', () => {
-  const handleClick = jest.fn();
-  render(<Button onClick={handleClick}>Click me</Button>);
-  
-  userEvent.click(screen.getByText('Click me'));
-  expect(handleClick).toHaveBeenCalledTimes(1);
 });`
       },
       {
-        title: 'Testing Hooks',
-        code: `import { renderHook, act } from '@testing-library/react';
-import { useCounter } from './useCounter';
-
-test('useCounter increments value', () => {
-  const { result } = renderHook(() => useCounter());
-  
-  act(() => {
-    result.current.increment();
-  });
-  
-  expect(result.current.count).toBe(1);
-});`
-      },
-      {
-        title: 'Async Testing',
-        code: `import { render, screen, waitFor } from '@testing-library/react';
-import { fetchUser } from './api';
-
-test('loads user data', async () => {
-  render(<UserProfile userId="123" />);
-  
-  await waitFor(() => {
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
-  });
-});`
-      },
-      {
-        title: 'Mocking',
-        code: `import { render, screen } from '@testing-library/react';
-import { fetchUser } from './api';
-
-// Mock the API module
-jest.mock('./api');
-
-test('displays user data', async () => {
-  fetchUser.mockResolvedValue({
-    name: 'John Doe',
-    email: 'john@example.com'
-  });
-  
-  render(<UserProfile userId="123" />);
-  
-  expect(await screen.findByText('John Doe')).toBeInTheDocument();
-});`
-      },
-      {
-        title: 'Testing Forms',
+        title: 'Testing Click Events',
         code: `import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import LoginForm from './LoginForm';
+import Counter from './Counter';
 
-test('submits form with user input', async () => {
-  const handleSubmit = jest.fn();
-  render(<LoginForm onSubmit={handleSubmit} />);
+test('increments counter when clicked', () => {
+  render(<Counter />);
   
-  await userEvent.type(screen.getByLabelText('Email'), 'test@example.com');
-  await userEvent.type(screen.getByLabelText('Password'), 'password123');
-  await userEvent.click(screen.getByRole('button', { name: /submit/i }));
+  const button = screen.getByText('Count: 0');
+  userEvent.click(button);
   
-  expect(handleSubmit).toHaveBeenCalledWith({
-    email: 'test@example.com',
-    password: 'password123'
-  });
+  expect(screen.getByText('Count: 1')).toBeInTheDocument();
+});`
+      },
+      {
+        title: 'Testing Props',
+        code: `import { render, screen } from '@testing-library/react';
+import Greeting from './Greeting';
+
+test('displays greeting with name', () => {
+  render(<Greeting name="John" />);
+  expect(screen.getByText('Hello, John!')).toBeInTheDocument();
+});`
+      },
+      {
+        title: 'Testing Conditional Rendering',
+        code: `import { render, screen } from '@testing-library/react';
+import UserProfile from './UserProfile';
+
+test('shows loading state', () => {
+  render(<UserProfile loading={true} />);
+  expect(screen.getByText('Loading...')).toBeInTheDocument();
+});
+
+test('shows user data when loaded', () => {
+  render(<UserProfile loading={false} user={{ name: 'John' }} />);
+  expect(screen.getByText('John')).toBeInTheDocument();
+});`
+      },
+      {
+        title: 'Testing Form Input',
+        code: `import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import SearchBox from './SearchBox';
+
+test('updates input value', () => {
+  render(<SearchBox />);
+  
+  const input = screen.getByPlaceholderText('Search...');
+  userEvent.type(input, 'react');
+  
+  expect(input.value).toBe('react');
 });`
       }
     ]
