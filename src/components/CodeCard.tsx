@@ -24,6 +24,15 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, onClick }) => {
     return colors[color] || 'bg-green-600 text-black font-bold';
   };
 
+  const getIconStyle = (icon: string) => {
+    // Special styling for text-based icons with consistent sizing and brighter colors
+    if (icon === 'TS' || icon === 'V' || icon === 'CSS' || icon === 'S' || icon === '[]' || icon === '{}') {
+      return 'font-mono font-bold text-xl bg-cyan-500/30 px-3 py-2 rounded border border-cyan-400/50 text-cyan-300 min-w-[3rem] min-h-[3rem] flex items-center justify-center';
+    }
+    // Default styling for emoji icons to match the size
+    return 'text-3xl min-w-[3rem] min-h-[3rem] flex items-center justify-center';
+  };
+
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -43,7 +52,7 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, onClick }) => {
       <div className="p-6">
         <div className="mb-6">
           <div className="flex items-start justify-between mb-4">
-            <div className="text-3xl mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+            <div className={`mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300 ${getIconStyle(topic.icon)}`}>
               {topic.icon}
             </div>
             <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-bold flex-shrink-0 ${getColorClasses(topic.color)}`}>

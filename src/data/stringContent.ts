@@ -1,17 +1,17 @@
 import { Section } from '../types/index';
 
 export const stringSections: Section[] = [
-  { id: 'basics', title: 'Basic Methods', icon: '📝' },
-  { id: 'search', title: 'Search & Replace', icon: '🔍' },
-  { id: 'formatting', title: 'Text Formatting', icon: '✨' },
-  { id: 'splitting', title: 'Splitting & Joining', icon: '✂️' },
-  { id: 'case', title: 'Case Conversion', icon: '🔄' },
-  { id: 'validation', title: 'Validation', icon: '✅' },
-  { id: 'encoding', title: 'Encoding & Decoding', icon: '🔐' },
-  { id: 'regex', title: 'Regular Expressions', icon: '🎯' },
-  { id: 'advanced', title: 'Advanced Patterns', icon: '🚀' },
-  { id: 'performance', title: 'Performance Tips', icon: '⚡' },
-  { id: 'best-practices', title: 'Best Practices', icon: '⭐' }
+  { id: 'basics', title: 'Basics', icon: 'S' },
+  { id: 'search', title: 'Searching', icon: '?' },
+  { id: 'case', title: 'Case Conversion', icon: 'C' },
+  { id: 'splitting', title: 'Splitting', icon: 'S' },
+  { id: 'formatting', title: 'Formatting', icon: 'F' },
+  { id: 'validation', title: 'Validation', icon: 'V' },
+  { id: 'regex', title: 'Regular Expressions', icon: 'R' },
+  { id: 'encoding', title: 'Encoding', icon: 'E' },
+  { id: 'advanced', title: 'Advanced', icon: 'A' },
+  { id: 'performance', title: 'Performance', icon: 'P' },
+  { id: 'best-practices', title: 'Best Practices', icon: 'B' }
 ];
 
 // Lazy loading function for content

@@ -1,18 +1,18 @@
 import { Section } from '../types/index';
 
 export const cssSections: Section[] = [
-  { id: 'centering', title: 'Centering', icon: '🎯' },
-  { id: 'flexbox', title: 'Flexbox', icon: '📐' },
-  { id: 'grid', title: 'CSS Grid', icon: '🔲' },
-  { id: 'positioning', title: 'Positioning', icon: '📍' },
-  { id: 'responsive', title: 'Responsive Design', icon: '📱' },
-  { id: 'animations', title: 'Animations', icon: '✨' },
-  { id: 'spacing', title: 'Spacing & Layout', icon: '📏' },
-  { id: 'typography', title: 'Typography', icon: '📝' },
-  { id: 'colors', title: 'Colors & Themes', icon: '🎨' },
-  { id: 'borders', title: 'Borders & Shadows', icon: '🖼️' },
-  { id: 'media', title: 'Media Queries', icon: '📺' },
-  { id: 'utilities', title: 'Utility Classes', icon: '🛠️' }
+  { id: 'flexbox', title: 'Flexbox', icon: 'F' },
+  { id: 'grid', title: 'CSS Grid', icon: 'G' },
+  { id: 'positioning', title: 'Positioning', icon: 'P' },
+  { id: 'centering', title: 'Centering', icon: 'C' },
+  { id: 'responsive', title: 'Responsive', icon: 'R' },
+  { id: 'spacing', title: 'Spacing', icon: 'S' },
+  { id: 'typography', title: 'Typography', icon: 'T' },
+  { id: 'colors', title: 'Colors', icon: 'C' },
+  { id: 'borders', title: 'Borders', icon: 'B' },
+  { id: 'animations', title: 'Animations', icon: 'A' },
+  { id: 'media', title: 'Media Queries', icon: 'M' },
+  { id: 'utilities', title: 'Utilities', icon: 'U' }
 ];
 
 // Lazy loading function for content

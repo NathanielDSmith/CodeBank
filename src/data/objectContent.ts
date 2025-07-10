@@ -1,11 +1,11 @@
 import { Section } from '../types/index';
 
 export const objectSections: Section[] = [
-  { id: 'basics', title: 'Object Basics', icon: '📦' },
-  { id: 'properties', title: 'Property Operations', icon: '🔧' },
-  { id: 'methods', title: 'Object Methods', icon: '⚙️' },
-  { id: 'destructuring', title: 'Destructuring', icon: '🎯' },
-  { id: 'spread', title: 'Spread Operator', icon: '📤' }
+  { id: 'basics', title: 'Basics', icon: '{}' },
+  { id: 'properties', title: 'Properties', icon: 'P' },
+  { id: 'methods', title: 'Methods', icon: 'M' },
+  { id: 'destructuring', title: 'Destructuring', icon: 'D' },
+  { id: 'spread', title: 'Spread', icon: 'S' }
 ];
 
 // Lazy loading function for object content

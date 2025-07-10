@@ -1,17 +1,20 @@
 import { Section } from '../types/index';
 
 export const arraySections: Section[] = [
-  { id: 'basics', title: 'Basic Methods', icon: '📋' },
-  { id: 'filtering', title: 'Filtering & Sorting', icon: '🔍' },
-  { id: 'mapping', title: 'Mapping & Reducing', icon: '🔄' },
-  { id: 'adding', title: 'Adding & Removing', icon: '➕' },
-  { id: 'searching', title: 'Searching', icon: '🔎' },
-  { id: 'transforming', title: 'Transforming', icon: '✨' },
-  { id: 'flattening', title: 'Flattening & Grouping', icon: '📦' },
-  { id: 'chunking', title: 'Chunking & Partitioning', icon: '📊' },
-  { id: 'advanced', title: 'Advanced Patterns', icon: '🚀' },
-  { id: 'performance', title: 'Performance Tips', icon: '⚡' },
-  { id: 'best-practices', title: 'Best Practices', icon: '⭐' }
+  { id: 'basics', title: 'Basics', icon: '[]' },
+  { id: 'adding', title: 'Adding Elements', icon: '+' },
+  { id: 'removing', title: 'Removing Elements', icon: '-' },
+  { id: 'searching', title: 'Searching', icon: '?' },
+  { id: 'filtering', title: 'Filtering', icon: 'F' },
+  { id: 'mapping', title: 'Mapping', icon: 'M' },
+  { id: 'reducing', title: 'Reducing', icon: 'R' },
+  { id: 'sorting', title: 'Sorting', icon: 'S' },
+  { id: 'chunking', title: 'Chunking', icon: 'C' },
+  { id: 'flattening', title: 'Flattening', icon: 'F' },
+  { id: 'transforming', title: 'Transforming', icon: 'T' },
+  { id: 'performance', title: 'Performance', icon: 'P' },
+  { id: 'best-practices', title: 'Best Practices', icon: 'B' },
+  { id: 'advanced', title: 'Advanced', icon: 'A' }
 ];
 
 // Lazy loading function for content

@@ -56,7 +56,7 @@ const HomePage: React.FC = () => {
         "Type Narrowing",
         "Modules"
       ],
-      icon: "🟦",
+      icon: "TS",
       color: "blue"
     },
     // Frontend Frameworks
@@ -89,7 +89,7 @@ const HomePage: React.FC = () => {
         "Computed & Watchers",
         "Vue Router"
       ],
-      icon: "🟩",
+      icon: "V",
       color: "emerald"
     },
     // Backend Frameworks
@@ -139,7 +139,7 @@ const HomePage: React.FC = () => {
         "Animations",
         "Media Queries"
       ],
-      icon: "🎨",
+      icon: "CSS",
       color: "purple"
     },
     // Programming Concepts
@@ -156,7 +156,7 @@ const HomePage: React.FC = () => {
         "Case Conversion",
         "Validation"
       ],
-      icon: "📝",
+      icon: "S",
       color: "blue"
     },
     {
@@ -172,7 +172,7 @@ const HomePage: React.FC = () => {
         "Searching",
         "Transforming"
       ],
-      icon: "📋",
+      icon: "[]",
       color: "green"
     },
     {
@@ -188,7 +188,7 @@ const HomePage: React.FC = () => {
         "JSON Handling",
         "Deep Cloning"
       ],
-      icon: "📦",
+      icon: "{}",
       color: "indigo"
     },
     {

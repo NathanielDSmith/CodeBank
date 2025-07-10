@@ -1,14 +1,14 @@
 import { Section, PageContent } from '../types/index';
 
 export const vueSections: Section[] = [
-  { id: 'basics', title: 'Basics', icon: '📚' },
-  { id: 'components', title: 'Components', icon: '🧩' },
-  { id: 'templates', title: 'Templates', icon: '📝' },
-  { id: 'reactivity', title: 'Reactivity', icon: '⚡' },
-  { id: 'lifecycle', title: 'Lifecycle', icon: '🔄' },
-  { id: 'events', title: 'Events', icon: '🎯' },
-  { id: 'routing', title: 'Routing', icon: '🛣️' },
-  { id: 'state', title: 'State Management', icon: '📊' }
+  { id: 'basics', title: 'Basics', icon: 'V' },
+  { id: 'components', title: 'Components', icon: 'C' },
+  { id: 'templates', title: 'Templates', icon: 'T' },
+  { id: 'reactivity', title: 'Reactivity', icon: 'R' },
+  { id: 'lifecycle', title: 'Lifecycle', icon: 'L' },
+  { id: 'events', title: 'Events', icon: 'E' },
+  { id: 'routing', title: 'Routing', icon: 'R' },
+  { id: 'state', title: 'State Management', icon: 'S' }
 ];
 
 export const vueContent: PageContent = {

@@ -1,18 +1,18 @@
 import { Section } from '../types/index';
 
 export const typescriptSections: Section[] = [
-  { id: 'basics', title: 'Basics', icon: '📚' },
-  { id: 'types', title: 'Types', icon: '🏷️' },
-  { id: 'interfaces', title: 'Interfaces', icon: '📋' },
-  { id: 'functions', title: 'Functions', icon: '⚙️' },
-  { id: 'classes', title: 'Classes', icon: '🏗️' },
-  { id: 'generics', title: 'Generics', icon: '🔧' },
-  { id: 'enums', title: 'Enums', icon: '📊' },
-  { id: 'modules', title: 'Modules', icon: '📦' },
-  { id: 'advanced', title: 'Advanced Types', icon: '🎯' },
-  { id: 'utility', title: 'Utility Types', icon: '🛠️' },
-  { id: 'decorators', title: 'Decorators', icon: '🎨' },
-  { id: 'best-practices', title: 'Best Practices', icon: '⭐' }
+  { id: 'basics', title: 'Basics', icon: 'TS' },
+  { id: 'types', title: 'Types', icon: 'T' },
+  { id: 'interfaces', title: 'Interfaces', icon: 'I' },
+  { id: 'functions', title: 'Functions', icon: 'F' },
+  { id: 'classes', title: 'Classes', icon: 'C' },
+  { id: 'generics', title: 'Generics', icon: 'G' },
+  { id: 'enums', title: 'Enums', icon: 'E' },
+  { id: 'modules', title: 'Modules', icon: 'M' },
+  { id: 'advanced', title: 'Advanced Types', icon: 'A' },
+  { id: 'utility', title: 'Utility Types', icon: 'U' },
+  { id: 'decorators', title: 'Decorators', icon: 'D' },
+  { id: 'best-practices', title: 'Best Practices', icon: 'B' }
 ];
 
 // Lazy loading function for content
