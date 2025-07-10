@@ -21,11 +21,11 @@ const variablesContent = [
     examples: [
       {
         title: 'Basic template literal',
-        code: 'const name = "John";\nconst age = 25;\nconst greeting = `Hello, ${name}! You are ${age} years old.`;\nconsole.log(greeting); // "Hello, John! You are 25 years old."'
+        code: 'const name = "John";\nconst age = 25;\nconst greeting = \`Hello, \${name}! You are \${age} years old.\`;\nconsole.log(greeting); // "Hello, John! You are 25 years old."'
       },
       {
         title: 'Multi-line template literal',
-        code: 'const message = `\n  Dear User,\n  \n  Welcome to our website!\n  We hope you enjoy your visit.\n  \n  Best regards,\n  The Team\n`;'
+        code: 'const message = \`\n  Dear User,\n  \n  Welcome to our website!\n  We hope you enjoy your visit.\n  \n  Best regards,\n  The Team\n\`;'
       }
     ]
   }

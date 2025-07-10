@@ -21,7 +21,7 @@ const stringsContent = [
       },
       {
         title: 'String interpolation with template literals',
-        code: 'const name = "Alice";\nconst age = 25;\nconst city = "Boston";\n\n// Old way (concatenation)\nconst oldWay = "My name is " + name + ", I am " + age + " years old, and I live in " + city + ".";\n\n// New way (template literals)\nconst newWay = `My name is ${name}, I am ${age} years old, and I live in ${city}.`;\n\nconsole.log(oldWay);\nconsole.log(newWay);\n// Both output: "My name is Alice, I am 25 years old, and I live in Boston."'
+        code: 'const name = "Alice";\nconst age = 25;\nconst city = "Boston";\n\n// Old way (concatenation)\nconst oldWay = "My name is " + name + ", I am " + age + " years old, and I live in " + city + ".";\n\n// New way (template literals)\nconst newWay = \`My name is \${name}, I am \${age} years old, and I live in \${city}.\`;\n\nconsole.log(oldWay);\nconsole.log(newWay);\n// Both output: "My name is Alice, I am 25 years old, and I live in Boston."'
       }
     ]
   }

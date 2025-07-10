@@ -18,7 +18,7 @@ export const javascriptSections: Section[] = [
 // Lazy loading function for content
 export const loadJavaScriptContent = async (sectionId: string) => {
   try {
-    const module = await import(`./javascript/${sectionId}`);
+    const module = await import(`./javascript/${sectionId}.ts`);
     return module.default;
   } catch (error) {
     console.error(`Failed to load content for section: ${sectionId}`, error);
@@ -28,5 +28,5 @@ export const loadJavaScriptContent = async (sectionId: string) => {
 
 // Preload function for better UX
 export const preloadJavaScriptSection = (sectionId: string) => {
-  import(`./javascript/${sectionId}`);
+  import(`./javascript/${sectionId}.ts`);
 }; 

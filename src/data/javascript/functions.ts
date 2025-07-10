@@ -4,11 +4,11 @@ const functionsContent = [
     examples: [
       {
         title: 'Function declaration (traditional way)',
-        code: 'function greet(name) {\n  return `Hello, ${name}!`;\n}\n\n// Call the function\nconst message = greet("Alice");\nconsole.log(message); // "Hello, Alice!"'
+        code: 'function greet(name) {\n  return \`Hello, \${name}!\`;\n}\n\n// Call the function\nconst message = greet("Alice");\nconsole.log(message); // "Hello, Alice!"'
       },
       {
         title: 'Arrow function (modern way)',
-        code: 'const greet = (name) => {\n  return `Hello, ${name}!`;\n};\n\n// Or shorter version\nconst greetShort = name => `Hello, ${name}!`;'
+        code: 'const greet = (name) => {\n  return \`Hello, \${name}!\`;\n};\n\n// Or shorter version\nconst greetShort = name => \`Hello, \${name}!\`;'
       },
       {
         title: 'Arrow function with multiple parameters',
@@ -21,7 +21,7 @@ const functionsContent = [
     examples: [
       {
         title: 'Single default parameter',
-        code: 'function greet(name = "Guest") {\n  return `Hello, ${name}!`;\n}\n\nconsole.log(greet("Alice")); // "Hello, Alice!"\nconsole.log(greet()); // "Hello, Guest!"'
+        code: 'function greet(name = "Guest") {\n  return \`Hello, \${name}!\`;\n}\n\nconsole.log(greet("Alice")); // "Hello, Alice!"\nconsole.log(greet()); // "Hello, Guest!"'
       },
       {
         title: 'Multiple default parameters',

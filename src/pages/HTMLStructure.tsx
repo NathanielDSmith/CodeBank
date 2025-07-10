@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import PageHeader from '../components/PageHeader';
-import SidePanel from '../components/SidePanel';
-import CodeBlock from '../components/CodeBlock';
-import ContentSection from '../components/ContentSection';
 import { usePageNavigation } from '../hooks/usePageNavigation';
 import { htmlSections, loadHtmlContent, preloadHtmlSection } from '../data/htmlContent';
+import PageLayout from '../components/PageLayout';
 
 interface Example {
   title: string;
@@ -17,7 +14,7 @@ interface Section {
 }
 
 const HTMLStructure: React.FC = () => {
-  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('semantic');
+  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('semantic', htmlSections);
   const [content, setContent] = useState<Section[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,90 +48,33 @@ const HTMLStructure: React.FC = () => {
     }
   }, [activeSection]);
 
-  const renderContent = () => {
-    if (loading) {
-      return (
-        <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto mb-4"></div>
-          <p className="text-green-300">Loading content...</p>
-        </div>
-      );
-    }
-
-    if (error) {
-      return (
-        <div className="text-center py-12">
-          <h2 className="text-2xl font-bold text-green-400 mb-4">
-            {htmlSections.find(s => s.id === activeSection)?.title}
-          </h2>
-          <p className="text-red-400 mb-4">{error}</p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-orange-600 text-white rounded hover:bg-orange-700"
-          >
-            Retry
-          </button>
-        </div>
-      );
-    }
-
-    if (!content) {
-      return (
-        <div className="text-center py-12">
-          <h2 className="text-2xl font-bold text-green-400 mb-4">
-            {htmlSections.find(s => s.id === activeSection)?.title}
-          </h2>
-          <p className="text-green-300">
-            Content for {htmlSections.find(s => s.id === activeSection)?.title} will be added here...
-          </p>
-        </div>
-      );
-    }
-
-    return (
-      <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-green-400 mb-4">
-          {htmlSections.find(s => s.id === activeSection)?.title}
-        </h2>
-        
-        {content.map((section, index) => (
-          <ContentSection key={index} title={section.title}>
-            <div className="space-y-4">
-              {section.examples.map((example: Example, exampleIndex: number) => (
-                <div key={exampleIndex}>
-                  <h4 className="font-medium text-green-300 mb-2">{example.title}</h4>
-                  <CodeBlock code={example.code} />
-                </div>
-              ))}
-            </div>
-          </ContentSection>
-        ))}
-      </div>
-    );
+  const fallbackContent = {
+    description: "Welcome to HTML Structure! This section covers essential HTML concepts for building web pages.",
+    topics: [
+      { icon: "🌐", text: "HTML document structure and semantic elements" },
+      { icon: "🌐", text: "Forms, tables, and multimedia elements" },
+      { icon: "🌐", text: "Accessibility and SEO best practices" },
+      { icon: "🌐", text: "HTML5 features and modern standards" },
+      { icon: "🌐", text: "Validation and debugging techniques" }
+    ]
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-100">
-      <PageHeader title="HTML Structure" icon="🌐" />
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 relative z-10">
-        <div className="flex gap-4 sm:gap-8">
-          <SidePanel
-            sections={htmlSections}
-            activeSection={activeSection}
-            searchTerm={searchTerm}
-            onSectionChange={handleSectionChange}
-            onSearchChange={handleSearchChange}
-            isOpen={isSidePanelOpen}
-            onToggle={() => setIsSidePanelOpen(!isSidePanelOpen)}
-          />
-          
-          <div className="flex-1 min-w-0">
-            {renderContent()}
-          </div>
-        </div>
-      </div>
-    </div>
+    <PageLayout
+      title="HTML Structure"
+      icon="🌐"
+      sections={htmlSections}
+      activeSection={activeSection}
+      searchTerm={searchTerm}
+      content={content}
+      loading={loading}
+      error={error}
+      isSidePanelOpen={isSidePanelOpen}
+      onSectionChange={handleSectionChange}
+      onSearchChange={handleSearchChange}
+      onToggleSidePanel={() => setIsSidePanelOpen(!isSidePanelOpen)}
+      fallbackContent={fallbackContent}
+    />
   );
 };
 

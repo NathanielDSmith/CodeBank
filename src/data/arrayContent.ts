@@ -17,7 +17,7 @@ export const arraySections: Section[] = [
 // Lazy loading function for content
 export const loadArrayContent = async (sectionId: string) => {
   try {
-    const module = await import(`./array/${sectionId}`);
+    const module = await import(`./array/${sectionId}.ts`);
     return module.default;
   } catch (error) {
     console.error(`Failed to load content for section: ${sectionId}`, error);
@@ -27,5 +27,5 @@ export const loadArrayContent = async (sectionId: string) => {
 
 // Preload function for better UX
 export const preloadArraySection = (sectionId: string) => {
-  import(`./array/${sectionId}`);
+  import(`./array/${sectionId}.ts`);
 }; 

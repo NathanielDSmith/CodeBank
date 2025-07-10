@@ -17,7 +17,7 @@ const arraysContent = [
     examples: [
       {
         title: 'forEach - loop through each item',
-        code: 'const numbers = [1, 2, 3, 4, 5];\n\nnumbers.forEach(number => {\n  console.log(`Number: ${number}`);\n});\n// Output:\n// Number: 1\n// Number: 2\n// Number: 3\n// Number: 4\n// Number: 5'
+        code: 'const numbers = [1, 2, 3, 4, 5];\n\nnumbers.forEach(number => {\n  console.log(\`Number: \${number}\`);\n});\n// Output:\n// Number: 1\n// Number: 2\n// Number: 3\n// Number: 4\n// Number: 5'
       },
       {
         title: 'map - transform each item',
