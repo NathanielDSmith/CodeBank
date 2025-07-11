@@ -1,6 +1,7 @@
 import { Section, PageContent } from '../types/index';
 
 export const railsSections: Section[] = [
+  { id: 'overview', title: 'Overview', icon: '📖' },
   { id: 'basics', title: 'Basics', icon: '📚' },
   { id: 'mvc', title: 'MVC Structure', icon: '🏛️' },
   { id: 'routing', title: 'Routing', icon: '🛣️' },

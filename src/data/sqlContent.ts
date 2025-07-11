@@ -1,4 +1,5 @@
 const sqlSections = [
+  { id: 'overview', title: 'Overview', icon: '📖' },
   { id: 'basics', title: 'SQL Basics', icon: '🗄️' },
   { id: 'select', title: 'SELECT Statements', icon: '🔎' },
   { id: 'where', title: 'WHERE Clauses', icon: '📋' },

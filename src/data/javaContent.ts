@@ -1,4 +1,5 @@
 const javaSections = [
+  { id: 'overview', title: 'Overview', icon: '📖' },
   { id: 'basics', title: 'Java Basics', icon: '☕' },
   { id: 'classes', title: 'Classes & Objects', icon: '🏗️' },
   { id: 'collections', title: 'Collections', icon: '📦' },

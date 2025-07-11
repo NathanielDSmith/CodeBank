@@ -1,6 +1,7 @@
 import { Section } from '../types/index';
 
 export const reactSections: Section[] = [
+  { id: 'overview', title: 'Overview', icon: '📖' },
   { id: 'components', title: 'Components', icon: '🧩' },
   { id: 'state', title: 'State Management', icon: '⚡' },
   { id: 'props', title: 'Props & Data Flow', icon: '📤' },
@@ -17,6 +18,11 @@ export const reactSections: Section[] = [
 
 // Lazy loading function for content
 export const loadReactContent = async (sectionId: string) => {
+  // Return null for overview to show fallback content
+  if (sectionId === 'overview') {
+    return null;
+  }
+  
   try {
     const module = await import(`./react/${sectionId}.ts`);
     return module.default;

@@ -14,7 +14,7 @@ interface Section {
 }
 
 const ObjectManipulation: React.FC = () => {
-  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('basics', objectSections);
+  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('overview', objectSections);
   const [content, setContent] = useState<Section[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -49,13 +49,21 @@ const ObjectManipulation: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: "Welcome to Object Manipulation! This section covers essential JavaScript object methods and techniques.",
+    description: "Objects are the building blocks of JavaScript applications. Learn how to create, manipulate, and work with objects efficiently using modern JavaScript features.",
+    benefits: "Object manipulation is essential for working with APIs, building data structures, and creating maintainable code. These skills are fundamental for JavaScript development and are used in frameworks like React and Node.js.",
+    difficulty: "Beginner to Intermediate",
     topics: [
       { icon: "{}", text: "Basic object creation and manipulation" },
       { icon: "{}", text: "Property access and modification" },
       { icon: "{}", text: "Object destructuring and spread" },
       { icon: "{}", text: "Object methods and prototypes" },
       { icon: "{}", text: "Advanced object patterns" }
+    ],
+    usefulLinks: [
+      { name: "MDN Objects", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object" },
+      { name: "JavaScript Object Guide", url: "https://javascript.info/object" },
+      { name: "Object Destructuring", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" },
+      { name: "Object Methods", url: "https://www.w3schools.com/js/js_object_methods.asp" }
     ]
   };
 

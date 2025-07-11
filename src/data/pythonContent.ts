@@ -1,6 +1,7 @@
 import { Section, PageContent } from '../types/index';
 
 export const pythonSections: Section[] = [
+  { id: 'overview', title: 'Overview', icon: '📖' },
   { id: 'basics', title: 'Basics', icon: '📚' },
   { id: 'variables', title: 'Variables', icon: '📦' },
   { id: 'functions', title: 'Functions', icon: '⚙️' },

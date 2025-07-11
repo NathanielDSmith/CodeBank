@@ -14,7 +14,7 @@ interface Section {
 }
 
 const CSSLayoutTricks: React.FC = () => {
-  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('flexbox', cssSections);
+  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('overview', cssSections);
   const [content, setContent] = useState<Section[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -55,13 +55,21 @@ const CSSLayoutTricks: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: "Welcome to CSS Layout Tricks! This section covers essential CSS layout techniques and modern approaches.",
+    description: "CSS is the language that brings web designs to life. Modern CSS with Flexbox, Grid, and advanced features makes creating beautiful, responsive layouts easier than ever.",
+    benefits: "Mastering CSS layout techniques is essential for creating modern, responsive websites. These skills are fundamental for frontend development and web design careers.",
+    difficulty: "Beginner to Intermediate",
     topics: [
       { icon: "CSS", text: "Flexbox layouts and alignment" },
       { icon: "CSS", text: "CSS Grid systems and positioning" },
       { icon: "CSS", text: "Responsive design techniques" },
       { icon: "CSS", text: "Centering and positioning tricks" },
       { icon: "CSS", text: "Modern CSS features and utilities" }
+    ],
+    usefulLinks: [
+      { name: "CSS-Tricks", url: "https://css-tricks.com/" },
+      { name: "MDN CSS", url: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
+      { name: "Flexbox Froggy", url: "https://flexboxfroggy.com/" },
+      { name: "Grid Garden", url: "https://cssgridgarden.com/" }
     ]
   };
 

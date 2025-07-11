@@ -3,7 +3,7 @@ import { javaSections, javaContent } from '../data/javaContent';
 import PageLayout from '../components/PageLayout';
 
 const JavaPage: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<string>('basics');
+  const [activeSection, setActiveSection] = useState<string>('overview');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [content, setContent] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,9 @@ const JavaPage: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: 'Welcome to Java! This section covers essential Java concepts for beginners, from basic syntax to enterprise development.',
+    description: 'Java is a powerful, object-oriented programming language known for its "Write Once, Run Anywhere" capability. It\'s widely used in enterprise development, Android apps, and large-scale systems.',
+    benefits: 'Java\'s strong typing and object-oriented design make it excellent for building robust, scalable applications. It\'s the foundation for Android development and enterprise software. Great for learning programming fundamentals.',
+    difficulty: 'Intermediate to Advanced',
     topics: [
       { icon: '☕', text: 'Java basics: variables, data types, and syntax' },
       { icon: '🏗️', text: 'Object-oriented programming with classes and inheritance' },
@@ -34,6 +36,12 @@ const JavaPage: React.FC = () => {
       { icon: '🌊', text: 'Modern Java with streams and lambda expressions' },
       { icon: '🌱', text: 'Spring Boot for web development and APIs' },
       { icon: '📱', text: 'Android development with Java' }
+    ],
+    usefulLinks: [
+      { name: "Oracle Java Docs", url: "https://docs.oracle.com/javase/tutorial/" },
+      { name: "Java Tutorial", url: "https://docs.oracle.com/javase/tutorial/" },
+      { name: "Spring Boot", url: "https://spring.io/projects/spring-boot" },
+      { name: "Android Developer", url: "https://developer.android.com/" }
     ]
   };
 

@@ -14,7 +14,7 @@ interface Section {
 }
 
 const JavaScriptBasics: React.FC = () => {
-  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('variables', javascriptSections);
+  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('overview', javascriptSections);
   const [content, setContent] = useState<Section[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -49,13 +49,21 @@ const JavaScriptBasics: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: "Welcome to JavaScript Basics! This section covers essential JavaScript concepts for beginners.",
+    description: "JavaScript is the programming language of the web. It's essential for creating interactive websites, web applications, and even mobile apps. This guide covers everything from basic syntax to advanced concepts.",
+    benefits: "Learning JavaScript opens doors to web development, mobile app development, server-side programming (Node.js), and even game development. It's the foundation for modern web technologies.",
+    difficulty: "Beginner to Intermediate",
     topics: [
       { icon: "⚡", text: "Variables, data types, and scope" },
       { icon: "⚡", text: "Functions and control flow" },
       { icon: "⚡", text: "Arrays, objects, and data structures" },
       { icon: "⚡", text: "DOM manipulation and events" },
       { icon: "⚡", text: "Async programming and promises" }
+    ],
+    usefulLinks: [
+      { name: "MDN JavaScript Guide", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide" },
+      { name: "JavaScript.info", url: "https://javascript.info/" },
+      { name: "Eloquent JavaScript", url: "https://eloquentjavascript.net/" },
+      { name: "You Don't Know JS", url: "https://github.com/getify/You-Dont-Know-JS" }
     ]
   };
 

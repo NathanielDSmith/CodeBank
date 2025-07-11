@@ -1,6 +1,7 @@
 import { Section } from '../types/index';
 
 export const arraySections: Section[] = [
+  { id: 'overview', title: 'Overview', icon: '📖' },
   { id: 'basics', title: 'Basics', icon: '[]' },
   { id: 'adding', title: 'Adding Elements', icon: '+' },
   { id: 'removing', title: 'Removing Elements', icon: '-' },
@@ -19,6 +20,11 @@ export const arraySections: Section[] = [
 
 // Lazy loading function for content
 export const loadArrayContent = async (sectionId: string) => {
+  // Return null for overview to show fallback content
+  if (sectionId === 'overview') {
+    return null;
+  }
+  
   try {
     const module = await import(`./array/${sectionId}.ts`);
     return module.default;

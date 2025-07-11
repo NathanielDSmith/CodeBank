@@ -1,6 +1,7 @@
 import { Section } from '../types/index';
 
 export const objectSections: Section[] = [
+  { id: 'overview', title: 'Overview', icon: '📖' },
   { id: 'basics', title: 'Basics', icon: '{}' },
   { id: 'properties', title: 'Properties', icon: 'P' },
   { id: 'methods', title: 'Methods', icon: 'M' },
@@ -9,7 +10,12 @@ export const objectSections: Section[] = [
 ];
 
 // Lazy loading function for object content
-export const loadObjectContent = async (sectionId: string): Promise<any[]> => {
+export const loadObjectContent = async (sectionId: string): Promise<any[] | null> => {
+  // Return null for overview to show fallback content
+  if (sectionId === 'overview') {
+    return null;
+  }
+  
   try {
     const module = await import(`./object/${sectionId}.ts`);
     return module.default;

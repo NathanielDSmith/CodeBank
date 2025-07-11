@@ -14,7 +14,7 @@ interface Section {
 }
 
 const ArrayOperations: React.FC = () => {
-  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('basics', arraySections);
+  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('overview', arraySections);
   const [content, setContent] = useState<Section[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -49,13 +49,21 @@ const ArrayOperations: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: "Welcome to Array Operations! This section covers essential JavaScript array methods and techniques.",
+    description: "Arrays are one of the most fundamental data structures in programming. Master array operations to efficiently manipulate collections of data with modern JavaScript methods.",
+    benefits: "Array operations are essential for data processing, API responses, and building user interfaces. These skills are transferable across programming languages and are crucial for modern web development.",
+    difficulty: "Beginner to Intermediate",
     topics: [
       { icon: "[]", text: "Basic array methods and manipulation" },
       { icon: "[]", text: "Filtering, mapping, and reducing" },
       { icon: "[]", text: "Adding, removing, and transforming elements" },
       { icon: "[]", text: "Searching and sorting techniques" },
       { icon: "[]", text: "Advanced patterns and performance tips" }
+    ],
+    usefulLinks: [
+      { name: "MDN Array Methods", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array" },
+      { name: "JavaScript Array Guide", url: "https://javascript.info/array-methods" },
+      { name: "Array Methods Examples", url: "https://www.w3schools.com/js/js_array_methods.asp" },
+      { name: "Array Performance", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#performance" }
     ]
   };
 

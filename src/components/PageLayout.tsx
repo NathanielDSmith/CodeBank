@@ -29,7 +29,10 @@ interface PageLayoutProps {
   onToggleSidePanel: () => void;
   fallbackContent?: {
     description: string;
+    benefits?: string;
+    difficulty?: string;
     topics: Array<{ icon: string; text: string }>;
+    usefulLinks?: Array<{ name: string; url: string }>;
   };
 }
 
@@ -76,33 +79,90 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     }
 
     if (!content) {
+      // If overview section is selected or no active section, show the enhanced landing content
+      if (!activeSection || activeSection === 'overview') {
+        return (
+          <div className="text-center py-12">
+            <h2 className="text-2xl font-bold text-green-400 mb-4 font-mono">
+              {title}
+            </h2>
+            <div className="max-w-4xl mx-auto space-y-6">
+              {/* Description */}
+              <p className="text-green-300 font-mono text-lg leading-relaxed">
+                {fallbackContent?.description || `Welcome to ${title}! This section covers essential concepts.`}
+              </p>
+              
+              {/* Benefits */}
+              {fallbackContent?.benefits && (
+                <div className="bg-black/50 border border-green-500/30 rounded-lg p-6 text-left">
+                  <h3 className="text-lg font-bold text-green-400 mb-3 font-mono">Why Learn This:</h3>
+                  <p className="text-green-300 font-mono leading-relaxed">{fallbackContent.benefits}</p>
+                </div>
+              )}
+              
+              {/* Difficulty */}
+              {fallbackContent?.difficulty && (
+                <div className="inline-block">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-green-600 text-black">
+                    {fallbackContent.difficulty}
+                  </span>
+                </div>
+              )}
+              
+              {/* Topics */}
+              {fallbackContent?.topics && (
+                <div className="bg-black/50 border border-green-500/30 rounded-lg p-6 text-left">
+                  <h3 className="text-lg font-bold text-green-400 mb-4 font-mono">What you'll learn:</h3>
+                  <ul className="space-y-2 text-green-300 font-mono">
+                    {fallbackContent.topics.map((topic, index) => (
+                      <li key={index} className="flex items-start">
+                        <span className="text-green-400 mr-2">{topic.icon}</span>
+                        <span>{topic.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              
+              {/* Useful Links */}
+              {fallbackContent?.usefulLinks && (
+                <div className="bg-black/50 border border-green-500/30 rounded-lg p-6 text-left">
+                  <h3 className="text-lg font-bold text-green-400 mb-4 font-mono">Useful Resources:</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {fallbackContent.usefulLinks.map((link, index) => (
+                      <a
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center text-green-300 hover:text-green-200 font-mono transition-colors duration-300 group"
+                      >
+                        <span className="text-green-400 mr-2 group-hover:scale-110 transition-transform duration-300">🔗</span>
+                        <span className="group-hover:underline">{link.name}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              <p className="text-green-400 font-mono mt-6 text-sm">
+                Select a topic from the sidebar to get started!
+              </p>
+            </div>
+          </div>
+        );
+      }
+      
+      // If there's an active section but no content, show a different message
       const currentSection = sections.find(s => s.id === activeSection);
       return (
         <div className="text-center py-12">
           <h2 className="text-2xl font-bold text-green-400 mb-4 font-mono">
             {currentSection?.title || title}
           </h2>
-          <div className="max-w-2xl mx-auto">
-            <p className="text-green-300 font-mono mb-6">
-              {fallbackContent?.description || `Welcome to ${title}! This section covers essential concepts.`}
-            </p>
-            {fallbackContent?.topics && (
-              <div className="bg-black/50 border border-green-500/30 rounded-lg p-6 text-left">
-                <h3 className="text-lg font-bold text-green-400 mb-4 font-mono">What you'll learn:</h3>
-                <ul className="space-y-2 text-green-300 font-mono">
-                  {fallbackContent.topics.map((topic, index) => (
-                    <li key={index} className="flex items-start">
-                      <span className="text-green-400 mr-2">{topic.icon}</span>
-                      <span>{topic.text}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <p className="text-green-400 font-mono mt-6 text-sm">
-              Select a topic from the sidebar to get started!
-            </p>
-          </div>
+          <p className="text-green-300 font-mono">
+            Content for {currentSection?.title} will be added here...
+          </p>
         </div>
       );
     }

@@ -3,7 +3,7 @@ import { asyncSections, asyncContent } from '../data/asyncContent';
 import PageLayout from '../components/PageLayout';
 
 const AsyncProgramming: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<string>('basics');
+  const [activeSection, setActiveSection] = useState<string>('overview');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [content, setContent] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,9 @@ const AsyncProgramming: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: 'Welcome to Async Programming! This section covers essential asynchronous programming concepts for beginners.',
+    description: 'Asynchronous programming is essential for modern web development. Learn how to handle operations that take time without blocking your application.',
+    benefits: 'Async programming enables responsive user interfaces, efficient API calls, and better user experience. These skills are crucial for web development, mobile apps, and server-side programming.',
+    difficulty: 'Intermediate',
     topics: [
       { icon: '⏱️', text: 'Understanding synchronous vs asynchronous code' },
       { icon: '🤝', text: 'Working with Promises and .then() chains' },
@@ -34,6 +36,12 @@ const AsyncProgramming: React.FC = () => {
       { icon: '⚠️', text: 'Error handling in async operations' },
       { icon: '🌐', text: 'Making API calls and handling responses' },
       { icon: '🔄', text: 'Running operations in parallel' }
+    ],
+    usefulLinks: [
+      { name: "MDN Async/Await", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function" },
+      { name: "JavaScript Promises", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise" },
+      { name: "Async JavaScript", url: "https://javascript.info/async" },
+      { name: "Fetch API", url: "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" }
     ]
   };
 

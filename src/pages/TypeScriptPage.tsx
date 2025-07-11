@@ -14,7 +14,7 @@ interface TypeScriptContentSection {
 }
 
 const TypeScriptPage: React.FC = () => {
-  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('basics', typescriptSections);
+  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('overview', typescriptSections);
   const [content, setContent] = useState<TypeScriptContentSection[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,7 +27,10 @@ const TypeScriptPage: React.FC = () => {
       
       try {
         const sectionContent = await loadTypeScriptContent(activeSection);
-        if (sectionContent) {
+        // Don't treat null as an error for overview section
+        if (sectionContent === null && activeSection === 'overview') {
+          setContent(null);
+        } else if (sectionContent) {
           setContent(sectionContent);
         } else {
           setError(`Content not found for section: ${activeSection}`);
@@ -52,13 +55,21 @@ const TypeScriptPage: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: "Welcome to TypeScript! This section covers essential TypeScript concepts for type-safe JavaScript development.",
+    description: "TypeScript is a superset of JavaScript that adds static typing, making your code more reliable and easier to maintain. It's widely used in modern web development and enterprise applications.",
+    benefits: "TypeScript helps catch errors at compile time, provides better IDE support with autocomplete, and makes refactoring safer. It's essential for large-scale applications and teams.",
+    difficulty: "Intermediate",
     topics: [
       { icon: "📘", text: "Type annotations and interfaces" },
       { icon: "📘", text: "Classes, generics, and enums" },
       { icon: "📘", text: "Advanced types and utility types" },
       { icon: "📘", text: "Modules and decorators" },
       { icon: "📘", text: "Best practices and patterns" }
+    ],
+    usefulLinks: [
+      { name: "TypeScript Official Docs", url: "https://www.typescriptlang.org/docs/" },
+      { name: "TypeScript Handbook", url: "https://www.typescriptlang.org/docs/handbook/intro.html" },
+      { name: "TypeScript Playground", url: "https://www.typescriptlang.org/play" },
+      { name: "TypeScript Deep Dive", url: "https://basarat.gitbook.io/typescript/" }
     ]
   };
 

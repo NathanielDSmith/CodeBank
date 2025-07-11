@@ -1,4 +1,5 @@
 const asyncSections = [
+  { id: 'overview', title: 'Overview', icon: '📖' },
   { id: 'basics', title: 'Async Basics', icon: '⏱️' },
   { id: 'promises', title: 'Promises', icon: '🤝' },
   { id: 'async-await', title: 'Async/Await', icon: '⚡' },

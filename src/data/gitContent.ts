@@ -1,6 +1,7 @@
 import { Section, PageContent } from '../types/index';
 
 export const gitSections: Section[] = [
+  { id: 'overview', title: 'Overview', icon: '📖' },
   { id: 'basics', title: 'Basic Commands', icon: '📝' },
   { id: 'commits', title: 'Commits', icon: '💾' },
   { id: 'branches', title: 'Branches', icon: '🌿' },

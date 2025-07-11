@@ -1,6 +1,7 @@
 import { Section, PageContent } from '../types/index';
 
 export const vueSections: Section[] = [
+  { id: 'overview', title: 'Overview', icon: '📖' },
   { id: 'basics', title: 'Basics', icon: 'V' },
   { id: 'components', title: 'Components', icon: 'C' },
   { id: 'templates', title: 'Templates', icon: 'T' },

@@ -9,7 +9,7 @@ interface Section {
 }
 
 const VuePage: React.FC = () => {
-  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('basics', vueSections);
+  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('overview', vueSections);
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
 
   const content = vueContent[activeSection] || null;
@@ -17,13 +17,21 @@ const VuePage: React.FC = () => {
   const error = null;
 
   const fallbackContent = {
-    description: "Welcome to Vue.js! This section covers essential Vue concepts for building reactive user interfaces.",
+    description: "Vue.js is a progressive JavaScript framework for building user interfaces. It's designed to be incrementally adoptable and focuses on the view layer.",
+    benefits: "Vue.js offers gentle learning curve, excellent documentation, and powerful features. It's great for both small projects and large applications, with strong community support and ecosystem.",
+    difficulty: "Beginner to Intermediate",
     topics: [
       { icon: "🟩", text: "Vue instances and components" },
       { icon: "🟩", text: "Template syntax and directives" },
       { icon: "🟩", text: "Reactivity and data binding" },
       { icon: "🟩", text: "Lifecycle hooks and events" },
       { icon: "🟩", text: "Routing and state management" }
+    ],
+    usefulLinks: [
+      { name: "Vue.js Official Docs", url: "https://vuejs.org/guide/" },
+      { name: "Vue Tutorial", url: "https://vuejs.org/tutorial/" },
+      { name: "Vue Router", url: "https://router.vuejs.org/" },
+      { name: "Vuex", url: "https://vuex.vuejs.org/" }
     ]
   };
 

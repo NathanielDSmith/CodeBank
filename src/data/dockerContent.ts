@@ -6,6 +6,7 @@ interface DockerContentSection {
 }
 
 export const dockerSections: Section[] = [
+  { id: 'overview', title: 'Overview', icon: '📖' },
   {
     id: 'images',
     title: 'Docker Images',

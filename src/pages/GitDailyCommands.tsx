@@ -9,7 +9,7 @@ interface Section {
 }
 
 const GitDailyCommands: React.FC = () => {
-  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('basics', gitSections);
+  const { activeSection, searchTerm, handleSectionChange, handleSearchChange } = usePageNavigation('overview', gitSections);
   const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
 
   const content = gitContent[activeSection] || null;
@@ -17,13 +17,21 @@ const GitDailyCommands: React.FC = () => {
   const error = null;
 
   const fallbackContent = {
-    description: "Welcome to Git Daily Commands! This section covers essential Git commands for version control.",
+    description: "Git is the most popular version control system used by developers worldwide. Learn essential commands for managing your code and collaborating with teams.",
+    benefits: "Git skills are essential for any developer. Version control enables collaboration, code backup, and project history tracking. These skills are required for most software development jobs.",
+    difficulty: "Beginner to Intermediate",
     topics: [
       { icon: "📚", text: "Basic repository operations" },
       { icon: "📚", text: "Committing and branching" },
       { icon: "📚", text: "Remote repository management" },
       { icon: "📚", text: "History and log viewing" },
       { icon: "📚", text: "Merging and conflict resolution" }
+    ],
+    usefulLinks: [
+      { name: "Git Official Docs", url: "https://git-scm.com/doc" },
+      { name: "GitHub Guides", url: "https://guides.github.com/" },
+      { name: "Git Cheat Sheet", url: "https://education.github.com/git-cheat-sheet-education.pdf" },
+      { name: "Git Tutorial", url: "https://git-scm.com/docs/gittutorial" }
     ]
   };
 
