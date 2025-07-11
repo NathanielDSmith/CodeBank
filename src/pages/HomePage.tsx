@@ -2,12 +2,14 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CodeCard from '../components/CodeCard';
 import { LanguageTopic } from '../types/index';
+import { useFavorites } from '../hooks/useFavorites';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [cursorPosition, setCursorPosition] = useState<number>(0);
+  const { favorites, toggleFavorite, isFavorite, isLoaded } = useFavorites();
 
   const languageTopics: LanguageTopic[] = [
     // Programming Languages
@@ -511,32 +513,30 @@ const HomePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Featured Guides */}
-        <div className="mb-12">
-          <h3 className="text-2xl font-mono font-bold text-center mb-8 text-green-400 glitch-text" data-text="Quick Access">
-            Quick Access
-          </h3>
-          <div className="flex justify-center gap-6">
-            {languageTopics.slice(0, 3).map((topic, index) => (
-              <div
-                key={topic.id}
-                onClick={() => handleCardClick(topic)}
-                className="group relative cursor-pointer"
-                style={{ animationDelay: `${index * 200}ms` }}
-              >
-                <div className="relative bg-black/70 border border-green-500/50 rounded-lg px-6 py-4 hover:border-green-400 transition-all duration-500 transform hover:-translate-y-1 hover:scale-105">
-                  <div className="flex items-center gap-4">
-                    <span className="text-2xl group-hover:scale-110 transition-transform duration-300">{topic.icon}</span>
-                    <div>
-                      <div className="font-bold text-green-400 text-lg group-hover:text-green-300 transition-colors font-mono">{topic.title}</div>
-                      <div className="text-sm text-green-300 font-mono">{topic.category}</div>
-                    </div>
-                  </div>
+        {/* Favorites Section */}
+        {isLoaded && favorites.length > 0 && (
+          <div className="mb-12">
+            <h3 className="text-2xl font-mono font-bold text-center mb-8 text-green-400 glitch-text" data-text="Your Favorites">
+              Your Favorites
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {favorites.map((topic, index) => (
+                <div
+                  key={topic.id}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="animate-fade-in"
+                >
+                                  <CodeCard
+                  topic={topic}
+                  onClick={() => handleCardClick(topic)}
+                  isFavorite={isFavorite(topic.id)}
+                  onToggleFavorite={isLoaded ? toggleFavorite : undefined}
+                />
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Search and Filter Controls */}
         <div className="mb-12 space-y-6 animate-fade-in">
@@ -645,6 +645,8 @@ const HomePage: React.FC = () => {
                 <CodeCard
                   topic={topic}
                   onClick={() => handleCardClick(topic)}
+                  isFavorite={isFavorite(topic.id)}
+                  onToggleFavorite={isLoaded ? toggleFavorite : undefined}
                 />
               </div>
             ))}
