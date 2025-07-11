@@ -306,7 +306,8 @@ const HomePage: React.FC = () => {
       "Vue Common Tasks": "/vue",
       "Ruby on Rails": "/rails",
       "Docker Basics": "/docker-basics",
-      "SQL Basics": "/sql-basics"
+      "SQL Basics": "/sql-basics",
+      "Async Programming": "/async-programming"
     };
     
     const route = routeMap[topic.title];

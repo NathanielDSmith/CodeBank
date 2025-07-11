@@ -19,6 +19,7 @@ const VuePage = lazy(() => import('./pages/VuePage'));
 const ObjectManipulation = lazy(() => import('./pages/ObjectManipulation'));
 const DockerPage = lazy(() => import('./pages/DockerPage'));
 const SQLBasics = lazy(() => import('./pages/SQLBasics'));
+const AsyncProgramming = lazy(() => import('./pages/AsyncProgramming'));
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="/object-manipulation/*" element={<ObjectManipulation />} />
           <Route path="/docker-basics/*" element={<DockerPage />} />
           <Route path="/sql-basics/*" element={<SQLBasics />} />
+          <Route path="/async-programming/*" element={<AsyncProgramming />} />
         </Routes>
       </Suspense>
     </Router>
