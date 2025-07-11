@@ -259,6 +259,23 @@ const HomePage: React.FC = () => {
       ],
       icon: "🐳",
       color: "cyan"
+    },
+    // Programming Languages
+    {
+      id: 16,
+      title: "Java",
+      description: "Enterprise programming with object-oriented design",
+      category: "Programming Languages",
+      topics: [
+        "Variables & Data Types",
+        "Classes & Objects",
+        "Collections Framework",
+        "Streams & Lambdas",
+        "Spring Boot",
+        "Android Development"
+      ],
+      icon: "☕",
+      color: "orange"
     }
   ];
 
@@ -307,7 +324,8 @@ const HomePage: React.FC = () => {
       "Ruby on Rails": "/rails",
       "Docker Basics": "/docker-basics",
       "SQL Basics": "/sql-basics",
-      "Async Programming": "/async-programming"
+      "Async Programming": "/async-programming",
+      "Java": "/java"
     };
     
     const route = routeMap[topic.title];
@@ -438,7 +456,7 @@ const HomePage: React.FC = () => {
           <div className="relative z-10">
             <h2 className="text-5xl md:text-6xl font-mono font-black text-green-400 mb-6 leading-tight">
               <span className="text-green-300">$</span> INITIALIZE
-              <span className="block text-green-300 animate-pulse typing-effect">
+              <span className="block text-green-300 typing-effect">
                 DATABASE_CONNECTION
               </span>
             </h2>
