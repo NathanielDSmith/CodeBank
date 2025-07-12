@@ -276,6 +276,22 @@ const HomePage: React.FC = () => {
       ],
       icon: "☕",
       color: "orange"
+    },
+    {
+      id: 17,
+      title: "C#",
+      description: "Microsoft's flagship language for enterprise and game development",
+      category: "Programming Languages",
+      topics: [
+        "Variables & Classes",
+        "LINQ & Collections",
+        "Async/Await",
+        "ASP.NET Core",
+        "Unity Development",
+        "Design Patterns"
+      ],
+      icon: "C#",
+      color: "purple"
     }
   ];
 
@@ -325,7 +341,8 @@ const HomePage: React.FC = () => {
       "Docker Basics": "/docker-basics",
       "SQL Basics": "/sql-basics",
       "Async Programming": "/async-programming",
-      "Java": "/java"
+      "Java": "/java",
+      "C#": "/csharp"
     };
     
     const route = routeMap[topic.title];

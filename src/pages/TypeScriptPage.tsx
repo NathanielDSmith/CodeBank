@@ -55,18 +55,18 @@ const TypeScriptPage: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: "TypeScript is a superset of JavaScript that adds static typing, making your code more reliable and easier to maintain. It's widely used in modern web development and enterprise applications.",
-    benefits: "TypeScript helps catch errors at compile time, provides better IDE support with autocomplete, and makes refactoring safer. It's essential for large-scale applications and teams.",
+    description: "TypeScript - JavaScript with superpowers. Adds static typing so you catch bugs before they hit production. Makes your code more predictable and your IDE way smarter.",
+    benefits: "Catch errors while you code, not when users complain. Better autocomplete, safer refactoring, and it's basically required for serious React/Angular projects these days.",
     difficulty: "Intermediate",
     topics: [
-      { icon: "📘", text: "Type annotations and interfaces" },
+      { icon: "📘", text: "Basic types and interfaces" },
       { icon: "📘", text: "Classes, generics, and enums" },
-      { icon: "📘", text: "Advanced types and utility types" },
+      { icon: "📘", text: "Advanced types and utilities" },
       { icon: "📘", text: "Modules and decorators" },
       { icon: "📘", text: "Best practices and patterns" }
     ],
     usefulLinks: [
-      { name: "TypeScript Official Docs", url: "https://www.typescriptlang.org/docs/" },
+      { name: "TypeScript Docs", url: "https://www.typescriptlang.org/docs/" },
       { name: "TypeScript Handbook", url: "https://www.typescriptlang.org/docs/handbook/intro.html" },
       { name: "TypeScript Playground", url: "https://www.typescriptlang.org/play" },
       { name: "TypeScript Deep Dive", url: "https://basarat.gitbook.io/typescript/" }

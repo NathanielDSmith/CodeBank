@@ -44,18 +44,18 @@ const DockerPage: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: "Docker is a platform for developing, shipping, and running applications in containers. It enables consistent environments across development, testing, and production.",
-    benefits: "Docker simplifies deployment, ensures consistency across environments, and enables microservices architecture. These skills are essential for DevOps, cloud deployment, and modern application development.",
+    description: "Docker containers - basically like lightweight VMs that package your app with everything it needs to run. Handy for keeping dev environments consistent and deploying stuff without the 'works on my machine' headache.",
+    benefits: "Skip the environment setup drama. Build once, run anywhere. Great for microservices, CI/CD pipelines, and when you need to ship apps that actually work the same everywhere.",
     difficulty: "Intermediate to Advanced",
     topics: [
-      { icon: "🐳", text: "Container concepts and Docker basics" },
-      { icon: "🐳", text: "Building and managing Docker images" },
-      { icon: "🐳", text: "Running containers and volume management" },
-      { icon: "🐳", text: "Docker Compose for multi-container apps" },
-      { icon: "🐳", text: "Networking and deployment strategies" }
+      { icon: "🐳", text: "Basic container concepts and Docker commands" },
+      { icon: "🐳", text: "Building images and managing containers" },
+      { icon: "🐳", text: "Volumes and persistent data" },
+      { icon: "🐳", text: "Docker Compose for multi-service apps" },
+      { icon: "🐳", text: "Networking and production deployment" }
     ],
     usefulLinks: [
-      { name: "Docker Official Docs", url: "https://docs.docker.com/" },
+      { name: "Docker Docs", url: "https://docs.docker.com/" },
       { name: "Docker Hub", url: "https://hub.docker.com/" },
       { name: "Docker Tutorial", url: "https://docs.docker.com/get-started/" },
       { name: "Docker Compose", url: "https://docs.docker.com/compose/" }

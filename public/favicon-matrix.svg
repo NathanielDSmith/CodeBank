@@ -1,1 +1,10 @@
- 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Pure black background -->
+  <rect width="32" height="32" fill="#000000"/>
+  
+  <!-- Bright green CB text -->
+  <text x="16" y="22" font-family="monospace" font-size="16" font-weight="bold" text-anchor="middle" fill="#00FF00">CB</text>
+  
+  <!-- Green border -->
+  <rect x="1" y="1" width="30" height="30" fill="none" stroke="#00FF00" stroke-width="2"/>
+</svg> 

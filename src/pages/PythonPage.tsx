@@ -31,18 +31,18 @@ const PythonPage: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: "Python is a versatile, high-level programming language known for its simplicity and readability. It's perfect for beginners and widely used in web development, data science, AI, automation, and more.",
-    benefits: "Python's clean syntax makes it ideal for learning programming. It's used in web development (Django, Flask), data science (pandas, numpy), AI/ML (TensorFlow, PyTorch), and automation. Great for both beginners and professionals.",
+    description: "Python - the Swiss Army knife of programming. Easy to read, quick to write, and does pretty much everything. Web apps, data crunching, automation scripts, you name it.",
+    benefits: "Perfect for beginners but powerful enough for pros. Great for web dev (Django/Flask), data science (pandas/numpy), AI stuff, and automating boring tasks. The syntax is so clean you can almost read it like English.",
     difficulty: "Beginner to Advanced",
     topics: [
-      { icon: "🐍", text: "Variables, data types, and control flow" },
-      { icon: "🐍", text: "Functions and modules" },
-      { icon: "🐍", text: "Lists, dictionaries, and data structures" },
-      { icon: "🐍", text: "File I/O and error handling" },
-      { icon: "🐍", text: "Object-oriented programming" }
+      { icon: "🐍", text: "Variables, data types, and basic syntax" },
+      { icon: "🐍", text: "Functions, modules, and imports" },
+      { icon: "🐍", text: "Lists, dicts, and data structures" },
+      { icon: "🐍", text: "File handling and error catching" },
+      { icon: "🐍", text: "Classes and OOP basics" }
     ],
     usefulLinks: [
-      { name: "Python Official Docs", url: "https://docs.python.org/3/tutorial/" },
+      { name: "Python Docs", url: "https://docs.python.org/3/tutorial/" },
       { name: "Real Python", url: "https://realpython.com/" },
       { name: "Python.org", url: "https://www.python.org/" },
       { name: "Python for Beginners", url: "https://wiki.python.org/moin/BeginnersGuide" }

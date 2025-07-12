@@ -55,18 +55,18 @@ const ReactCommonTasks: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: "React is a powerful JavaScript library for building user interfaces. It's component-based, declarative, and efficient, making it perfect for creating interactive web applications.",
-    benefits: "React's component-based architecture promotes reusability and maintainability. Virtual DOM ensures optimal performance, while the large ecosystem provides tools for routing, state management, and more.",
+    description: "React - the go-to library for building interactive UIs. Component-based, declarative, and has a massive ecosystem. Once you get the hang of it, you'll wonder how you built websites without it.",
+    benefits: "Reusable components save tons of time. Virtual DOM keeps things fast, and the ecosystem is huge - routing, state management, UI libraries, you name it. Plus, the job market loves React devs.",
     difficulty: "Intermediate",
     topics: [
-      { icon: "⚛️", text: "Components, props, and state management" },
-      { icon: "⚛️", text: "Hooks and lifecycle methods" },
-      { icon: "⚛️", text: "Event handling and forms" },
-      { icon: "⚛️", text: "API integration and data fetching" },
-      { icon: "⚛️", text: "Performance optimization and best practices" }
+      { icon: "⚛️", text: "Components, props, and state basics" },
+      { icon: "⚛️", text: "Hooks and lifecycle stuff" },
+      { icon: "⚛️", text: "Event handling and form management" },
+      { icon: "⚛️", text: "API calls and data fetching" },
+      { icon: "⚛️", text: "Performance tips and best practices" }
     ],
     usefulLinks: [
-      { name: "React Official Docs", url: "https://react.dev/" },
+      { name: "React Docs", url: "https://react.dev/" },
       { name: "React Tutorial", url: "https://react.dev/learn" },
       { name: "React Hooks", url: "https://react.dev/reference/react" },
       { name: "Create React App", url: "https://create-react-app.dev/" }

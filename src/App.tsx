@@ -21,6 +21,7 @@ const DockerPage = lazy(() => import('./pages/DockerPage'));
 const SQLBasics = lazy(() => import('./pages/SQLBasics'));
 const AsyncProgramming = lazy(() => import('./pages/AsyncProgramming'));
 const JavaPage = lazy(() => import('./pages/JavaPage'));
+const CSharpPage = lazy(() => import('./pages/CSharpPage'));
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="/sql-basics/*" element={<SQLBasics />} />
           <Route path="/async-programming/*" element={<AsyncProgramming />} />
           <Route path="/java/*" element={<JavaPage />} />
+          <Route path="/csharp/*" element={<CSharpPage />} />
         </Routes>
       </Suspense>
     </Router>

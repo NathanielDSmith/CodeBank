@@ -26,19 +26,19 @@ const JavaPage: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: 'Java is a powerful, object-oriented programming language known for its "Write Once, Run Anywhere" capability. It\'s widely used in enterprise development, Android apps, and large-scale systems.',
-    benefits: 'Java\'s strong typing and object-oriented design make it excellent for building robust, scalable applications. It\'s the foundation for Android development and enterprise software. Great for learning programming fundamentals.',
+    description: 'Java - the enterprise workhorse. Write once, run anywhere (mostly). Big in Android apps, enterprise software, and anywhere you need rock-solid reliability.',
+    benefits: 'Strong typing keeps your code predictable. Great for learning OOP fundamentals, and it\'s everywhere - Android apps, enterprise systems, big data processing. Plus, the job market is huge.',
     difficulty: 'Intermediate to Advanced',
     topics: [
-      { icon: '☕', text: 'Java basics: variables, data types, and syntax' },
-      { icon: '🏗️', text: 'Object-oriented programming with classes and inheritance' },
-      { icon: '📦', text: 'Collections framework: lists, maps, and sets' },
-      { icon: '🌊', text: 'Modern Java with streams and lambda expressions' },
-      { icon: '🌱', text: 'Spring Boot for web development and APIs' },
-      { icon: '📱', text: 'Android development with Java' }
+      { icon: '☕', text: 'Basic syntax, variables, and data types' },
+      { icon: '🏗️', text: 'Classes, objects, and inheritance' },
+      { icon: '📦', text: 'Collections: lists, maps, sets' },
+      { icon: '🌊', text: 'Streams and lambda expressions' },
+      { icon: '🌱', text: 'Spring Boot for web apps' },
+      { icon: '📱', text: 'Android development basics' }
     ],
     usefulLinks: [
-      { name: "Oracle Java Docs", url: "https://docs.oracle.com/javase/tutorial/" },
+      { name: "Java Docs", url: "https://docs.oracle.com/javase/tutorial/" },
       { name: "Java Tutorial", url: "https://docs.oracle.com/javase/tutorial/" },
       { name: "Spring Boot", url: "https://spring.io/projects/spring-boot" },
       { name: "Android Developer", url: "https://developer.android.com/" }
