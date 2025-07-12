@@ -1,1 +1,14 @@
- 
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Pure black background -->
+  <rect width="32" height="32" fill="#000000"/>
+  
+  <!-- Matrix green text with different positioning -->
+  <text x="16" y="18" font-family="monospace" font-size="14" font-weight="bold" text-anchor="middle" fill="#00FF00">C</text>
+  <text x="16" y="28" font-family="monospace" font-size="14" font-weight="bold" text-anchor="middle" fill="#00FF00">B</text>
+  
+  <!-- Matrix corner dots -->
+  <circle cx="4" cy="4" r="1" fill="#00FF00"/>
+  <circle cx="28" cy="4" r="1" fill="#00FF00"/>
+  <circle cx="4" cy="28" r="1" fill="#00FF00"/>
+  <circle cx="28" cy="28" r="1" fill="#00FF00"/>
+</svg> 
