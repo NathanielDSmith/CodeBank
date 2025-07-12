@@ -27,12 +27,8 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, onClick, isFavorite = false,
   };
 
   const getIconStyle = (icon: string) => {
-    // Special styling for text-based icons with consistent sizing and brighter colors
-    if (icon === 'TS' || icon === 'V' || icon === 'CSS' || icon === 'S' || icon === '[]' || icon === '{}') {
-      return 'font-mono font-bold text-xl bg-cyan-500/30 px-3 py-2 rounded border border-cyan-400/50 text-cyan-300 min-w-[3rem] min-h-[3rem] flex items-center justify-center';
-    }
-    // Default styling for emoji icons to match the size
-    return 'text-3xl min-w-[3rem] min-h-[3rem] flex items-center justify-center';
+    // All icons are now emoji-based, so use consistent styling with better visibility
+    return 'text-3xl min-w-[3rem] min-h-[3rem] flex items-center justify-center bg-black/30 rounded-lg p-2 border border-green-500/30 group-hover:border-green-400/50 transition-all duration-300';
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {

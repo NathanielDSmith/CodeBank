@@ -12,7 +12,7 @@ const HomePage: React.FC = () => {
   const { favorites, toggleFavorite, isFavorite, isLoaded } = useFavorites();
 
   const languageTopics: LanguageTopic[] = [
-    // Programming Languages
+    // Core Programming Languages (Most Important)
     {
       id: 1,
       title: "JavaScript Basics",
@@ -46,6 +46,22 @@ const HomePage: React.FC = () => {
       color: "green"
     },
     {
+      id: 16,
+      title: "Java",
+      description: "Enterprise programming with object-oriented design",
+      category: "Programming Languages",
+      topics: [
+        "Variables & Data Types",
+        "Classes & Objects",
+        "Collections Framework",
+        "Streams & Lambdas",
+        "Spring Boot",
+        "Android Development"
+      ],
+      icon: "☕",
+      color: "orange"
+    },
+    {
       id: 3,
       title: "TypeScript Basics",
       description: "Type-safe JavaScript for scalable apps",
@@ -58,10 +74,42 @@ const HomePage: React.FC = () => {
         "Type Narrowing",
         "Modules"
       ],
-      icon: "TS",
+      icon: "🔷",
       color: "blue"
     },
-    // Frontend Frameworks
+    {
+      id: 17,
+      title: "C#",
+      description: "Microsoft's flagship language for enterprise and game development",
+      category: "Programming Languages",
+      topics: [
+        "Variables & Classes",
+        "LINQ & Collections",
+        "Async/Await",
+        "ASP.NET Core",
+        "Unity Development",
+        "Design Patterns"
+      ],
+      icon: "⚡",
+      color: "purple"
+    },
+    {
+      id: 18,
+      title: "Go",
+      description: "Google's language for fast, concurrent programming",
+      category: "Programming Languages",
+      topics: [
+        "Variables & Functions",
+        "Goroutines & Concurrency",
+        "Channels & Communication",
+        "Web Servers",
+        "Structs & Interfaces",
+        "Package Management"
+      ],
+      icon: "🚀",
+      color: "cyan"
+    },
+    // Frontend Frameworks (High Priority)
     {
       id: 4,
       title: "React Common Tasks",
@@ -91,27 +139,10 @@ const HomePage: React.FC = () => {
         "Computed & Watchers",
         "Vue Router"
       ],
-      icon: "V",
+      icon: "💚",
       color: "emerald"
     },
-    // Backend Frameworks
-    {
-      id: 6,
-      title: "Ruby on Rails",
-      description: "Rails basics and common web development tasks",
-      category: "Backend Frameworks",
-      topics: [
-        "MVC Structure",
-        "Routing",
-        "ActiveRecord",
-        "Migrations",
-        "Controllers & Views",
-        "RESTful APIs"
-      ],
-      icon: "💎",
-      color: "red"
-    },
-    // Web Technologies
+    // Web Technologies (Essential)
     {
       id: 7,
       title: "HTML Structure",
@@ -141,10 +172,10 @@ const HomePage: React.FC = () => {
         "Animations",
         "Media Queries"
       ],
-      icon: "CSS",
+      icon: "🎨",
       color: "purple"
     },
-    // Programming Concepts
+    // Programming Concepts (Core Skills)
     {
       id: 9,
       title: "String Manipulation",
@@ -158,7 +189,7 @@ const HomePage: React.FC = () => {
         "Case Conversion",
         "Validation"
       ],
-      icon: "S",
+      icon: "📝",
       color: "blue"
     },
     {
@@ -174,7 +205,7 @@ const HomePage: React.FC = () => {
         "Searching",
         "Transforming"
       ],
-      icon: "[]",
+      icon: "📊",
       color: "green"
     },
     {
@@ -190,7 +221,7 @@ const HomePage: React.FC = () => {
         "JSON Handling",
         "Deep Cloning"
       ],
-      icon: "{}",
+      icon: "📦",
       color: "indigo"
     },
     {
@@ -209,22 +240,22 @@ const HomePage: React.FC = () => {
       icon: "⏱️",
       color: "emerald"
     },
-    // Tools & Platforms
+    // Backend Frameworks
     {
-      id: 13,
-      title: "Git Daily Commands",
-      description: "Essential Git commands for daily development",
-      category: "Tools & Platforms",
+      id: 6,
+      title: "Ruby on Rails",
+      description: "Rails basics and common web development tasks",
+      category: "Backend Frameworks",
       topics: [
-        "Basic Commands",
-        "Branching & Merging",
-        "Remote Repositories",
-        "Stashing & Resetting",
-        "Conflict Resolution",
-        "Best Practices"
+        "MVC Structure",
+        "Routing",
+        "ActiveRecord",
+        "Migrations",
+        "Controllers & Views",
+        "RESTful APIs"
       ],
-      icon: "📚",
-      color: "orange"
+      icon: "💎",
+      color: "red"
     },
     // Database & Data
     {
@@ -243,7 +274,24 @@ const HomePage: React.FC = () => {
       icon: "🗄️",
       color: "blue"
     },
-    // DevOps & Deployment
+    // Tools & Platforms (Important but not first)
+    {
+      id: 13,
+      title: "Git Daily Commands",
+      description: "Essential Git commands for daily development",
+      category: "Tools & Platforms",
+      topics: [
+        "Basic Commands",
+        "Branching & Merging",
+        "Remote Repositories",
+        "Stashing & Resetting",
+        "Conflict Resolution",
+        "Best Practices"
+      ],
+      icon: "📚",
+      color: "orange"
+    },
+    // DevOps & Deployment (Advanced)
     {
       id: 15,
       title: "Docker Basics",
@@ -259,39 +307,6 @@ const HomePage: React.FC = () => {
       ],
       icon: "🐳",
       color: "cyan"
-    },
-    // Programming Languages
-    {
-      id: 16,
-      title: "Java",
-      description: "Enterprise programming with object-oriented design",
-      category: "Programming Languages",
-      topics: [
-        "Variables & Data Types",
-        "Classes & Objects",
-        "Collections Framework",
-        "Streams & Lambdas",
-        "Spring Boot",
-        "Android Development"
-      ],
-      icon: "☕",
-      color: "orange"
-    },
-    {
-      id: 17,
-      title: "C#",
-      description: "Microsoft's flagship language for enterprise and game development",
-      category: "Programming Languages",
-      topics: [
-        "Variables & Classes",
-        "LINQ & Collections",
-        "Async/Await",
-        "ASP.NET Core",
-        "Unity Development",
-        "Design Patterns"
-      ],
-      icon: "C#",
-      color: "purple"
     }
   ];
 
@@ -342,7 +357,8 @@ const HomePage: React.FC = () => {
       "SQL Basics": "/sql-basics",
       "Async Programming": "/async-programming",
       "Java": "/java",
-      "C#": "/csharp"
+      "C#": "/csharp",
+      "Go": "/go"
     };
     
     const route = routeMap[topic.title];

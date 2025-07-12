@@ -4,12 +4,8 @@ import { PageHeaderProps } from '../types/index';
 
 const PageHeader: React.FC<PageHeaderProps> = ({ title, icon }) => {
   const getIconStyle = (icon: string) => {
-    // Special styling for text-based icons with consistent sizing and brighter colors
-    if (icon === 'TS' || icon === 'V' || icon === 'CSS' || icon === 'S' || icon === '[]' || icon === '{}') {
-      return 'font-mono font-bold text-lg sm:text-xl lg:text-2xl bg-cyan-500/30 px-2 py-1 rounded border border-cyan-400/50 text-cyan-300 min-w-[2.5rem] min-h-[2.5rem] flex items-center justify-center';
-    }
-    // Default styling for emoji icons to match the size
-    return 'text-lg sm:text-2xl lg:text-3xl min-w-[2.5rem] min-h-[2.5rem] flex items-center justify-center';
+    // All icons are now emoji-based, so use consistent styling with better visibility
+    return 'text-lg sm:text-2xl lg:text-3xl min-w-[2.5rem] min-h-[2.5rem] flex items-center justify-center bg-black/30 rounded-lg p-1 border border-green-500/30';
   };
 
   return (

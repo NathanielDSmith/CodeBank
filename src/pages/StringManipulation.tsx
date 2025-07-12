@@ -72,7 +72,7 @@ const StringManipulation: React.FC = () => {
   return (
     <PageLayout
       title="String Manipulation"
-      icon="S"
+      icon="📝"
       sections={stringSections}
       activeSection={activeSection}
       searchTerm={searchTerm}

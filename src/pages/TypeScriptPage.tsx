@@ -76,7 +76,7 @@ const TypeScriptPage: React.FC = () => {
   return (
     <PageLayout
       title="TypeScript"
-      icon="TS"
+      icon="🔷"
       sections={typescriptSections}
       activeSection={activeSection}
       searchTerm={searchTerm}

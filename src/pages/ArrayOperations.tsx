@@ -70,7 +70,7 @@ const ArrayOperations: React.FC = () => {
   return (
     <PageLayout
       title="Array Operations"
-      icon="[]"
+      icon="📊"
       sections={arraySections}
       activeSection={activeSection}
       searchTerm={searchTerm}
