@@ -41,29 +41,8 @@ const HomePage: React.FC = () => {
   }, [selectedCategory, searchTerm]);
 
   const handleCardClick = (topic: LanguageTopic) => {
-    // Map topic titles to routes
-    const routeMap: { [key: string]: string } = {
-      "JavaScript Basics": "/javascript-basics",
-      "React Common Tasks": "/react-common-tasks",
-      "CSS Layout Tricks": "/css-layout-tricks",
-      "HTML Structure": "/html-structure",
-      "String Manipulation": "/string-manipulation",
-      "Array Operations": "/array-operations",
-      "Object Manipulation": "/object-manipulation",
-      "Git Daily Commands": "/git-daily-commands",
-      "Python Basics": "/python",
-      "TypeScript Basics": "/typescript",
-      "Vue Common Tasks": "/vue",
-      "Ruby on Rails": "/rails",
-      "Docker Basics": "/docker-basics",
-      "SQL Basics": "/sql-basics",
-      "Async Programming": "/async-programming",
-      "Java": "/java",
-      "C#": "/csharp",
-      "Go": "/go"
-    };
-    
-    const route = routeMap[topic.title];
+    const route =
+      topic.route ?? LANGUAGE_TOPICS.find((t) => t.id === topic.id)?.route;
     if (route) {
       navigate(route);
     }

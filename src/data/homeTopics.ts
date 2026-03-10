@@ -16,7 +16,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "DOM & Events"
     ],
     icon: "⚡",
-    color: "yellow"
+    color: "yellow",
+    route: "/javascript-basics"
   },
   {
     id: 2,
@@ -32,7 +33,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Error Handling"
     ],
     icon: "🐍",
-    color: "green"
+    color: "green",
+    route: "/python"
   },
   {
     id: 16,
@@ -64,7 +66,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Modules"
     ],
     icon: "🔷",
-    color: "blue"
+    color: "blue",
+    route: "/typescript"
   },
   {
     id: 17,
@@ -80,7 +83,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Design Patterns"
     ],
     icon: "⚡",
-    color: "purple"
+    color: "purple",
+    route: "/csharp"
   },
   {
     id: 18,
@@ -96,7 +100,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Package Management"
     ],
     icon: "🚀",
-    color: "cyan"
+    color: "cyan",
+    route: "/go"
   },
   {
     id: 4,
@@ -112,7 +117,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "API Integration"
     ],
     icon: "⚛️",
-    color: "cyan"
+    color: "cyan",
+    route: "/react-common-tasks"
   },
   {
     id: 5,
@@ -144,7 +150,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Meta Tags"
     ],
     icon: "🌐",
-    color: "orange"
+    color: "orange",
+    route: "/html-structure"
   },
   {
     id: 8,
@@ -160,7 +167,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Media Queries"
     ],
     icon: "🎨",
-    color: "purple"
+    color: "purple",
+    route: "/css-layout-tricks"
   },
   {
     id: 9,
@@ -176,7 +184,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Validation"
     ],
     icon: "📝",
-    color: "blue"
+    color: "blue",
+    route: "/string-manipulation"
   },
   {
     id: 10,
@@ -192,7 +201,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Transforming"
     ],
     icon: "📊",
-    color: "green"
+    color: "green",
+    route: "/array-operations"
   },
   {
     id: 11,
@@ -208,7 +218,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Deep Cloning"
     ],
     icon: "📦",
-    color: "indigo"
+    color: "indigo",
+    route: "/object-manipulation"
   },
   {
     id: 12,
@@ -240,7 +251,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "RESTful APIs"
     ],
     icon: "💎",
-    color: "red"
+    color: "red",
+    route: "/rails"
   },
   {
     id: 14,
@@ -256,7 +268,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Indexing & Performance"
     ],
     icon: "🗄️",
-    color: "blue"
+    color: "blue",
+    route: "/sql-basics"
   },
   {
     id: 13,
@@ -272,7 +285,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Best Practices"
     ],
     icon: "📚",
-    color: "orange"
+    color: "orange",
+    route: "/git-daily-commands"
   },
   {
     id: 15,
@@ -288,6 +302,7 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Deployment"
     ],
     icon: "🐳",
-    color: "cyan"
+    color: "cyan",
+    route: "/docker-basics"
   }
 ];
