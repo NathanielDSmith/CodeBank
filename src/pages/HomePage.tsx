@@ -261,11 +261,12 @@ const HomePage: React.FC = () => {
                   className="animate-fade-in"
                 >
                                   <CodeCard
-                  topic={topic}
-                  onClick={() => handleCardClick(topic)}
-                  isFavorite={isFavorite(topic.id)}
-                  onToggleFavorite={isLoaded ? toggleFavorite : undefined}
-                />
+                    topic={topic}
+                    to={topic.route ?? LANGUAGE_TOPICS.find((t) => t.id === topic.id)?.route}
+                    onClick={() => handleCardClick(topic)}
+                    isFavorite={isFavorite(topic.id)}
+                    onToggleFavorite={isLoaded ? toggleFavorite : undefined}
+                  />
                 </div>
               ))}
             </div>
@@ -378,6 +379,7 @@ const HomePage: React.FC = () => {
               >
                 <CodeCard
                   topic={topic}
+                  to={topic.route ?? LANGUAGE_TOPICS.find((t) => t.id === topic.id)?.route}
                   onClick={() => handleCardClick(topic)}
                   isFavorite={isFavorite(topic.id)}
                   onToggleFavorite={isLoaded ? toggleFavorite : undefined}
