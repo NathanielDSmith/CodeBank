@@ -28,6 +28,8 @@ export interface LanguageTopic {
   topics: string[];
   icon: string;
   color: string;
+  /** Path for navigation (e.g. /javascript-basics). Single source of truth with topic config. */
+  route?: string;
 }
 
 export interface SidePanelProps {
