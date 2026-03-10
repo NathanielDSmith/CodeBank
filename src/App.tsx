@@ -28,7 +28,17 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <Suspense fallback={<div className="loading">Loading...</div>}>
+      <Suspense fallback={
+        <div className="loading-fallback" role="status" aria-label="Loading">
+          <div className="loading-fallback__spinner" aria-hidden="true" />
+          <p className="loading-fallback__brand">
+            <span className="text-green-300">[</span>
+            <span className="text-green-400">CodeBank</span>
+            <span className="text-green-300">]</span>
+          </p>
+          <p className="loading-fallback__text text-green-500 font-mono text-sm">Loading…</p>
+        </div>
+      }>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/javascript-basics/*" element={<JavaScriptBasics />} />
