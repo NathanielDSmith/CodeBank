@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import CodeCard from '../components/CodeCard';
 import { LanguageTopic } from '../types/index';
 import { useFavorites } from '../hooks/useFavorites';
+import { LANGUAGE_TOPICS } from '../data/homeTopics';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -11,323 +12,24 @@ const HomePage: React.FC = () => {
   const [cursorPosition, setCursorPosition] = useState<number>(0);
   const { favorites, toggleFavorite, isFavorite, isLoaded } = useFavorites();
 
-  const languageTopics: LanguageTopic[] = [
-    // Core Programming Languages (Most Important)
-    {
-      id: 1,
-      title: "JavaScript Basics",
-      description: "Complete beginner guide with side navigation and search",
-      category: "Programming Languages",
-      topics: [
-        "Variables & Data Types",
-        "Functions & Scope",
-        "Arrays & Objects",
-        "Strings & Numbers",
-        "Conditionals & Loops",
-        "DOM & Events"
-      ],
-      icon: "⚡",
-      color: "yellow"
-    },
-    {
-      id: 2,
-      title: "Python Basics",
-      description: "Essential Python syntax and patterns for beginners",
-      category: "Programming Languages",
-      topics: [
-        "Variables & Data Types",
-        "Functions & Loops",
-        "Lists & Dictionaries",
-        "String Manipulation",
-        "File I/O",
-        "Error Handling"
-      ],
-      icon: "🐍",
-      color: "green"
-    },
-    {
-      id: 16,
-      title: "Java",
-      description: "Enterprise programming with object-oriented design",
-      category: "Programming Languages",
-      topics: [
-        "Variables & Data Types",
-        "Classes & Objects",
-        "Collections Framework",
-        "Streams & Lambdas",
-        "Spring Boot",
-        "Android Development"
-      ],
-      icon: "☕",
-      color: "orange"
-    },
-    {
-      id: 3,
-      title: "TypeScript Basics",
-      description: "Type-safe JavaScript for scalable apps",
-      category: "Programming Languages",
-      topics: [
-        "Types & Interfaces",
-        "Functions & Generics",
-        "Type Assertions",
-        "Enums & Tuples",
-        "Type Narrowing",
-        "Modules"
-      ],
-      icon: "🔷",
-      color: "blue"
-    },
-    {
-      id: 17,
-      title: "C#",
-      description: "Microsoft's flagship language for enterprise and game development",
-      category: "Programming Languages",
-      topics: [
-        "Variables & Classes",
-        "LINQ & Collections",
-        "Async/Await",
-        "ASP.NET Core",
-        "Unity Development",
-        "Design Patterns"
-      ],
-      icon: "⚡",
-      color: "purple"
-    },
-    {
-      id: 18,
-      title: "Go",
-      description: "Google's language for fast, concurrent programming",
-      category: "Programming Languages",
-      topics: [
-        "Variables & Functions",
-        "Goroutines & Concurrency",
-        "Channels & Communication",
-        "Web Servers",
-        "Structs & Interfaces",
-        "Package Management"
-      ],
-      icon: "🚀",
-      color: "cyan"
-    },
-    // Frontend Frameworks (High Priority)
-    {
-      id: 4,
-      title: "React Common Tasks",
-      description: "Everyday React patterns and solutions",
-      category: "Frontend Frameworks",
-      topics: [
-        "Components & Props",
-        "State Management",
-        "Hooks & Lifecycle",
-        "Event Handling",
-        "Forms & Inputs",
-        "API Integration"
-      ],
-      icon: "⚛️",
-      color: "cyan"
-    },
-    {
-      id: 5,
-      title: "Vue Common Tasks",
-      description: "Everyday Vue.js patterns and solutions",
-      category: "Frontend Frameworks",
-      topics: [
-        "Components & Props",
-        "Reactivity & Data",
-        "Directives",
-        "Event Handling",
-        "Computed & Watchers",
-        "Vue Router"
-      ],
-      icon: "💚",
-      color: "emerald"
-    },
-    // Web Technologies (Essential)
-    {
-      id: 7,
-      title: "HTML Structure",
-      description: "Common HTML patterns and semantic elements",
-      category: "Web Technologies",
-      topics: [
-        "Semantic Elements",
-        "Forms & Inputs",
-        "Images & Media",
-        "Links & Navigation",
-        "Tables & Lists",
-        "Meta Tags"
-      ],
-      icon: "🌐",
-      color: "orange"
-    },
-    {
-      id: 8,
-      title: "CSS Layout Tricks",
-      description: "Quick CSS solutions for common layout problems",
-      category: "Web Technologies",
-      topics: [
-        "Flexbox & Grid",
-        "Centering Elements",
-        "Responsive Design",
-        "Positioning",
-        "Animations",
-        "Media Queries"
-      ],
-      icon: "🎨",
-      color: "purple"
-    },
-    // Programming Concepts (Core Skills)
-    {
-      id: 9,
-      title: "String Manipulation",
-      description: "Common string operations and text processing",
-      category: "Programming Concepts",
-      topics: [
-        "String Methods",
-        "Text Formatting",
-        "Search & Replace",
-        "Splitting & Joining",
-        "Case Conversion",
-        "Validation"
-      ],
-      icon: "📝",
-      color: "blue"
-    },
-    {
-      id: 10,
-      title: "Array Operations",
-      description: "Common array methods and manipulations",
-      category: "Programming Concepts",
-      topics: [
-        "Array Methods",
-        "Filtering & Sorting",
-        "Mapping & Reducing",
-        "Adding & Removing",
-        "Searching",
-        "Transforming"
-      ],
-      icon: "📊",
-      color: "green"
-    },
-    {
-      id: 11,
-      title: "Object Manipulation",
-      description: "Working with objects and data structures",
-      category: "Programming Concepts",
-      topics: [
-        "Object Properties",
-        "Destructuring",
-        "Spread Operator",
-        "Object Methods",
-        "JSON Handling",
-        "Deep Cloning"
-      ],
-      icon: "📦",
-      color: "indigo"
-    },
-    {
-      id: 12,
-      title: "Async Programming",
-      description: "Handling asynchronous operations and promises",
-      category: "Programming Concepts",
-      topics: [
-        "Promises",
-        "Async/Await",
-        "Error Handling",
-        "API Calls",
-        "Event Listeners",
-        "Timers"
-      ],
-      icon: "⏱️",
-      color: "emerald"
-    },
-    // Backend Frameworks
-    {
-      id: 6,
-      title: "Ruby on Rails",
-      description: "Rails basics and common web development tasks",
-      category: "Backend Frameworks",
-      topics: [
-        "MVC Structure",
-        "Routing",
-        "ActiveRecord",
-        "Migrations",
-        "Controllers & Views",
-        "RESTful APIs"
-      ],
-      icon: "💎",
-      color: "red"
-    },
-    // Database & Data
-    {
-      id: 14,
-      title: "SQL Basics",
-      description: "Essential SQL queries and database operations",
-      category: "Database & Data",
-      topics: [
-        "SELECT Statements",
-        "WHERE Clauses",
-        "JOIN Operations",
-        "Aggregate Functions",
-        "INSERT/UPDATE/DELETE",
-        "Indexing & Performance"
-      ],
-      icon: "🗄️",
-      color: "blue"
-    },
-    // Tools & Platforms (Important but not first)
-    {
-      id: 13,
-      title: "Git Daily Commands",
-      description: "Essential Git commands for daily development",
-      category: "Tools & Platforms",
-      topics: [
-        "Basic Commands",
-        "Branching & Merging",
-        "Remote Repositories",
-        "Stashing & Resetting",
-        "Conflict Resolution",
-        "Best Practices"
-      ],
-      icon: "📚",
-      color: "orange"
-    },
-    // DevOps & Deployment (Advanced)
-    {
-      id: 15,
-      title: "Docker Basics",
-      description: "Containerization and deployment fundamentals",
-      category: "DevOps & Deployment",
-      topics: [
-        "Docker Images",
-        "Containers & Volumes",
-        "Docker Compose",
-        "Networking",
-        "Best Practices",
-        "Deployment"
-      ],
-      icon: "🐳",
-      color: "cyan"
-    }
-  ];
-
   // Get unique categories
   const categories = useMemo(() => {
-    const cats = ['all', ...Array.from(new Set(languageTopics.map(topic => topic.category)))];
+    const cats = ['all', ...Array.from(new Set(LANGUAGE_TOPICS.map(topic => topic.category)))];
     return cats;
-  }, [languageTopics]);
+  }, []);
 
   // Get category stats
   const categoryStats = useMemo(() => {
-    const stats = languageTopics.reduce((acc, topic) => {
+    const stats = LANGUAGE_TOPICS.reduce((acc, topic) => {
       acc[topic.category] = (acc[topic.category] || 0) + 1;
       return acc;
     }, {} as { [key: string]: number });
     return stats;
-  }, [languageTopics]);
+  }, []);
 
   // Filter topics based on category and search term
   const filteredTopics = useMemo(() => {
-    return languageTopics.filter(topic => {
+    return LANGUAGE_TOPICS.filter(topic => {
       const matchesCategory = selectedCategory === 'all' || topic.category === selectedCategory;
       const matchesSearch = searchTerm === '' || 
         topic.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -336,7 +38,7 @@ const HomePage: React.FC = () => {
       
       return matchesCategory && matchesSearch;
     });
-  }, [selectedCategory, searchTerm, languageTopics]);
+  }, [selectedCategory, searchTerm]);
 
   const handleCardClick = (topic: LanguageTopic) => {
     // Map topic titles to routes
@@ -558,7 +260,7 @@ const HomePage: React.FC = () => {
                 <div className="inline-flex items-center gap-3 px-6 py-3 bg-black/70 border border-green-500/50 rounded font-mono">
                   <span className="text-sm text-green-300">Total Entries:</span>
                   <span className="text-lg font-bold text-green-400">
-                    {languageTopics.length}
+                    {LANGUAGE_TOPICS.length}
                   </span>
                 </div>
               </div>
@@ -679,7 +381,7 @@ const HomePage: React.FC = () => {
               <span className="text-sm text-green-300">SHOWING</span>
               <span className="text-xl font-bold text-green-400">{filteredTopics.length}</span>
               <span className="text-sm text-green-300">OF</span>
-              <span className="text-xl font-bold text-green-400">{languageTopics.length}</span>
+              <span className="text-xl font-bold text-green-400">{LANGUAGE_TOPICS.length}</span>
               <span className="text-sm text-green-300">ENTRIES</span>
             </div>
           </div>
