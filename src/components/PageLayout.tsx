@@ -7,6 +7,13 @@ import CodeBlock from './CodeBlock';
 interface Example {
   title: string;
   code: string;
+  /**
+   * Optional knowledge-base fields.
+   * Existing content modules only provide { title, code }, so these stay optional.
+   */
+  explanation?: string;
+  keyIdeas?: string[];
+  pitfalls?: string[];
 }
 
 interface Section {
@@ -240,6 +247,42 @@ const PageLayout: React.FC<PageLayoutProps> = ({
               {section.examples.map((example: Example, exampleIndex: number) => (
                 <div key={exampleIndex} className="bg-black/50 border border-green-500/30 rounded-lg p-4">
                   <h4 className="font-medium text-green-300 mb-2 font-mono">{example.title}</h4>
+                  {example.explanation && (
+                    <div className="bg-black/40 border border-green-500/20 rounded-lg p-3 mb-3">
+                      <h5 className="text-xs font-bold text-green-400 mb-2 font-mono uppercase tracking-wider">
+                        Concept
+                      </h5>
+                      <p className="text-green-200 text-sm font-mono leading-relaxed whitespace-pre-wrap">
+                        {example.explanation}
+                      </p>
+                    </div>
+                  )}
+
+                  {example.keyIdeas && example.keyIdeas.length > 0 && (
+                    <div className="bg-black/40 border border-green-500/20 rounded-lg p-3 mb-3">
+                      <h5 className="text-xs font-bold text-green-400 mb-2 font-mono uppercase tracking-wider">
+                        Key ideas
+                      </h5>
+                      <ul className="space-y-1 text-green-200 text-sm font-mono list-disc pl-5">
+                        {example.keyIdeas.map((idea, idx) => (
+                          <li key={idx}>{idea}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {example.pitfalls && example.pitfalls.length > 0 && (
+                    <div className="bg-black/40 border border-green-500/20 rounded-lg p-3 mb-3">
+                      <h5 className="text-xs font-bold text-green-400 mb-2 font-mono uppercase tracking-wider">
+                        Pitfalls
+                      </h5>
+                      <ul className="space-y-1 text-green-200 text-sm font-mono list-disc pl-5">
+                        {example.pitfalls.map((pitfall, idx) => (
+                          <li key={idx}>{pitfall}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   <CodeBlock code={example.code} />
                 </div>
               ))}
