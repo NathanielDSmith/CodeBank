@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import ScrollToTop from './components/ScrollToTop';
+import NotFoundPage from './pages/NotFoundPage';
 
 // Lazy load components
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -59,6 +60,7 @@ function App() {
           <Route path="/java/*" element={<JavaPage />} />
           <Route path="/csharp/*" element={<CSharpPage />} />
           <Route path="/go/*" element={<GoPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </Router>
