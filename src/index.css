@@ -181,7 +181,8 @@ code {
     transparent 0%, 
     rgba(0, 255, 0, 0.1) 50%, 
     transparent 100%);
-  animation: matrixRain 8s linear infinite;
+  /* Slower = less harsh + more modern */
+  animation: matrixRain 12s linear infinite;
 }
 
 .glitch-overlay {
@@ -197,7 +198,8 @@ code {
     rgba(0, 255, 0, 0.03) 2px,
     rgba(0, 255, 0, 0.03) 4px
   );
-  animation: glitch 0.3s ease-in-out infinite;
+  /* Slower glitch makes the UI feel more product-like */
+  animation: glitch 0.8s ease-in-out infinite;
 }
 
 /* Custom scrollbar for Matrix theme */
@@ -275,7 +277,7 @@ code {
     rgba(0, 255, 0, 0.03) 50%,
     transparent 100%
   );
-  animation: scanlines 12s linear infinite;
+  animation: scanlines 18s linear infinite;
   pointer-events: none;
 }
 
@@ -296,7 +298,7 @@ code {
 }
 
 .glitch-text {
-  animation: elegantGlow 3s ease-in-out infinite;
+  animation: elegantGlow 4s ease-in-out infinite;
   position: relative;
 }
 
@@ -309,7 +311,7 @@ code {
   height: 100%;
   background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 0, 0.1) 50%, transparent 70%);
   background-size: 200% 200%;
-  animation: shimmer 4s ease-in-out infinite;
+  animation: shimmer 6s ease-in-out infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -363,7 +365,7 @@ code {
 }
 
 .cursor-blink {
-  animation: cursorBlink 1s infinite;
+  animation: cursorBlink 1.5s infinite;
 }
 
 /* Matrix data stream effect - enhanced vertical character columns */
@@ -399,7 +401,7 @@ code {
   color: #00ff00;
   font-family: monospace;
   font-size: 16px;
-  animation: dataStream 8s linear infinite;
+  animation: dataStream 14s linear infinite;
   pointer-events: none;
   writing-mode: vertical-rl;
   text-orientation: mixed;
@@ -416,7 +418,7 @@ code {
   color: #00ff00;
   font-family: monospace;
   font-size: 14px;
-  animation: dataStream2 10s linear infinite;
+  animation: dataStream2 16s linear infinite;
   pointer-events: none;
   writing-mode: vertical-rl;
   text-orientation: mixed;
@@ -433,7 +435,7 @@ code {
   color: #00ff00;
   font-family: monospace;
   font-size: 12px;
-  animation: dataStream3 12s linear infinite;
+  animation: dataStream3 20s linear infinite;
   pointer-events: none;
   writing-mode: vertical-rl;
   text-orientation: mixed;
@@ -443,6 +445,31 @@ code {
   justify-content: center;
   text-shadow: 0 0 2px rgba(0, 255, 0, 0.2);
   opacity: 0;
+}
+
+/* Accessibility: honor reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+
+  .matrix-rain::before,
+  .glitch-overlay,
+  .scanlines,
+  .data-stream,
+  .data-stream-alt,
+  .data-stream-slow,
+  .glitch-text,
+  .glitch-text::before,
+  .glitch-text-subtle,
+  .typing-effect,
+  .cursor-blink,
+  .animate-fade-in,
+  .animate-pulse-slow,
+  .animate-float,
+  .loading-fallback__spinner {
+    animation: none !important;
+  }
 }
 
 /* Disable heavy effects on mobile/tablet */
