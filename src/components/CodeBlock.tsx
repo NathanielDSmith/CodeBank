@@ -3,9 +3,8 @@ import { CodeBlockProps } from '../types/index';
 
 const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'javascript' }) => {
   return (
-    <div 
+    <div
       className="bg-gray-900 text-green-400 p-3 sm:p-4 rounded-lg overflow-x-auto"
-      role="code"
       aria-label={`${language} code example`}
     >
       <pre className="text-xs sm:text-sm font-mono whitespace-pre-wrap break-words m-0">
