@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import ScrollToTop from './components/ScrollToTop';
 import NotFoundPage from './pages/NotFoundPage';
@@ -60,7 +60,15 @@ function App() {
           <Route path="/java/*" element={<JavaPage />} />
           <Route path="/csharp/*" element={<CSharpPage />} />
           <Route path="/go/*" element={<GoPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="*" element={
+            <div className="min-h-screen bg-black flex flex-col items-center justify-center font-mono text-green-400">
+              <p className="text-6xl mb-4">404</p>
+              <p className="text-xl mb-8 text-green-300">PAGE NOT FOUND</p>
+              <Link to="/" className="px-6 py-3 border border-green-500/50 rounded hover:border-green-400 transition-colors">
+                ← RETURN HOME
+              </Link>
+            </div>
+          } />
         </Routes>
       </Suspense>
     </Router>
