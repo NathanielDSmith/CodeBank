@@ -3,6 +3,7 @@ import PageHeader from './PageHeader';
 import SidePanel from './SidePanel';
 import ContentSection from './ContentSection';
 import CodeBlock from './CodeBlock';
+import { Section } from '../types/index';
 
 interface Example {
   title: string;
@@ -24,7 +25,7 @@ interface Section {
 interface PageLayoutProps {
   title: string;
   icon: string;
-  sections: any[];
+  sections: Section[];
   activeSection: string;
   searchTerm: string;
   content: Section[] | null;

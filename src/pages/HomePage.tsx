@@ -9,7 +9,6 @@ const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [cursorPosition, setCursorPosition] = useState<number>(0);
   const { favorites, toggleFavorite, isFavorite, isLoaded } = useFavorites();
 
   // Get unique categories
@@ -302,23 +301,8 @@ const HomePage: React.FC = () => {
                       placeholder="grep -r 'pattern' /database/*"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      onKeyUp={(e) => setCursorPosition((e.target as HTMLInputElement).selectionStart || 0)}
-                      onClick={(e) => setCursorPosition((e.target as HTMLInputElement).selectionStart || 0)}
                       className="w-full bg-transparent border-none outline-none text-lg text-green-300 font-mono placeholder-green-500/50 focus:placeholder-green-400/70 transition-colors duration-300"
                     />
-                    
-                    {/* Dynamic cursor positioned based on text */}
-                    {searchTerm && (
-                      <div 
-                        className="absolute top-6 bottom-6 text-green-400 font-mono pointer-events-none"
-                        style={{ 
-                          left: `${6 + (cursorPosition * 0.6)}rem`,
-                          transform: 'translateX(0)'
-                        }}
-                      >
-                        <span className="cursor-blink text-2xl">|</span>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>
