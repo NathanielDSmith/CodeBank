@@ -41,9 +41,8 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'javascript' }) 
   };
 
   return (
-    <div 
-      className="bg-gray-900 text-green-400 p-3 sm:p-4 rounded-lg overflow-x-auto relative"
-      role="code"
+    <div
+      className="bg-gray-900 text-green-400 p-3 sm:p-4 rounded-lg overflow-x-auto"
       aria-label={`${language} code example`}
     >
       <button
@@ -55,7 +54,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'javascript' }) 
         {isCopied ? 'Copied!' : 'Copy'}
       </button>
       <pre className="text-xs sm:text-sm font-mono whitespace-pre-wrap break-words m-0">
-        <code className="break-all">{code}</code>
+        <code>{code}</code>
       </pre>
     </div>
   );
