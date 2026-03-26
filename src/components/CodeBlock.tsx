@@ -8,7 +8,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'javascript' }) 
       aria-label={`${language} code example`}
     >
       <pre className="text-xs sm:text-sm font-mono whitespace-pre-wrap break-words m-0">
-        <code className="break-all">{code}</code>
+        <code>{code}</code>
       </pre>
     </div>
   );
