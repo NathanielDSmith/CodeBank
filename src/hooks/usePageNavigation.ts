@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Section } from '../types/index';
 
-export const usePageNavigation = (defaultSection: string, sections: any[] = []) => {
+export const usePageNavigation = (defaultSection: string, sections: Section[] = []) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
