@@ -51,9 +51,9 @@ export const usePageNavigation = (defaultSection: string, sections: any[] = []) 
 
   const handleSectionChange = (sectionId: string) => {
     setActiveSection(sectionId);
-    // Update URL to reflect the current section
-    const currentPath = location.pathname;
-    const basePath = currentPath.split('/').slice(0, -1).join('/') || currentPath;
+    // Always derive basePath from the first path segment so it stays stable
+    // regardless of how many sub-segments the current URL has.
+    const basePath = '/' + location.pathname.split('/').filter(Boolean)[0];
     navigate(`${basePath}/${sectionId}`, { replace: true });
   };
 
