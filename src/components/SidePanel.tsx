@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SidePanelProps } from '../types/index';
 
 const SidePanel: React.FC<SidePanelProps> = ({
@@ -14,6 +14,16 @@ const SidePanel: React.FC<SidePanelProps> = ({
     section.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Close the mobile drawer when Escape is pressed
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onToggle?.();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onToggle]);
+
   return (
     <>
       {/* Mobile Toggle Button */}
@@ -22,6 +32,7 @@ const SidePanel: React.FC<SidePanelProps> = ({
           onClick={onToggle}
           className="bg-black/80 backdrop-blur-sm border border-green-500/50 rounded-lg p-3 text-green-400 hover:text-green-300 transition-colors duration-300"
           aria-label="Toggle navigation menu"
+          aria-expanded={isOpen}
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {isOpen ? (

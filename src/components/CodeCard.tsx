@@ -29,8 +29,7 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, to, onClick, isFavorite = fa
     return colors[color] || 'bg-green-600 text-black font-bold';
   };
 
-  const getIconStyle = (icon: string) => {
-    // All icons are now emoji-based, so use consistent styling with better visibility
+  const getIconStyle = () => {
     return 'text-3xl min-w-[3rem] min-h-[3rem] flex items-center justify-center bg-black/30 rounded-lg p-2 border border-green-500/30 group-hover:border-green-400/50 transition-all duration-300';
   };
 
@@ -53,7 +52,7 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, to, onClick, isFavorite = fa
     <div className="p-6">
       <div className="mb-6">
         <div className="flex items-start justify-between mb-4">
-          <div className={`mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300 ${getIconStyle(topic.icon)}`}>
+          <div className={`mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300 ${getIconStyle()}`}>
             {topic.icon}
           </div>
           <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-bold flex-shrink-0 ${getColorClasses(topic.color)}`}>
