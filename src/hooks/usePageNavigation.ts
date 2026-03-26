@@ -38,11 +38,16 @@ export const usePageNavigation = (defaultSection: string, sections: any[] = []) 
 
   // Update active section when URL changes
   useEffect(() => {
-    const sectionFromUrl = getSectionFromUrl();
+    const pathParts = location.pathname.split('/');
+    const lastPart = pathParts[pathParts.length - 1];
+    const sectionFromUrl =
+      lastPart && pathParts.length > 2 && sections.some(s => s.id === lastPart)
+        ? lastPart
+        : defaultSection;
     if (sectionFromUrl !== activeSection) {
       setActiveSection(sectionFromUrl);
     }
-  }, [location.pathname]);
+  }, [location.pathname, sections, defaultSection, activeSection]);
 
   const handleSectionChange = (sectionId: string) => {
     setActiveSection(sectionId);
