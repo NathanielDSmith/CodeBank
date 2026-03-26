@@ -41,10 +41,8 @@ const HomePage: React.FC = () => {
   }, [selectedCategory, searchTerm]);
 
   const handleCardClick = (topic: LanguageTopic) => {
-    const route =
-      topic.route ?? LANGUAGE_TOPICS.find((t) => t.id === topic.id)?.route;
-    if (route) {
-      navigate(route);
+    if (topic.route) {
+      navigate(topic.route);
     }
   };
 
@@ -262,7 +260,7 @@ const HomePage: React.FC = () => {
                 >
                                   <CodeCard
                     topic={topic}
-                    to={topic.route ?? LANGUAGE_TOPICS.find((t) => t.id === topic.id)?.route}
+                    to={topic.route}
                     onClick={() => handleCardClick(topic)}
                     isFavorite={isFavorite(topic.id)}
                     onToggleFavorite={isLoaded ? toggleFavorite : undefined}
@@ -379,7 +377,7 @@ const HomePage: React.FC = () => {
               >
                 <CodeCard
                   topic={topic}
-                  to={topic.route ?? LANGUAGE_TOPICS.find((t) => t.id === topic.id)?.route}
+                  to={topic.route}
                   onClick={() => handleCardClick(topic)}
                   isFavorite={isFavorite(topic.id)}
                   onToggleFavorite={isLoaded ? toggleFavorite : undefined}
