@@ -50,7 +50,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Android Development"
     ],
     icon: "☕",
-    color: "orange"
+    color: "orange",
+    route: "/java"
   },
   {
     id: 3,
@@ -134,7 +135,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Vue Router"
     ],
     icon: "💚",
-    color: "emerald"
+    color: "emerald",
+    route: "/vue"
   },
   {
     id: 7,
@@ -235,7 +237,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
       "Timers"
     ],
     icon: "⏱️",
-    color: "emerald"
+    color: "emerald",
+    route: "/async-programming"
   },
   {
     id: 6,
