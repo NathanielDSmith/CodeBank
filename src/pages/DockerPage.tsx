@@ -64,6 +64,7 @@ const DockerPage: React.FC = () => {
 
   return (
     <PageLayout
+      language="docker"
       title="Docker Basics"
       icon="🐳"
       sections={dockerSections}

@@ -64,6 +64,7 @@ const CSharpPage: React.FC = () => {
 
   return (
     <PageLayout
+      language="csharp"
       title="C#"
       icon="⚡"
       sections={csharpSections}

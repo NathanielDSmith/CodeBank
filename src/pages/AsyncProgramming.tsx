@@ -47,6 +47,7 @@ const AsyncProgramming: React.FC = () => {
 
   return (
     <PageLayout
+      language="javascript"
       title="Async Programming"
       icon="⏱️"
       sections={asyncSections}

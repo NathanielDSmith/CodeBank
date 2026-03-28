@@ -37,6 +37,7 @@ const GitDailyCommands: React.FC = () => {
 
   return (
     <PageLayout
+      language="bash"
       title="Git Daily Commands"
       icon="📚"
       sections={gitSections}

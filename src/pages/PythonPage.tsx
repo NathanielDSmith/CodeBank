@@ -51,6 +51,7 @@ const PythonPage: React.FC = () => {
 
   return (
     <PageLayout
+      language="python"
       title="Python"
       icon="🐍"
       sections={pythonSections}

@@ -69,6 +69,7 @@ const JavaScriptBasics: React.FC = () => {
 
   return (
     <PageLayout
+      language="javascript"
       title="JavaScript Basics"
       icon="⚡"
       sections={javascriptSections}

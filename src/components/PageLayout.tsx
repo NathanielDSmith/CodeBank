@@ -25,6 +25,7 @@ interface Section {
 interface PageLayoutProps {
   title: string;
   icon: string;
+  language?: string;
   sections: Section[];
   activeSection: string;
   searchTerm: string;
@@ -47,6 +48,7 @@ interface PageLayoutProps {
 const PageLayout: React.FC<PageLayoutProps> = ({
   title,
   icon,
+  language = 'javascript',
   sections,
   activeSection,
   searchTerm,
@@ -284,7 +286,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                       </ul>
                     </div>
                   )}
-                  <CodeBlock code={example.code} />
+                  <CodeBlock code={example.code} language={language} />
                 </div>
               ))}
             </div>

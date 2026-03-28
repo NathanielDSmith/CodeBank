@@ -37,6 +37,7 @@ const VuePage: React.FC = () => {
 
   return (
     <PageLayout
+      language="html"
       title="Vue.js"
       icon="💚"
       sections={vueSections}

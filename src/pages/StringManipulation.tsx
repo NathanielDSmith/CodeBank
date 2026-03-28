@@ -71,6 +71,7 @@ const StringManipulation: React.FC = () => {
 
   return (
     <PageLayout
+      language="javascript"
       title="String Manipulation"
       icon="📝"
       sections={stringSections}

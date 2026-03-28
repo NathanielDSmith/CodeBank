@@ -75,6 +75,7 @@ const ReactCommonTasks: React.FC = () => {
 
   return (
     <PageLayout
+      language="jsx"
       title="React Common Tasks"
       icon="⚛️"
       sections={reactSections}
