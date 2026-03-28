@@ -22,8 +22,8 @@ export const useFavorites = () => {
           // Handle legacy format: array of full LanguageTopic objects
           if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === 'object') {
             const ids = parsed
-              .map((item: any) => item?.id)
-              .filter((id: any): id is number => typeof id === 'number');
+              .map((item: unknown) => (item as Record<string, unknown>)?.id)
+              .filter((id: unknown): id is number => typeof id === 'number');
             setFavoriteIds(ids);
           } else {
             localStorage.removeItem(STORAGE_KEY);
