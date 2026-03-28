@@ -59,12 +59,12 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   onToggleSidePanel,
   fallbackContent
 }) => {
-  const [activeTab, setActiveTab] = React.useState<'notes' | 'quiz'>('notes');
+  // const [activeTab, setActiveTab] = React.useState<'notes' | 'quiz'>('notes');
 
-  React.useEffect(() => {
-    // When you switch sections, default back to Notes.
-    setActiveTab('notes');
-  }, [activeSection]);
+  // React.useEffect(() => {
+  //   // When you switch sections, default back to Notes.
+  //   setActiveTab('notes');
+  // }, [activeSection]);
 
   const renderContent = () => {
     if (loading) {
@@ -93,59 +93,59 @@ const PageLayout: React.FC<PageLayoutProps> = ({
       );
     }
 
-    if (activeTab === 'quiz') {
-      const sectionTitle =
-        sections.find((s) => s.id === activeSection)?.title ?? title;
-
-      return (
-        <div className="space-y-4">
-          <div className="bg-black/50 border border-green-500/30 rounded-lg p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-green-400 mb-2 font-mono matrix-glow">
-              Quiz: {sectionTitle}
-            </h2>
-            <p className="text-green-300 font-mono leading-relaxed">
-              Quiz mode is scaffolding only for now. When you add quiz data, this panel will render questions and collect answers.
-            </p>
-          </div>
-
-          <div className="bg-black/50 border border-green-500/30 rounded-lg p-4 sm:p-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div className="text-green-400 font-mono">
-                <span className="text-xs uppercase tracking-wider text-green-500/80 block mb-1">
-                  Status
-                </span>
-                <span className="text-sm">Coming soon</span>
-              </div>
-
-              <button
-                disabled
-                className="px-4 py-2 bg-green-500/20 text-green-300 border border-green-500/30 rounded-lg font-mono opacity-80 cursor-not-allowed"
-              >
-                Start Quiz
-              </button>
-            </div>
-
-            <div className="mt-4 space-y-3">
-              {[1, 2, 3].map((n) => (
-                <div key={n} className="border border-green-500/20 rounded-lg p-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="text-green-400 font-mono text-sm">
-                      Q{n}
-                    </div>
-                    <div className="text-green-500/70 font-mono text-xs">
-                      Placeholder
-                    </div>
-                  </div>
-                  <div className="mt-2 h-3 bg-green-500/10 rounded w-full" />
-                  <div className="mt-2 h-3 bg-green-500/10 rounded w-11/12" />
-                  <div className="mt-2 h-3 bg-green-500/10 rounded w-10/12" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      );
-    }
+    // if (activeTab === 'quiz') {
+    //   const sectionTitle =
+    //     sections.find((s) => s.id === activeSection)?.title ?? title;
+    //
+    //   return (
+    //     <div className="space-y-4">
+    //       <div className="bg-black/50 border border-green-500/30 rounded-lg p-4 sm:p-6">
+    //         <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-green-400 mb-2 font-mono matrix-glow">
+    //           Quiz: {sectionTitle}
+    //         </h2>
+    //         <p className="text-green-300 font-mono leading-relaxed">
+    //           Quiz mode is scaffolding only for now. When you add quiz data, this panel will render questions and collect answers.
+    //         </p>
+    //       </div>
+    //
+    //       <div className="bg-black/50 border border-green-500/30 rounded-lg p-4 sm:p-6">
+    //         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+    //           <div className="text-green-400 font-mono">
+    //             <span className="text-xs uppercase tracking-wider text-green-500/80 block mb-1">
+    //               Status
+    //             </span>
+    //             <span className="text-sm">Coming soon</span>
+    //           </div>
+    //
+    //           <button
+    //             disabled
+    //             className="px-4 py-2 bg-green-500/20 text-green-300 border border-green-500/30 rounded-lg font-mono opacity-80 cursor-not-allowed"
+    //           >
+    //             Start Quiz
+    //           </button>
+    //         </div>
+    //
+    //         <div className="mt-4 space-y-3">
+    //           {[1, 2, 3].map((n) => (
+    //             <div key={n} className="border border-green-500/20 rounded-lg p-3">
+    //               <div className="flex items-start justify-between gap-3">
+    //                 <div className="text-green-400 font-mono text-sm">
+    //                   Q{n}
+    //                 </div>
+    //                 <div className="text-green-500/70 font-mono text-xs">
+    //                   Placeholder
+    //                 </div>
+    //               </div>
+    //               <div className="mt-2 h-3 bg-green-500/10 rounded w-full" />
+    //               <div className="mt-2 h-3 bg-green-500/10 rounded w-11/12" />
+    //               <div className="mt-2 h-3 bg-green-500/10 rounded w-10/12" />
+    //             </div>
+    //           ))}
+    //         </div>
+    //       </div>
+    //     </div>
+    //   );
+    // }
 
     if (!content) {
       // If overview section is selected or no active section, show the enhanced landing content
@@ -324,8 +324,8 @@ const PageLayout: React.FC<PageLayoutProps> = ({
           />
           
           <div className="flex-1 min-w-0">
-            {/* Notes | Quiz scaffold */}
-            <div className="mb-4">
+            {/* Notes | Quiz scaffold — quiz hidden until feature is built */}
+            {/* <div className="mb-4">
               <div
                 role="tablist"
                 aria-label="Quiz and notes tabs"
@@ -356,7 +356,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                   Quiz
                 </button>
               </div>
-            </div>
+            </div> */}
 
             {renderContent()}
           </div>
