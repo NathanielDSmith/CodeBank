@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { PageHeaderProps } from '../types/index';
 
 const PageHeader: React.FC<PageHeaderProps> = ({ title, icon }) => {
-  const getIconStyle = (icon: string) => {
+  const getIconStyle = () => {
     // All icons are now emoji-based, so use consistent styling with better visibility
     return 'text-lg sm:text-2xl lg:text-3xl min-w-[2.5rem] min-h-[2.5rem] flex items-center justify-center bg-black/30 rounded-lg p-1 border border-green-500/30';
   };
@@ -17,7 +17,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, icon }) => {
               <span className="text-green-300">$</span> cd /home
             </Link>
             <div className="flex items-center">
-              <span className={`text-lg sm:text-2xl lg:text-3xl mr-1 sm:mr-2 lg:mr-3 text-green-400 ${getIconStyle(icon)}`}>{icon}</span>
+              <span className={`text-lg sm:text-2xl lg:text-3xl mr-1 sm:mr-2 lg:mr-3 text-green-400 ${getIconStyle()}`}>{icon}</span>
               <h1 className="text-xs sm:text-lg lg:text-3xl font-bold text-green-400 font-mono matrix-glow break-words">{title}</h1>
             </div>
           </div>
