@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const NotFoundPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center px-4">
       <div className="w-full max-w-2xl bg-black/50 backdrop-blur-sm border border-green-500/30 rounded-lg p-6 sm:p-8">
@@ -19,14 +21,12 @@ const NotFoundPage: React.FC = () => {
           >
             Go Home
           </Link>
-          <a
-            href="https://codebank.live"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => navigate(-1)}
             className="px-4 py-2 rounded-lg bg-black/40 text-green-300 border border-green-500/30 hover:border-green-400 hover:text-green-100 transition-colors font-mono"
           >
-            Visit codebank.live
-          </a>
+            Go Back
+          </button>
         </div>
       </div>
     </div>
