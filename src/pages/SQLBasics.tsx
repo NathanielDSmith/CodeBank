@@ -48,6 +48,7 @@ const SQLBasics: React.FC = () => {
 
   return (
     <PageLayout
+      language="sql"
       title="SQL Basics"
       icon="🗄️"
       sections={sqlSections}

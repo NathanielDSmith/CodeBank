@@ -64,6 +64,7 @@ const GoPage: React.FC = () => {
 
   return (
     <PageLayout
+      language="go"
       title="Go"
       icon="🚀"
       sections={goSections}

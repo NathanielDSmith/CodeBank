@@ -69,6 +69,7 @@ const HTMLStructure: React.FC = () => {
 
   return (
     <PageLayout
+      language="markup"
       title="HTML Structure"
       icon="🌐"
       sections={htmlSections}

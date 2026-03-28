@@ -75,6 +75,7 @@ const TypeScriptPage: React.FC = () => {
 
   return (
     <PageLayout
+      language="typescript"
       title="TypeScript"
       icon="🔷"
       sections={typescriptSections}

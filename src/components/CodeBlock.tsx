@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { CodeBlockProps } from '../types/index';
 
 const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'javascript' }) => {
@@ -41,23 +43,31 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'javascript' }) 
   };
 
   return (
-    <div
-      className="bg-gray-900 text-green-400 p-3 sm:p-4 rounded-lg overflow-x-auto"
-      aria-label={`${language} code example`}
-    >
+    <div className="relative rounded-lg overflow-hidden" aria-label={`${language} code example`}>
       <button
         type="button"
         onClick={copyToClipboard}
-        className="absolute top-2 right-2 px-2 py-1 text-xs font-mono rounded bg-black/40 border border-green-500/20 text-green-300 hover:text-green-200 hover:border-green-500/40 transition-colors"
+        className="absolute top-2 right-2 z-10 px-2 py-1 text-xs font-mono rounded bg-black/60 border border-green-500/20 text-green-300 hover:text-green-200 hover:border-green-500/40 transition-colors"
         aria-label="Copy code to clipboard"
       >
         {isCopied ? 'Copied!' : 'Copy'}
       </button>
-      <pre className="text-xs sm:text-sm font-mono whitespace-pre-wrap break-words m-0">
-        <code>{code}</code>
-      </pre>
+      <SyntaxHighlighter
+        language={language}
+        style={vscDarkPlus}
+        customStyle={{
+          margin: 0,
+          borderRadius: '0.5rem',
+          fontSize: '0.8rem',
+          paddingTop: '2.5rem',
+        }}
+        codeTagProps={{ style: { fontFamily: 'ui-monospace, monospace' } }}
+        wrapLongLines
+      >
+        {codeToCopy}
+      </SyntaxHighlighter>
     </div>
   );
 };
 
-export default CodeBlock; 
+export default CodeBlock;

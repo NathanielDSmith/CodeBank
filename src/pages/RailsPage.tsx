@@ -37,6 +37,7 @@ const RailsPage: React.FC = () => {
 
   return (
     <PageLayout
+      language="ruby"
       title="Ruby on Rails"
       icon="💎"
       sections={railsSections}

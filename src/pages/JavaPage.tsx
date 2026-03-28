@@ -47,6 +47,7 @@ const JavaPage: React.FC = () => {
 
   return (
     <PageLayout
+      language="java"
       title="Java"
       icon="☕"
       sections={javaSections}

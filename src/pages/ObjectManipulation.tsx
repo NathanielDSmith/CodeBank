@@ -69,6 +69,7 @@ const ObjectManipulation: React.FC = () => {
 
   return (
     <PageLayout
+      language="javascript"
       title="Object Manipulation"
       icon="📦"
       sections={objectSections}
