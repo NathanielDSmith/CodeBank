@@ -86,11 +86,23 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, to, onClick, isFavorite = fa
           )}
         </div>
       </div>
-      <div className="flex items-center justify-center text-green-400 group-hover:text-green-300 transition-colors font-semibold">
-        <span className="text-sm font-mono">ACCESS GUIDE</span>
-        <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center text-green-400 group-hover:text-green-300 transition-colors font-semibold">
+          <span className="text-sm font-mono">ACCESS GUIDE</span>
+          <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+        {topic.status === 'deep' && (
+          <span className="text-xs font-mono font-bold px-2 py-0.5 rounded border border-green-400/60 text-green-300 bg-green-500/10">
+            ◆ IN DEPTH
+          </span>
+        )}
+        {topic.status === 'stub' && (
+          <span className="text-xs font-mono px-2 py-0.5 rounded border border-green-500/20 text-green-600 bg-black/20">
+            // in progress
+          </span>
+        )}
       </div>
     </div>
   );

@@ -17,24 +17,26 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "⚡",
     color: "yellow",
-    route: "/javascript-basics"
+    route: "/javascript-basics",
+    status: "stub"
   },
   {
     id: 2,
-    title: "Python Basics",
-    description: "Essential Python syntax and patterns for beginners",
+    title: "Python",
+    description: "In-depth Python — from core syntax to real-world patterns",
     category: "Programming Languages",
     topics: [
       "Variables & Data Types",
-      "Functions & Loops",
-      "Lists & Dictionaries",
-      "String Manipulation",
-      "File I/O",
-      "Error Handling"
+      "Functions & Scope",
+      "Lists, Dicts & Sets",
+      "OOP & Classes",
+      "Error Handling",
+      "Modules & Packages"
     ],
     icon: "🐍",
     color: "green",
-    route: "/python"
+    route: "/python",
+    status: "deep"
   },
   {
     id: 16,
@@ -51,24 +53,26 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "☕",
     color: "orange",
-    route: "/java"
+    route: "/java",
+    status: "stub"
   },
   {
     id: 3,
-    title: "TypeScript Basics",
-    description: "Type-safe JavaScript for scalable apps",
+    title: "TypeScript",
+    description: "In-depth TypeScript — types, generics, and real-world patterns",
     category: "Programming Languages",
     topics: [
       "Types & Interfaces",
-      "Functions & Generics",
-      "Type Assertions",
-      "Enums & Tuples",
+      "Generics",
       "Type Narrowing",
-      "Modules"
+      "Utility Types",
+      "Advanced Patterns",
+      "Modules & Config"
     ],
     icon: "🔷",
     color: "blue",
-    route: "/typescript"
+    route: "/typescript",
+    status: "deep"
   },
   {
     id: 17,
@@ -85,7 +89,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "⚡",
     color: "purple",
-    route: "/csharp"
+    route: "/csharp",
+    status: "stub"
   },
   {
     id: 18,
@@ -102,24 +107,26 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "🚀",
     color: "cyan",
-    route: "/go"
+    route: "/go",
+    status: "stub"
   },
   {
     id: 4,
-    title: "React Common Tasks",
-    description: "Everyday React patterns and solutions",
+    title: "React",
+    description: "In-depth React — hooks, patterns, and production thinking",
     category: "Frontend Frameworks",
     topics: [
       "Components & Props",
-      "State Management",
-      "Hooks & Lifecycle",
-      "Event Handling",
-      "Forms & Inputs",
-      "API Integration"
+      "useState & useEffect",
+      "Custom Hooks",
+      "Context & State",
+      "Performance",
+      "Patterns & Pitfalls"
     ],
     icon: "⚛️",
     color: "cyan",
-    route: "/react-common-tasks"
+    route: "/react-common-tasks",
+    status: "deep"
   },
   {
     id: 5,
@@ -136,7 +143,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "💚",
     color: "emerald",
-    route: "/vue"
+    route: "/vue",
+    status: "stub"
   },
   {
     id: 7,
@@ -153,7 +161,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "🌐",
     color: "orange",
-    route: "/html-structure"
+    route: "/html-structure",
+    status: "stub"
   },
   {
     id: 8,
@@ -170,7 +179,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "🎨",
     color: "purple",
-    route: "/css-layout-tricks"
+    route: "/css-layout-tricks",
+    status: "stub"
   },
   {
     id: 9,
@@ -187,7 +197,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "📝",
     color: "blue",
-    route: "/string-manipulation"
+    route: "/string-manipulation",
+    status: "stub"
   },
   {
     id: 10,
@@ -204,7 +215,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "📊",
     color: "green",
-    route: "/array-operations"
+    route: "/array-operations",
+    status: "stub"
   },
   {
     id: 11,
@@ -221,7 +233,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "📦",
     color: "indigo",
-    route: "/object-manipulation"
+    route: "/object-manipulation",
+    status: "stub"
   },
   {
     id: 12,
@@ -238,7 +251,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "⏱️",
     color: "emerald",
-    route: "/async-programming"
+    route: "/async-programming",
+    status: "stub"
   },
   {
     id: 6,
@@ -255,7 +269,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "💎",
     color: "red",
-    route: "/rails"
+    route: "/rails",
+    status: "stub"
   },
   {
     id: 14,
@@ -272,7 +287,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "🗄️",
     color: "blue",
-    route: "/sql-basics"
+    route: "/sql-basics",
+    status: "stub"
   },
   {
     id: 13,
@@ -289,7 +305,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "📚",
     color: "orange",
-    route: "/git-daily-commands"
+    route: "/git-daily-commands",
+    status: "stub"
   },
   {
     id: 19,
@@ -323,6 +340,7 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "🐳",
     color: "cyan",
-    route: "/docker-basics"
+    route: "/docker-basics",
+    status: "stub"
   }
 ];
