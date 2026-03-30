@@ -1,267 +1,124 @@
 export default [
   {
-    title: 'React Forms',
+    title: 'Forms & Inputs',
     examples: [
       {
-        title: 'Basic Form',
-        code: `import { useState } from 'react';
+        title: 'Controlled vs uncontrolled inputs',
+        explanation: `Controlled inputs store their value in React state — React is the source of truth. Uncontrolled inputs store their value in the DOM — you read it with a ref when you need it.
 
-function LoginForm() {
+Controlled inputs give you instant access to the current value on every keystroke (useful for live validation, search-as-you-type). Uncontrolled inputs are simpler and perform better for large forms where you only need the value on submit.`,
+        keyIdeas: [
+          'Controlled: value comes from state, onChange updates state — React owns the value',
+          'Uncontrolled: no value prop, DOM owns the value, ref reads it on demand',
+          'For most forms with validation, controlled inputs are the right default',
+          'React Hook Form uses uncontrolled inputs under the hood for performance',
+        ],
+        pitfalls: [
+          'Switching between controlled and uncontrolled mid-lifecycle — set a default value from the start',
+          'Controlled input without an onChange handler — React will warn and the input becomes read-only',
+          'Re-rendering the whole form on every keystroke — colocate state or use useForm',
+        ],
+        code: `// ✅ Controlled — live validation as user types
+function EmailInput() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Login:', { email, password });
+  const [error, setError] = useState('');
+
+  const validate = (value: string) => {
+    if (!value) return 'Email is required';
+    if (!value.includes('@')) return 'Invalid email';
+    return '';
   };
-  
+
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <input
         type="email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        required
+        onChange={e => {
+          setEmail(e.target.value);
+          setError(validate(e.target.value));
+        }}
       />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        required
-      />
-      <button type="submit">Login</button>
-    </form>
+      {error && <p className="error">{error}</p>}
+    </div>
   );
-}`
-      },
-      {
-        title: 'Form with Multiple Fields',
-        code: `import { useState } from 'react';
+}
 
-function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-  
-  const handleSubmit = (e) => {
+// ✅ Uncontrolled — read value on submit only
+function SimpleForm() {
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    const name = nameRef.current!.value;
+    const email = emailRef.current!.value;
+    submitForm({ name, email });
   };
-  
+
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        placeholder="Your name"
-        required
-      />
-      <input
-        name="email"
-        type="email"
-        value={formData.email}
-        onChange={handleChange}
-        placeholder="Your email"
-        required
-      />
-      <textarea
-        name="message"
-        value={formData.message}
-        onChange={handleChange}
-        placeholder="Your message"
-        rows="4"
-        required
-      />
-      <button type="submit">Send Message</button>
+      <input ref={nameRef} type="text" placeholder="Name" />
+      <input ref={emailRef} type="email" placeholder="Email" />
+      <button type="submit">Submit</button>
     </form>
   );
 }`
       },
       {
-        title: 'Form Validation',
-        code: `import { useState } from 'react';
+        title: 'React Hook Form — forms at scale',
+        explanation: `React Hook Form is the standard for complex forms. It uses uncontrolled inputs by default (near-zero re-renders), has built-in validation with schema support (Zod, Yup), and handles field arrays, watch, and nested objects elegantly. Worth learning properly — it shows up everywhere.`,
+        keyIdeas: [
+          'register() connects an input to the form without making it controlled',
+          'handleSubmit only calls your callback if all validations pass',
+          'watch() lets you react to field values — useful for conditional fields',
+          'Pair with Zod for end-to-end type safety from schema to form values',
+        ],
+        code: `import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const schema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Invalid email address'),
+  age: z.number().min(18, 'Must be 18 or older').optional(),
+});
+
+type FormData = z.infer<typeof schema>;
 
 function SignupForm() {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    watch,
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
   });
-  const [errors, setErrors] = useState({});
-  
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.username) {
-      newErrors.username = 'Username is required';
-    }
-    
-    if (!formData.email) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
-    
-    if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
-    }
-    
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+
+  const onSubmit = async (data: FormData) => {
+    await createAccount(data); // TypeScript knows the shape
   };
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      console.log('Form is valid:', formData);
-    }
-  };
-  
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-  
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <input
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          placeholder="Username"
-        />
-        {errors.username && <span>{errors.username}</span>}
+        <input {...register('name')} placeholder="Name" />
+        {errors.name && <p>{errors.name.message}</p>}
       </div>
-      
+
       <div>
-        <input
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Email"
-        />
-        {errors.email && <span>{errors.email}</span>}
+        <input {...register('email')} type="email" placeholder="Email" />
+        {errors.email && <p>{errors.email.message}</p>}
       </div>
-      
-      <div>
-        <input
-          name="password"
-          type="password"
-          value={formData.password}
-          onChange={handleChange}
-          placeholder="Password"
-        />
-        {errors.password && <span>{errors.password}</span>}
-      </div>
-      
-      <div>
-        <input
-          name="confirmPassword"
-          type="password"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          placeholder="Confirm Password"
-        />
-        {errors.confirmPassword && <span>{errors.confirmPassword}</span>}
-      </div>
-      
-      <button type="submit">Sign Up</button>
+
+      <button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? 'Creating account...' : 'Sign up'}
+      </button>
     </form>
   );
 }`
       },
-      {
-        title: 'Select and Checkbox',
-        code: `import { useState } from 'react';
-
-function PreferencesForm() {
-  const [formData, setFormData] = useState({
-    country: '',
-    newsletter: false,
-    notifications: false
-  });
-  
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
-  };
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Preferences:', formData);
-  };
-  
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Country:</label>
-        <select
-          name="country"
-          value={formData.country}
-          onChange={handleChange}
-        >
-          <option value="">Select a country</option>
-          <option value="us">United States</option>
-          <option value="ca">Canada</option>
-          <option value="uk">United Kingdom</option>
-        </select>
-      </div>
-      
-      <div>
-        <label>
-          <input
-            type="checkbox"
-            name="newsletter"
-            checked={formData.newsletter}
-            onChange={handleChange}
-          />
-          Subscribe to newsletter
-        </label>
-      </div>
-      
-      <div>
-        <label>
-          <input
-            type="checkbox"
-            name="notifications"
-            checked={formData.notifications}
-            onChange={handleChange}
-          />
-          Enable notifications
-        </label>
-      </div>
-      
-      <button type="submit">Save Preferences</button>
-    </form>
-  );
-}`
-      }
     ]
-  }
-]; 
+  },
+];

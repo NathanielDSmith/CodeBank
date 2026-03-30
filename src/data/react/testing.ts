@@ -1,72 +1,91 @@
 export default [
   {
-    title: 'Basic React Testing',
+    title: 'Testing',
     examples: [
       {
-        title: 'Simple Component Test',
-        code: `import { render, screen } from '@testing-library/react';
-import Button from './Button';
+        title: 'Testing with React Testing Library — the right philosophy',
+        explanation: `React Testing Library's core principle: test your components the way users interact with them — by finding elements with accessible queries (text, role, label) rather than class names or IDs. This means tests don't break when you refactor internals, only when behaviour actually changes.
 
-test('shows button text', () => {
-  render(<Button>Click me</Button>);
-  expect(screen.getByText('Click me')).toBeInTheDocument();
-});`
-      },
-      {
-        title: 'Testing Click Events',
-        code: `import { render, screen } from '@testing-library/react';
+The guiding question is "what would a user see or do?" — not "does this state variable equal this value?".`,
+        keyIdeas: [
+          'getByRole is the most robust query — prefer it over getByTestId or getByClassName',
+          'userEvent simulates real user interactions (keystrokes, clicks); fireEvent is lower-level',
+          'waitFor and findBy* handle async behaviour — elements that appear after an async operation',
+          'Mock at the boundary (API calls, third-party libs), not at the React component level',
+        ],
+        pitfalls: [
+          'Testing implementation details (state values, component methods) — tests become brittle',
+          'Using getByTestId for everything — it\'s a last resort, not a default',
+          'Not wrapping async assertions in waitFor — causes flaky tests',
+        ],
+        code: `import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Counter from './Counter';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
 
-test('increments counter when clicked', () => {
-  render(<Counter />);
-  
-  const button = screen.getByText('Count: 0');
-  userEvent.click(button);
-  
-  expect(screen.getByText('Count: 1')).toBeInTheDocument();
-});`
-      },
-      {
-        title: 'Testing Props',
-        code: `import { render, screen } from '@testing-library/react';
-import Greeting from './Greeting';
+// Mock the API at the network level
+const server = setupServer(
+  rest.get('/api/users/:id', (req, res, ctx) => {
+    return res(ctx.json({ id: 1, name: 'Alice', email: 'alice@example.com' }));
+  })
+);
 
-test('displays greeting with name', () => {
-  render(<Greeting name="John" />);
-  expect(screen.getByText('Hello, John!')).toBeInTheDocument();
-});`
-      },
-      {
-        title: 'Testing Conditional Rendering',
-        code: `import { render, screen } from '@testing-library/react';
-import UserProfile from './UserProfile';
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
-test('shows loading state', () => {
-  render(<UserProfile loading={true} />);
-  expect(screen.getByText('Loading...')).toBeInTheDocument();
+describe('UserProfile', () => {
+  it('displays the user name after loading', async () => {
+    render(<UserProfile userId={1} />);
+
+    // Loading state — spinner is visible
+    expect(screen.getByRole('status')).toBeInTheDocument();
+
+    // Wait for the user name to appear
+    expect(await screen.findByText('Alice')).toBeInTheDocument();
+
+    // Spinner is gone
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+
+  it('shows an error message when the request fails', async () => {
+    server.use(
+      rest.get('/api/users/:id', (req, res, ctx) => res(ctx.status(500)))
+    );
+
+    render(<UserProfile userId={1} />);
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(/failed to load/i);
+  });
 });
 
-test('shows user data when loaded', () => {
-  render(<UserProfile loading={false} user={{ name: 'John' }} />);
-  expect(screen.getByText('John')).toBeInTheDocument();
+describe('LoginForm', () => {
+  it('submits email and password when the form is valid', async () => {
+    const user = userEvent.setup();
+    const onSubmit = jest.fn();
+    render(<LoginForm onSubmit={onSubmit} />);
+
+    await user.type(screen.getByLabelText(/email/i), 'alice@example.com');
+    await user.type(screen.getByLabelText(/password/i), 'password123');
+    await user.click(screen.getByRole('button', { name: /log in/i }));
+
+    expect(onSubmit).toHaveBeenCalledWith({
+      email: 'alice@example.com',
+      password: 'password123',
+    });
+  });
+
+  it('shows validation errors when fields are empty', async () => {
+    const user = userEvent.setup();
+    render(<LoginForm onSubmit={jest.fn()} />);
+
+    await user.click(screen.getByRole('button', { name: /log in/i }));
+
+    expect(screen.getByText(/email is required/i)).toBeInTheDocument();
+    expect(screen.getByText(/password is required/i)).toBeInTheDocument();
+  });
 });`
       },
-      {
-        title: 'Testing Form Input',
-        code: `import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import SearchBox from './SearchBox';
-
-test('updates input value', () => {
-  render(<SearchBox />);
-  
-  const input = screen.getByPlaceholderText('Search...');
-  userEvent.type(input, 'react');
-  
-  expect(input.value).toBe('react');
-});`
-      }
     ]
-  }
-]; 
+  },
+];

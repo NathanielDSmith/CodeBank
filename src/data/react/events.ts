@@ -1,154 +1,110 @@
 export default [
   {
-    title: 'React Event Handling',
+    title: 'Event Handling',
     examples: [
       {
-        title: 'Basic Event Handling',
-        code: `import { useState } from 'react';
+        title: 'Synthetic events and TypeScript event types',
+        explanation: `React wraps native browser events in SyntheticEvent — a cross-browser wrapper that normalises event behaviour. In TypeScript, each event type has a specific generic that tells you which element it came from, giving you typed access to event.target and element-specific properties.`,
+        keyIdeas: [
+          'React.ChangeEvent<HTMLInputElement> for input changes, React.FormEvent<HTMLFormElement> for form submit',
+          'event.currentTarget is always the element with the handler; event.target is where the event originated',
+          'SyntheticEvents are pooled in older React — don\'t access them asynchronously without e.persist() (not needed in React 17+)',
+        ],
+        pitfalls: [
+          'Using event.target instead of event.currentTarget when handlers are on parent elements',
+          'Not calling e.preventDefault() on form submit — causes a page reload',
+          'Inline arrow functions in JSX create a new function on every render — fine for most cases, but avoid in hot paths',
+        ],
+        code: `// ✅ Typed event handlers
+function SearchForm() {
+  const [query, setQuery] = useState('');
 
-function Button() {
-  const [count, setCount] = useState(0);
-  
-  const handleClick = (event) => {
-    event.preventDefault();
-    setCount(count + 1);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value); // target is HTMLInputElement — .value is typed
   };
-  
-  return (
-    <button onClick={handleClick}>
-      Clicked {count} times
-    </button>
-  );
-}`
-      },
-      {
-        title: 'Form Event Handling',
-        code: `import { useState } from 'react';
 
-function ContactForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // prevent page reload
+    performSearch(query);
   };
-  
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('Form submitted:', formData);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Escape') setQuery('');
+    if (e.key === 'Enter' && e.metaKey) handleSubmit(e as any);
   };
-  
+
   return (
     <form onSubmit={handleSubmit}>
       <input
-        name="name"
-        value={formData.name}
+        value={query}
         onChange={handleChange}
-        placeholder="Name"
+        onKeyDown={handleKeyDown}
+        placeholder="Search..."
       />
-      <input
-        name="email"
-        type="email"
-        value={formData.email}
-        onChange={handleChange}
-        placeholder="Email"
-      />
-      <textarea
-        name="message"
-        value={formData.message}
-        onChange={handleChange}
-        placeholder="Message"
-      />
-      <button type="submit">Send</button>
     </form>
-  );
-}`
-      },
-      {
-        title: 'Keyboard Events',
-        code: `import { useEffect } from 'react';
-
-function KeyboardHandler() {
-  useEffect(() => {
-    const handleKeyPress = (event) => {
-      if (event.key === 'Enter') {
-        console.log('Enter pressed');
-      }
-      if (event.ctrlKey && event.key === 's') {
-        event.preventDefault();
-        console.log('Save shortcut pressed');
-      }
-    };
-    
-    document.addEventListener('keydown', handleKeyPress);
-    
-    return () => {
-      document.removeEventListener('keydown', handleKeyPress);
-    };
-  }, []);
-  
-  return <div>Press Enter or Ctrl+S</div>;
-}`
-      },
-      {
-        title: 'Custom Event Handlers',
-        code: `function CustomButton({ onClick, children, ...props }) {
-  const handleClick = (event) => {
-    // Custom logic before calling parent handler
-    console.log('Button clicked');
-    
-    // Call parent handler if provided
-    if (onClick) {
-      onClick(event);
-    }
-  };
-  
-  return (
-    <button onClick={handleClick} {...props}>
-      {children}
-    </button>
   );
 }
 
-// Usage
-<CustomButton onClick={() => alert('Custom button clicked!')}>
-  Click me
-</CustomButton>`
-      },
-      {
-        title: 'Event Delegation',
-        code: `function TodoList({ todos, onDelete }) {
-  const handleListClick = (event) => {
-    if (event.target.matches('.delete-btn')) {
-      const todoId = event.target.dataset.id;
-      onDelete(todoId);
-    }
+// ✅ Event delegation — one handler on the parent
+function ButtonGroup() {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const button = (e.target as HTMLElement).closest('[data-action]');
+    if (!button) return;
+    const action = button.getAttribute('data-action');
+    handleAction(action);
   };
-  
+
   return (
-    <ul onClick={handleListClick}>
-      {todos.map(todo => (
-        <li key={todo.id}>
-          {todo.text}
-          <button 
-            className="delete-btn" 
-            data-id={todo.id}
-          >
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
+    <div onClick={handleClick}>
+      <button data-action="save">Save</button>
+      <button data-action="cancel">Cancel</button>
+      <button data-action="delete">Delete</button>
+    </div>
   );
 }`
-      }
+      },
+      {
+        title: 'Preventing event propagation',
+        explanation: `Events bubble up through the DOM — a click on a child triggers click handlers on every ancestor. This is often useful (event delegation) but sometimes needs to be stopped. stopPropagation prevents the event from bubbling; preventDefault prevents the browser's default behaviour.`,
+        keyIdeas: [
+          'stopPropagation stops the event from reaching parent handlers',
+          'preventDefault stops browser defaults (form submit, link navigation, right-click menu)',
+          'They are independent — you can call either, both, or neither',
+        ],
+        code: `// ✅ Common pattern — clickable card with a nested action button
+function PostCard({ post, onDelete }: Props) {
+  const navigate = useNavigate();
+
+  return (
+    <div onClick={() => navigate(\`/posts/\${post.id}\`)} className="card">
+      <h2>{post.title}</h2>
+      <p>{post.excerpt}</p>
+      <button
+        onClick={e => {
+          e.stopPropagation(); // don't navigate to the post
+          onDelete(post.id);
+        }}
+      >
+        Delete
+      </button>
+    </div>
+  );
+}
+
+// ✅ Modal that closes on backdrop click but not on content click
+function Modal({ onClose, children }: Props) {
+  return (
+    <div className="backdrop" onClick={onClose}>
+      <div
+        className="modal-content"
+        onClick={e => e.stopPropagation()} // don't close when clicking inside
+      >
+        {children}
+      </div>
+    </div>
+  );
+}`
+      },
     ]
-  }
-]; 
+  },
+];
