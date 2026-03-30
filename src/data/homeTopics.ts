@@ -292,6 +292,23 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     route: "/git-daily-commands"
   },
   {
+    id: 19,
+    title: "Flutter & Dart",
+    description: "Cross-platform mobile development with Flutter and Dart",
+    category: "Mobile Development",
+    topics: [
+      "Widgets & State",
+      "Layout & Composition",
+      "Navigation",
+      "Async & Futures",
+      "HTTP & APIs",
+      "Forms & Input"
+    ],
+    icon: "🐦",
+    color: "cyan",
+    route: "/flutter"
+  },
+  {
     id: 15,
     title: "Docker Basics",
     description: "Containerization and deployment fundamentals",
