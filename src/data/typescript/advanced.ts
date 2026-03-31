@@ -1,30 +1,152 @@
 const advancedContent = [
   {
-    title: 'Advanced Type Features',
+    title: 'Conditional Types and Infer',
     examples: [
       {
-        title: 'Literal types and union types',
-        code: '// Literal types (specific values)\ntype Status = "loading" | "success" | "error";\ntype Size = "small" | "medium" | "large";\ntype Direction = "north" | "south" | "east" | "west";\n\n// Using literal types\nfunction handleStatus(status: Status): string {\n  switch (status) {\n    case "loading":\n      return "Please wait...";\n    case "success":\n      return "Operation completed!";\n    case "error":\n      return "Something went wrong";\n  }\n}\n\n// Union types with different types\ntype StringOrNumber = string | number;\ntype StringOrNumberOrBoolean = string | number | boolean;\n\nfunction processValue(value: StringOrNumber): string {\n  if (typeof value === "string") {\n    return value.toUpperCase();\n  } else {\n    return value.toString();\n  }\n}\n\nconsole.log(processValue("hello")); // "HELLO"\nconsole.log(processValue(42)); // "42"'
+        title: 'Conditional types — type-level if/else',
+        explanation: "Conditional types (`T extends U ? X : Y`) are the type system's version of a ternary expression. They enable type-level logic: 'if T is a string, return X, otherwise return Y'. This is how many built-in utility types are implemented.",
+        keyIdeas: [
+          'Syntax: `T extends U ? TrueType : FalseType`',
+          'Conditional types distribute over union types — `(A | B) extends U` becomes `(A extends U) | (B extends U)`',
+          '`infer` extracts a type from within a conditional check',
+          'Naked type parameters distribute; wrapped ones don\'t'
+        ],
+        pitfalls: [
+          "Conditional types can make error messages cryptic — name intermediate types",
+          "Distribution over unions can be surprising — wrap in a tuple `[T]` to prevent it",
+          "Deep nesting of conditional types is very hard to read and debug"
+        ],
+        code: `// Basic conditional type
+type IsString<T> = T extends string ? true : false;
+
+type A = IsString<string>;  // true
+type B = IsString<number>;  // false
+type C = IsString<string | number>; // boolean (distributes: true | false)
+
+// Prevent distribution with tuple wrapping
+type IsStringStrict<T> = [T] extends [string] ? true : false;
+type D = IsStringStrict<string | number>; // false (evaluated as a whole)
+
+// infer — extract a type from within
+type UnpackArray<T> = T extends Array<infer Item> ? Item : T;
+type UnpackPromise<T> = T extends Promise<infer Value> ? Value : T;
+
+type StringItem = UnpackArray<string[]>;   // string
+type NumberItem = UnpackArray<number[]>;   // number
+type NotArray   = UnpackArray<string>;     // string (passthrough)
+
+type Resolved = UnpackPromise<Promise<User>>; // User
+
+// Deep infer — first param of a function
+type FirstParam<F> = F extends (first: infer P, ...rest: unknown[]) => unknown
+  ? P
+  : never;
+
+type P = FirstParam<(name: string, age: number) => void>; // string`
       },
       {
-        title: 'Type guards and narrowing',
-        code: '// Type guards (functions that check types)\nfunction isString(value: any): value is string {\n  return typeof value === "string";\n}\n\nfunction isNumber(value: any): value is number {\n  return typeof value === "number";\n}\n\nfunction isArray(value: any): value is any[] {\n  return Array.isArray(value);\n}\n\n// Using type guards\nfunction processData(data: string | number | string[]): string {\n  if (isString(data)) {\n    return data.toUpperCase();\n  } else if (isNumber(data)) {\n    return data.toString();\n  } else if (isArray(data)) {\n    return data.join(", ");\n  }\n  return "unknown";\n}\n\nconsole.log(processData("hello")); // "HELLO"\nconsole.log(processData(42)); // "42"\nconsole.log(processData(["a", "b", "c"])); // "a, b, c"\n\n// Type narrowing with instanceof\nclass Animal {\n  name: string;\n  constructor(name: string) {\n    this.name = name;\n  }\n}\n\nclass Dog extends Animal {\n  bark(): string {\n    return "Woof!";\n  }\n}\n\nfunction makeSound(animal: Animal): string {\n  if (animal instanceof Dog) {\n    return animal.bark();\n  }\n  return "Some sound";\n}'
+        title: 'Template literal types and string manipulation',
+        explanation: "TypeScript 4.1+ supports template literal types — string types built from other string types. Combined with utility types like `Capitalize`, `Uppercase`, etc., you can type event names, CSS properties, and API routes precisely.",
+        keyIdeas: [
+          'Template literal: `` `prefix_${string}` `` matches any string starting with "prefix_"',
+          'Works with literal unions — each combination is generated',
+          'Intrinsic types: `Uppercase<S>`, `Lowercase<S>`, `Capitalize<S>`, `Uncapitalize<S>`',
+          'Useful for typing event listener names, CSS variables, API route patterns'
+        ],
+        pitfalls: [
+          "Large literal union combinations produce huge types — can slow down the compiler",
+          "Template literal types are purely structural — no runtime regex check happens",
+          "Using `string` inside a template still matches any string, not a specific pattern"
+        ],
+        code: `// Basic template literal
+type Greeting = \`Hello, \${string}\`;
+const g: Greeting = 'Hello, World'; // OK
+// const bad: Greeting = 'Hi there'; // Error
+
+// Combining literal unions — generates all combinations
+type Axis = 'x' | 'y' | 'z';
+type Transform = 'translate' | 'rotate' | 'scale';
+type CSSTransform = \`\${Transform}\${Capitalize<Axis>}\`;
+// 'translateX' | 'translateY' | 'translateZ' | 'rotateX' | ...
+
+// Event naming pattern
+type EventName<T extends string> = \`on\${Capitalize<T>}\`;
+type ClickEvent = EventName<'click'>;  // 'onClick'
+type ChangeEvent = EventName<'change'>; // 'onChange'
+
+// Getter/setter type generation
+type Getters<T> = {
+  [K in keyof T as \`get\${Capitalize<string & K>}\`]: () => T[K];
+};
+
+type UserGetters = Getters<{ name: string; age: number }>;
+// { getName: () => string; getAge: () => number }
+
+// CSS custom property type
+type CSSVar = \`--\${string}\`;
+function setCSSVar(name: CSSVar, value: string) {
+  document.documentElement.style.setProperty(name, value);
+}
+
+setCSSVar('--primary-color', '#3b82f6'); // OK
+// setCSSVar('primary-color', '#333');   // Error!`
       }
     ]
   },
   {
-    title: 'Conditional and Mapped Types',
+    title: 'Declaration Merging and Module Augmentation',
     examples: [
       {
-        title: 'Conditional types',
-        code: '// Conditional types (types that depend on other types)\ntype NonNullable<T> = T extends null | undefined ? never : T;\ntype StringOrNumber<T> = T extends string ? string : number;\n\n// Using conditional types\nlet name: NonNullable<string | null> = "Alice"; // string\nlet age: NonNullable<number | undefined> = 25; // number\n\n// Conditional types with inference\ntype ElementType<T> = T extends (infer U)[] ? U : never;\ntype ReturnType<T> = T extends (...args: any[]) => infer R ? R : never;\n\n// Using inferred types\nlet numbers: ElementType<number[]> = 42; // number\nlet result: ReturnType<() => string> = "hello"; // string\n\n// More complex conditional types\ntype IsString<T> = T extends string ? true : false;\ntype IsNumber<T> = T extends number ? true : false;\n\ntype StringCheck = IsString<"hello">; // true\ntype NumberCheck = IsNumber<42>; // true\ntype BooleanCheck = IsString<boolean>; // false'
-      },
-      {
-        title: 'Mapped types',
-        code: '// Mapped types (transform existing types)\ninterface User {\n  id: number;\n  name: string;\n  email: string;\n  age: number;\n}\n\n// Make all properties optional\ntype PartialUser = Partial<User>;\n\n// Make all properties required\ntype RequiredUser = Required<User>;\n\n// Make all properties readonly\ntype ReadonlyUser = Readonly<User>;\n\n// Pick specific properties\ntype UserBasicInfo = Pick<User, "name" | "email">;\n\n// Omit specific properties\ntype UserWithoutId = Omit<User, "id">;\n\n// Custom mapped type\ntype Optional<T> = {\n  [K in keyof T]?: T[K];\n};\n\ntype Readonly<T> = {\n  readonly [K in keyof T]: T[K];\n};\n\n// Using the mapped types\nlet partialUser: PartialUser = {\n  name: "Alice"\n  // id, email, age are optional\n};\n\nlet readonlyUser: ReadonlyUser = {\n  id: 1,\n  name: "Bob",\n  email: "bob@example.com",\n  age: 30\n};\n\n// readonlyUser.name = "Charlie"; // Error! name is readonly'
+        title: 'Extending third-party types with module augmentation',
+        explanation: "When a library's types are wrong or incomplete, you can extend them without modifying `node_modules`. Module augmentation lets you add to existing type declarations by re-opening the module's interface.",
+        keyIdeas: [
+          'Interfaces can be re-declared to merge additional properties',
+          'Module augmentation uses `declare module "package-name"` to extend types',
+          'Useful for adding types to `express.Request`, `window`, `process.env`',
+          'Must be in a file that is a module (has at least one `import` or `export`)'
+        ],
+        pitfalls: [
+          "Augmentation is global — don't put it in reusable library code",
+          "You can only add to interfaces, not replace or remove existing properties",
+          "Forgetting `export {}` in a pure declaration file means augmentation won't apply"
+        ],
+        code: `// Extending Express Request with custom properties
+import 'express';
+
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: AuthenticatedUser;
+    requestId: string;
+  }
+}
+
+// Now req.user and req.requestId are typed in all route handlers
+
+// Extending the Window object
+declare global {
+  interface Window {
+    analytics: AnalyticsInstance;
+    __APP_CONFIG__: { apiUrl: string; version: string };
+  }
+}
+
+// Typing process.env variables
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      DATABASE_URL: string;
+      API_KEY: string;
+      NODE_ENV: 'development' | 'production' | 'test';
+      PORT?: string;
+    }
+  }
+}
+
+// Now process.env.DATABASE_URL is string (not string | undefined)
+const url: string = process.env.DATABASE_URL;`
       }
     ]
   }
 ];
 
-export default advancedContent; 
+export default advancedContent;

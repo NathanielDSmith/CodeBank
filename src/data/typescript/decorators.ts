@@ -1,26 +1,119 @@
 const decoratorsContent = [
   {
-    title: 'Class Decorators',
+    title: 'Decorators in TypeScript',
     examples: [
       {
-        title: 'Basic class decorator',
-        code: '// Class decorator (requires experimentalDecorators in tsconfig.json)\nfunction logClass(constructor: Function) {\n  console.log("Class " + constructor.name + " was defined");\n}\n\n// Using the decorator\n@logClass\nclass Calculator {\n  add(a: number, b: number): number {\n    return a + b;\n  }\n  \n  multiply(a: number, b: number): number {\n    return a * b;\n  }\n}\n\n// Decorator factory (returns a decorator)\nfunction withTiming<T extends { new (...args: any[]): {} }>(constructor: T) {\n  return class extends constructor {\n    constructor(...args: any[]) {\n      console.time("Object creation");\n      super(...args);\n      console.timeEnd("Object creation");\n    }\n  };\n}\n\n@withTiming\nclass ExpensiveObject {\n  constructor() {\n    // Simulate expensive initialization\n    for (let i = 0; i < 1000000; i++) {\n      Math.random();\n    }\n  }\n}\n\n// Using the decorated class\nlet calc = new Calculator();\nlet expensive = new ExpensiveObject(); // Will log timing'
+        title: 'What decorators are and when to use them',
+        explanation: "Decorators are a stage 3 TC39 proposal that TypeScript has supported (with flags) for years. They're functions that wrap classes, methods, properties, or parameters to add behavior at definition time. Common in frameworks like NestJS, Angular, and TypeORM. For most React/frontend code, you don't need them.",
+        keyIdeas: [
+          'Decorators are syntactic sugar for wrapping a target with a function',
+          'Enable `experimentalDecorators` in `tsconfig.json` for the legacy decorator syntax',
+          'TypeScript 5.0+ supports the new stage 3 decorators without a flag',
+          'Common uses: logging, validation, dependency injection, ORM column definitions'
+        ],
+        pitfalls: [
+          "Legacy decorators (`experimentalDecorators`) and TC39 stage 3 decorators have different APIs — don't mix them",
+          "Decorators execute at class definition time, not instance creation time",
+          "Overusing decorators makes code hard to trace — the behavior is hidden in the decorator"
+        ],
+        code: `// tsconfig.json
+// { "compilerOptions": { "experimentalDecorators": true } }
+
+// Class decorator — wraps the entire class
+function Sealed(constructor: Function) {
+  Object.seal(constructor);
+  Object.seal(constructor.prototype);
+}
+
+// Method decorator — wraps a method
+function Log(target: object, key: string, descriptor: PropertyDescriptor) {
+  const original = descriptor.value;
+  descriptor.value = function (...args: unknown[]) {
+    console.log(\`Calling \${key} with\`, args);
+    const result = original.apply(this, args);
+    console.log(\`\${key} returned\`, result);
+    return result;
+  };
+  return descriptor;
+}
+
+// Property decorator
+function ReadOnly(target: object, key: string) {
+  Object.defineProperty(target, key, { writable: false });
+}
+
+@Sealed
+class UserService {
+  @ReadOnly
+  version = '1.0';
+
+  @Log
+  findUser(id: string): User {
+    // ...
+    return { id, name: 'Alice', email: 'a@b.com' };
+  }
+}
+
+const service = new UserService();
+service.findUser('123'); // logs the call and return value`
       },
       {
-        title: 'Property and method decorators',
-        code: '// Property decorator\nfunction readonly(target: any, propertyKey: string) {\n  Object.defineProperty(target, propertyKey, {\n    writable: false,\n    configurable: false\n  });\n}\n\n// Method decorator\nfunction log(target: any, propertyKey: string, descriptor: PropertyDescriptor) {\n  const originalMethod = descriptor.value;\n  \n  descriptor.value = function(...args: any[]) {\n    console.log("Calling " + propertyKey + " with args:", args);\n    const result = originalMethod.apply(this, args);\n    console.log(propertyKey + " returned:", result);\n    return result;\n  };\n}\n\n// Parameter decorator\nfunction validate(target: any, propertyKey: string, parameterIndex: number) {\n  // Store validation info for later use\n  if (!target.__validations) {\n    target.__validations = {};\n  }\n  if (!target.__validations[propertyKey]) {\n    target.__validations[propertyKey] = [];\n  }\n  target.__validations[propertyKey][parameterIndex] = true;\n}\n\nclass UserService {\n  @readonly\n  apiUrl: string = "https://api.example.com";\n  \n  @log\n  getUser(@validate id: number): string {\n    return "User " + id;\n  }\n  \n  @log\n  createUser(name: string, email: string): object {\n    return { name, email, id: Math.random() };\n  }\n}\n\nlet service = new UserService();\nservice.getUser(123); // Will log the call and return value\n// service.apiUrl = "new-url"; // Error! property is readonly'
+        title: 'Decorator factories and NestJS-style patterns',
+        explanation: "Decorator factories are functions that return decorators, allowing you to pass arguments. This is the pattern used by frameworks like NestJS for routing, validation, and dependency injection.",
+        keyIdeas: [
+          'A decorator factory is just a function that returns a decorator function',
+          'NestJS uses decorators extensively: `@Controller()`, `@Get()`, `@Injectable()`',
+          'TypeORM uses `@Entity()`, `@Column()`, `@PrimaryGeneratedColumn()`',
+          'Reflect metadata API (`reflect-metadata`) is often used to store decorator data'
+        ],
+        pitfalls: [
+          "Decorators are applied bottom-up when stacked — order matters",
+          "Framework decorators are framework-specific — NestJS decorators don't work in Angular",
+          "Testing classes with decorators often requires the framework setup to be present"
+        ],
+        code: `// Decorator factory — accepts arguments
+function MinLength(min: number) {
+  return function (target: object, key: string) {
+    let value: string;
+    Object.defineProperty(target, key, {
+      get: () => value,
+      set: (v: string) => {
+        if (v.length < min) {
+          throw new Error(\`\${key} must be at least \${min} characters\`);
+        }
+        value = v;
       }
-    ]
-  },
-  {
-    title: 'Advanced Decorator Patterns',
-    examples: [
-      {
-        title: 'Decorator composition and metadata',
-        code: '// Multiple decorators can be applied\nfunction sealed(constructor: Function) {\n  Object.seal(constructor);\n  Object.seal(constructor.prototype);\n}\n\nfunction configurable(value: boolean) {\n  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {\n    descriptor.configurable = value;\n  };\n}\n\n// Decorator that adds metadata\nfunction apiEndpoint(path: string) {\n  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {\n    // Store the endpoint path\n    if (!target.__endpoints) {\n      target.__endpoints = {};\n    }\n    target.__endpoints[propertyKey] = path;\n  };\n}\n\n@sealed\nclass ApiService {\n  @apiEndpoint("/users")\n  @configurable(false)\n  getUsers(): Promise<any[]> {\n    return fetch("/users").then(res => res.json());\n  }\n  \n  @apiEndpoint("/users/:id")\n  getUser(id: number): Promise<any> {\n    return fetch("/users/" + id).then(res => res.json());\n  }\n}\n\n// Decorator for dependency injection\nfunction inject(token: string) {\n  return function (target: any, propertyKey: string) {\n    if (!target.__injections) {\n      target.__injections = {};\n    }\n    target.__injections[propertyKey] = token;\n  };\n}\n\nclass UserController {\n  @inject("UserService")\n  private userService: any;\n  \n  @inject("Logger")\n  private logger: any;\n}\n\n// Decorator for validation\nfunction validateEmail(target: any, propertyKey: string) {\n  let value: string;\n  \n  const getter = function() {\n    return value;\n  };\n  \n  const setter = function(newVal: string) {\n    if (newVal && !newVal.includes("@")) {\n      throw new Error("Invalid email format");\n    }\n    value = newVal;\n  };\n  \n  Object.defineProperty(target, propertyKey, {\n    get: getter,\n    set: setter,\n    enumerable: true,\n    configurable: true\n  });\n}\n\nclass User {\n  @validateEmail\n  email: string = "";\n}\n\nlet user = new User();\nuser.email = "valid@example.com"; // OK\n// user.email = "invalid-email"; // Error!'
+    });
+  };
+}
+
+function Required(target: object, key: string) {
+  // marks field as required for validation
+}
+
+class CreateUserDto {
+  @Required
+  @MinLength(2)
+  name: string = '';
+
+  @Required
+  @MinLength(5)
+  email: string = '';
+}
+
+// NestJS-style (illustrative — requires NestJS)
+// @Controller('/users')
+// class UsersController {
+//   @Get('/:id')
+//   async getUser(@Param('id') id: string): Promise<User> { ... }
+//
+//   @Post()
+//   @UseGuards(AuthGuard)
+//   async createUser(@Body() dto: CreateUserDto): Promise<User> { ... }
+// }`
       }
     ]
   }
 ];
 
-export default decoratorsContent; 
+export default decoratorsContent;
