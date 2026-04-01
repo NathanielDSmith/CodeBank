@@ -1,133 +1,110 @@
 export default [
   {
-    title: 'React useEffect Hook',
+    title: 'Effects & Lifecycle',
     examples: [
       {
-        title: 'Basic useEffect',
-        code: `import { useEffect, useState } from 'react';
+        title: 'The dependency array — the most misunderstood part of useEffect',
+        explanation: `The dependency array doesn't mean "run this effect when these values change". It means "this effect depends on these values — re-run it any time they change so it stays in sync". It's a declaration of what the effect reads from the component, not a trigger condition.
 
-function Counter() {
-  const [count, setCount] = useState(0);
-  
+If your effect uses a value from the component (state, props, a function defined in the component), that value should be in the array. Leaving things out doesn't make the effect run less — it makes it run with stale data.`,
+        keyIdeas: [
+          'ESLint\'s exhaustive-deps rule exists for good reason — follow it',
+          'If adding a dependency causes an infinite loop, the real problem is usually an unstable reference (object/array/function created in render)',
+          'Stable values like setState, dispatch, and refs don\'t need to be in the array',
+        ],
+        pitfalls: [
+          'Suppressing the ESLint warning instead of fixing the root cause',
+          'Using an object or array as a dependency — new reference every render means the effect runs every render',
+          'Writing useEffect(() => { fetchData() }, []) and wondering why it uses stale props',
+        ],
+        code: `// ❌ Stale closure — filter is read once at mount, never updated
+function FilteredList({ filter }: { filter: string }) {
+  const [items, setItems] = useState([]);
+
   useEffect(() => {
-    document.title = \`Count: \${count}\`;
-  }, [count]);
-  
-  return (
-    <div>
-      <p>Count: {count}</p>
-      <button onClick={() => setCount(count + 1)}>
-        Increment
-      </button>
-    </div>
+    fetchItems(filter).then(setItems);
+  }, []); // ❌ filter should be here — effect uses it but doesn't declare it
+
+  return <List items={items} />;
+}
+
+// ✅ Correct — re-fetches whenever filter changes
+function FilteredList({ filter }: { filter: string }) {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchItems(filter).then(data => {
+      if (!cancelled) setItems(data);
+    });
+    return () => { cancelled = true; };
+  }, [filter]); // ✅ declared — effect stays in sync
+
+  return <List items={items} />;
+}
+
+// ✅ Stabilising an object dependency with useMemo
+function Chart({ config }: { config: { color: string; width: number } }) {
+  // Without useMemo, config is a new object every render
+  const stableConfig = useMemo(() => config, [config.color, config.width]);
+
+  useEffect(() => {
+    renderChart(stableConfig);
+  }, [stableConfig]); // ✅ stable reference
+}`
+      },
+      {
+        title: 'Effects that don\'t belong in useEffect',
+        explanation: `Not everything that runs after a render should be in useEffect. React 18 and the React team are moving away from effects for certain patterns that were previously common. If you're computing derived state, transforming data, or handling user events — those don't need effects.`,
+        keyIdeas: [
+          'Derived state (filtering, sorting, computing totals) should be calculated during render, not in an effect',
+          'Event handlers are for responding to user interactions — not useEffect',
+          'Effects are for synchronising with external systems: APIs, DOM, subscriptions, timers',
+        ],
+        pitfalls: [
+          'Using an effect to sync one piece of state to another — just compute it from the source of truth instead',
+          'Fetching data in an effect without a library — consider React Query or SWR for production data fetching',
+        ],
+        code: `// ❌ Effect for derived state — unnecessary
+function FilteredList({ items, filter }) {
+  const [filtered, setFiltered] = useState(items);
+
+  useEffect(() => {
+    setFiltered(items.filter(i => i.name.includes(filter)));
+  }, [items, filter]); // causes an extra render every time
+
+  return <List items={filtered} />;
+}
+
+// ✅ Calculate during render — simpler, one render
+function FilteredList({ items, filter }) {
+  const filtered = useMemo(
+    () => items.filter(i => i.name.includes(filter)),
+    [items, filter]
   );
-}`
-      },
-      {
-        title: 'useEffect with Cleanup',
-        code: `import { useEffect, useState } from 'react';
 
-function Timer() {
-  const [count, setCount] = useState(0);
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCount(c => c + 1);
-    }, 1000);
-    
-    // Cleanup function
-    return () => {
-      clearInterval(interval);
-    };
-  }, []); // Empty dependency array = run once
-  
-  return <div>Timer: {count} seconds</div>;
-}`
-      },
-      {
-        title: 'useEffect with Dependencies',
-        code: `import { useEffect, useState } from 'react';
+  return <List items={filtered} />;
+}
 
-function UserProfile({ userId }) {
-  const [user, setUser] = useState(null);
-  
-  useEffect(() => {
-    fetch(\`/api/users/\${userId}\`)
-      .then(res => res.json())
-      .then(setUser);
-  }, [userId]); // Re-run when userId changes
-  
-  if (!user) return <div>Loading...</div>;
-  
-  return <div>Hello, {user.name}!</div>;
-}`
-      },
-      {
-        title: 'Multiple useEffect Hooks',
-        code: `import { useEffect, useState } from 'react';
+// ❌ Effect for event handling
+function Form() {
+  const [submitted, setSubmitted] = useState(false);
 
-function App() {
-  const [count, setCount] = useState(0);
-  const [name, setName] = useState('');
-  
-  // Update document title when count changes
   useEffect(() => {
-    document.title = \`Count: \${count}\`;
-  }, [count]);
-  
-  // Log when name changes
-  useEffect(() => {
-    if (name) {
-      console.log('Name changed to:', name);
+    if (submitted) {
+      sendAnalytics('form_submitted'); // this belongs in the handler
     }
-  }, [name]);
-  
-  return (
-    <div>
-      <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Enter name"
-      />
-      <button onClick={() => setCount(count + 1)}>
-        Count: {count}
-      </button>
-    </div>
-  );
+  }, [submitted]);
+}
+
+// ✅ Handle it in the event handler
+function Form() {
+  const handleSubmit = () => {
+    sendAnalytics('form_submitted');
+    submitForm();
+  };
 }`
       },
-      {
-        title: 'useEffect for Side Effects',
-        code: `import { useEffect } from 'react';
-
-function WindowSize() {
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight
-  });
-  
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight
-      });
-    };
-    
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-  
-  return (
-    <div>
-      Window size: {windowSize.width} x {windowSize.height}
-    </div>
-  );
-}`
-      }
     ]
-  }
-]; 
+  },
+];
