@@ -1,30 +1,102 @@
 const enumsContent = [
   {
-    title: 'Basic Enums',
+    title: 'Enums vs Literal Unions',
     examples: [
       {
-        title: 'Numeric enums',
-        code: '// Basic numeric enum\nenum Color {\n  Red,    // 0\n  Green,  // 1\n  Blue    // 2\n}\n\n// Using the enum\nlet myColor: Color = Color.Red;\nconsole.log(myColor); // 0\nconsole.log(Color.Green); // 1\nconsole.log(Color[1]); // "Green"\n\n// Enum with custom values\nenum Status {\n  Pending = 1,\n  Approved = 2,\n  Rejected = 3\n}\n\nlet currentStatus: Status = Status.Pending;\nconsole.log(currentStatus); // 1\n\n// Enum with mixed values\nenum Direction {\n  North = "NORTH",\n  South = "SOUTH",\n  East = "EAST",\n  West = "WEST"\n}\n\nlet heading: Direction = Direction.North;\nconsole.log(heading); // "NORTH"'
+        title: 'String enums — when to use them',
+        explanation: "Enums are one of TypeScript's few features that generate runtime code. String enums are the most useful — they're readable in logs and debuggers. But for many use cases, a literal union type (`'a' | 'b'`) is cleaner and generates no runtime code.",
+        keyIdeas: [
+          'String enums generate an object at runtime — the values are real strings',
+          'Enum members are accessed like `Direction.North` — you can\'t pass a raw string',
+          'String enums are great when values need to be readable in logs/APIs',
+          'Const enums are inlined at compile time and produce no runtime object'
+        ],
+        pitfalls: [
+          "Numeric enums have a reverse mapping (value → name) which can be surprising in `Object.values()`",
+          "String enums are nominal — `'North'` is not assignable to `Direction.North` without a cast",
+          "Const enums can't be used if you need to iterate over values at runtime"
+        ],
+        code: `// String enum — generates a runtime object
+enum Direction {
+  North = 'NORTH',
+  South = 'SOUTH',
+  East = 'EAST',
+  West = 'WEST'
+}
+
+function move(dir: Direction) {
+  console.log(dir); // logs 'NORTH', 'SOUTH', etc.
+}
+
+move(Direction.North); // OK
+// move('NORTH');         // Error! string is not assignable to Direction
+
+// Numeric enum — avoid unless you need bit flags
+enum Permission {
+  None = 0,
+  Read = 1,
+  Write = 2,
+  Admin = 4
+}
+
+// Const enum — inlined, no runtime object
+const enum Status {
+  Active = 'active',
+  Inactive = 'inactive',
+  Banned = 'banned'
+}
+
+// Literal union — cleaner alternative for simple cases
+type Direction2 = 'north' | 'south' | 'east' | 'west';
+// No runtime code, works with string literals directly`
       },
       {
-        title: 'String enums',
-        code: '// String enum (all values must be strings)\nenum UserRole {\n  Admin = "ADMIN",\n  User = "USER",\n  Guest = "GUEST"\n}\n\n// Using string enums\nfunction checkAccess(role: UserRole): string {\n  switch (role) {\n    case UserRole.Admin:\n      return "Full access granted";\n    case UserRole.User:\n      return "Standard access granted";\n    case UserRole.Guest:\n      return "Limited access granted";\n    default:\n      return "No access";\n  }\n}\n\nconsole.log(checkAccess(UserRole.Admin)); // "Full access granted"\nconsole.log(checkAccess(UserRole.Guest)); // "Limited access granted"\n\n// Enum as object keys\nenum LogLevel {\n  Error = "ERROR",\n  Warn = "WARN",\n  Info = "INFO",\n  Debug = "DEBUG"\n}\n\nconst logMessages = {\n  [LogLevel.Error]: "Something went wrong!",\n  [LogLevel.Warn]: "Warning: Check your input",\n  [LogLevel.Info]: "Information message",\n  [LogLevel.Debug]: "Debug information"\n};\n\nconsole.log(logMessages[LogLevel.Error]); // "Something went wrong!"'
-      }
-    ]
-  },
-  {
-    title: 'Advanced Enum Usage',
-    examples: [
-      {
-        title: 'Enum with computed values',
-        code: '// Enum with computed values\nenum FileAccess {\n  // Constant members\n  None = 0,\n  Read = 1 << 0,    // 1\n  Write = 1 << 1,   // 2\n  ReadWrite = Read | Write, // 3\n  \n  // Computed member\n  G = "123".length  // 3\n}\n\nconsole.log(FileAccess.None); // 0\nconsole.log(FileAccess.Read); // 1\nconsole.log(FileAccess.Write); // 2\nconsole.log(FileAccess.ReadWrite); // 3\n\n// Using enums in functions\nfunction hasPermission(access: FileAccess, permission: FileAccess): boolean {\n  return (access & permission) === permission;\n}\n\nlet userAccess = FileAccess.ReadWrite;\nconsole.log(hasPermission(userAccess, FileAccess.Read)); // true\nconsole.log(hasPermission(userAccess, FileAccess.Write)); // true\nconsole.log(hasPermission(FileAccess.Read, FileAccess.Write)); // false'
-      },
-      {
-        title: 'Enum with const assertion',
-        code: '// Const enum (more efficient, inlined at compile time)\nconst enum Size {\n  Small = "S",\n  Medium = "M",\n  Large = "L",\n  ExtraLarge = "XL"\n}\n\n// Using const enum\nfunction getShirtSize(size: Size): string {\n  switch (size) {\n    case Size.Small:\n      return "Small shirt";\n    case Size.Medium:\n      return "Medium shirt";\n    case Size.Large:\n      return "Large shirt";\n    case Size.ExtraLarge:\n      return "Extra large shirt";\n    default:\n      return "Unknown size";\n  }\n}\n\nconsole.log(getShirtSize(Size.Medium)); // "Medium shirt"\n\n// Enum as union type\nenum HttpMethod {\n  GET = "GET",\n  POST = "POST",\n  PUT = "PUT",\n  DELETE = "DELETE"\n}\n\ntype ApiRequest = {\n  method: HttpMethod;\n  url: string;\n  data?: any;\n};\n\nfunction makeRequest(request: ApiRequest): void {\n  console.log("Making " + request.method + " request to " + request.url);\n}\n\nmakeRequest({\n  method: HttpMethod.GET,\n  url: "/api/users"\n}); // "Making GET request to /api/users"'
+        title: 'When to prefer literal unions over enums',
+        explanation: "For most cases, a literal union type is a better choice than an enum. It produces no runtime code, works naturally with string values, and is easier to use with API responses. Use enums when you need to iterate over values, when values need to be opaque, or when using const enums for performance.",
+        keyIdeas: [
+          'Literal unions work directly with JSON API values — no mapping needed',
+          'You can derive types from literal unions with `typeof` and `keyof`',
+          '`as const` objects give you the best of both: iteration + literal types',
+          'If your team is from Java/C# backgrounds, enums may be more comfortable'
+        ],
+        pitfalls: [
+          "Enums don't interop well with string values from APIs — you need to validate and cast",
+          "Adding to an enum is a breaking change if callers do exhaustive checks",
+          "Enums are not tree-shakeable — the runtime object is always included in the bundle"
+        ],
+        code: `// Literal union — simple, no runtime cost
+type HttpStatus = 200 | 201 | 400 | 401 | 403 | 404 | 500;
+type ContentType = 'application/json' | 'text/html' | 'multipart/form-data';
+
+// as const object — iteration + literal types
+const ROLES = {
+  User: 'user',
+  Admin: 'admin',
+  Moderator: 'moderator'
+} as const;
+
+type Role = typeof ROLES[keyof typeof ROLES]; // 'user' | 'admin' | 'moderator'
+
+// Can iterate over values
+const allRoles = Object.values(ROLES); // ['user', 'admin', 'moderator']
+
+// Works naturally with API data
+type ApiUser = { name: string; role: Role };
+const user: ApiUser = { name: 'Alice', role: 'admin' }; // no cast needed
+
+// Bit flags — numeric enum actually shines here
+enum FilePermission {
+  None    = 0,
+  Read    = 1 << 0, // 1
+  Write   = 1 << 1, // 2
+  Execute = 1 << 2  // 4
+}
+
+const perms = FilePermission.Read | FilePermission.Write; // 3
+const canRead = (perms & FilePermission.Read) !== 0;      // true`
       }
     ]
   }
 ];
 
-export default enumsContent; 
+export default enumsContent;
