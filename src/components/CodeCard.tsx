@@ -47,7 +47,7 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, to, onClick, isFavorite = fa
     }
   };
 
-  const cardClassName = "bg-black/70 backdrop-blur-sm rounded-lg border border-green-500/50 hover:border-green-400 transition-all duration-500 cursor-pointer transform hover:-translate-y-1 hover:scale-105 overflow-hidden focus:outline-none focus:ring-4 focus:ring-green-500/20 font-mono";
+  const cardClassName = "bg-black/70 backdrop-blur-sm rounded-lg border border-green-500/50 hover:border-green-400 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 hover:scale-105 overflow-hidden focus:outline-none focus:ring-4 focus:ring-green-500/20 font-mono";
   const cardContent = (
     <div className="p-6">
       <div className="mb-6">
@@ -75,7 +75,7 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, to, onClick, isFavorite = fa
         <div className="space-y-2">
           {topic.topics.slice(0, 3).map((topicItem: string, index: number) => (
             <div key={index} className="flex items-start text-sm text-green-300 group-hover:text-green-200 transition-colors">
-              <span className="text-green-400 mr-2 text-sm flex-shrink-0 mt-0.5" aria-hidden="true">$</span>
+              <span className="text-green-500/70 mr-2 text-sm flex-shrink-0 mt-0.5" aria-hidden="true">▸</span>
               <span className="line-clamp-2 font-medium leading-relaxed">{topicItem}</span>
             </div>
           ))}
@@ -99,7 +99,7 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, to, onClick, isFavorite = fa
           </span>
         )}
         {topic.status === 'stub' && (
-          <span className="text-xs font-mono px-2 py-0.5 rounded border border-green-500/20 text-green-600 bg-black/20">
+          <span className="text-xs font-mono px-2 py-0.5 rounded border border-green-500/25 text-green-500/50 bg-black/20">
             // in progress
           </span>
         )}
