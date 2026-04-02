@@ -77,7 +77,7 @@ class _UserProfileState extends State<UserProfile> {
           return const CircularProgressIndicator();
         }
         if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return Text('Error: \${snapshot.error}');
         }
         if (!snapshot.hasData) {
           return const Text('No user found');
@@ -115,7 +115,7 @@ StreamBuilder<int>(
       return const Text('Done!');
     }
     return Text(
-      '${snapshot.data}',
+      '\${snapshot.data}',
       style: const TextStyle(fontSize: 48),
     );
   },

@@ -8,7 +8,7 @@ const modulesContent = [
         keyIdeas: [
           '`import type` ensures the import is erased at runtime — no side effects, no circular deps',
           '`export type` marks a named export as type-only',
-          'Type and value imports can be mixed: `import UserClass, { type UserType } from ...'`',
+          "Type and value imports can be mixed: `import UserClass, { type UserType } from './user'`",
           'Prefer `import type` for interfaces, type aliases, and anything that only exists in TypeScript'
         ],
         pitfalls: [

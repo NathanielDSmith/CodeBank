@@ -46,7 +46,7 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, to, onClick, isFavorite = fa
 
   // Resolve icon: brand SVG from map, or fall back to the emoji string
   const iconEntry = topic.route ? TOPIC_ICON_MAP[topic.route] : undefined;
-  const IconComponent = iconEntry?.icon;
+  const IconComponent = iconEntry?.icon as React.ComponentType<{ size?: number; style?: React.CSSProperties }> | undefined;
   const iconColor = iconEntry?.color;
 
   const cardClassName = "bg-black/70 backdrop-blur-sm rounded-lg border border-green-500/50 hover:border-green-400 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 hover:scale-105 overflow-hidden focus:outline-none focus:ring-4 focus:ring-green-500/20 font-mono";

@@ -17,7 +17,7 @@ interface Example {
   pitfalls?: string[];
 }
 
-interface Section {
+interface ContentGroup {
   title: string;
   examples: Example[];
 }
@@ -29,7 +29,7 @@ interface PageLayoutProps {
   sections: Section[];
   activeSection: string;
   searchTerm: string;
-  content: Section[] | null;
+  content: ContentGroup[] | null;
   loading: boolean;
   error: string | null;
   isSidePanelOpen: boolean;
