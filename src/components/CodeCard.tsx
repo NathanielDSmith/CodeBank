@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { LanguageTopic } from '../types/index';
+import { TOPIC_ICON_MAP } from '../data/iconMap';
 
 interface CodeCardProps {
   topic: LanguageTopic;
@@ -29,10 +30,6 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, to, onClick, isFavorite = fa
     return colors[color] || 'bg-green-600 text-black font-bold';
   };
 
-  const getIconStyle = () => {
-    return 'text-3xl min-w-[3rem] min-h-[3rem] flex items-center justify-center bg-black/30 rounded-lg p-2 border border-green-500/30 group-hover:border-green-400/50 transition-all duration-300';
-  };
-
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (onClick && (event.key === 'Enter' || event.key === ' ')) {
       event.preventDefault();
@@ -47,13 +44,24 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, to, onClick, isFavorite = fa
     }
   };
 
+  // Resolve icon: brand SVG from map, or fall back to the emoji string
+  const iconEntry = topic.route ? TOPIC_ICON_MAP[topic.route] : undefined;
+  const IconComponent = iconEntry?.icon;
+  const iconColor = iconEntry?.color;
+
   const cardClassName = "bg-black/70 backdrop-blur-sm rounded-lg border border-green-500/50 hover:border-green-400 transition-all duration-300 cursor-pointer transform hover:-translate-y-1 hover:scale-105 overflow-hidden focus:outline-none focus:ring-4 focus:ring-green-500/20 font-mono";
+
   const cardContent = (
     <div className="p-6">
       <div className="mb-6">
         <div className="flex items-start justify-between mb-4">
-          <div className={`mr-4 flex-shrink-0 group-hover:scale-110 transition-transform duration-300 ${getIconStyle()}`}>
-            {topic.icon}
+          {/* Icon — brand SVG or emoji fallback */}
+          <div className="mr-4 flex-shrink-0 min-w-[3rem] min-h-[3rem] flex items-center justify-center bg-black/30 rounded-lg p-2 border border-green-500/30 group-hover:border-green-400/50 transition-all duration-300 group-hover:scale-110">
+            {IconComponent ? (
+              <IconComponent size={28} style={{ color: iconColor }} />
+            ) : (
+              <span className="text-2xl">{topic.icon}</span>
+            )}
           </div>
           <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-bold flex-shrink-0 ${getColorClasses(topic.color)}`}>
             {topic.category}
@@ -152,4 +160,4 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, to, onClick, isFavorite = fa
   );
 };
 
-export default CodeCard; 
+export default CodeCard;
