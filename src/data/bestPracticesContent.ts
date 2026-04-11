@@ -281,8 +281,6 @@ export const bestPracticesContent: PageContent = {
         {
           title: 'Recognise the category, speed up the fix',
           explanation: 'Most errors fall into a handful of categories. Once you recognise the pattern, you know where to look without reading the full stack trace each time.',
-          keyIdeas: [],
-          pitfalls: [],
           code:
 `// TypeError
 //   → null or undefined where you expected a value
