@@ -12,7 +12,7 @@ interface CodeCardProps {
   onToggleFavorite?: (topic: LanguageTopic) => void;
 }
 
-const CodeCard: React.FC<CodeCardProps> = ({ topic, to, onClick, isFavorite = false, onToggleFavorite }) => {
+const CodeCard: React.FC<CodeCardProps> = React.memo(({ topic, to, onClick, isFavorite = false, onToggleFavorite }) => {
   const getColorClasses = (color: string) => {
     // Matrix theme - all categories get green styling with different intensities
     const colors: { [key: string]: string } = {
@@ -159,5 +159,7 @@ const CodeCard: React.FC<CodeCardProps> = ({ topic, to, onClick, isFavorite = fa
     </div>
   );
 };
+
+});
 
 export default CodeCard;

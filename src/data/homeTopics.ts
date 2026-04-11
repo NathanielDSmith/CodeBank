@@ -323,7 +323,8 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     ],
     icon: "🐦",
     color: "cyan",
-    route: "/flutter"
+    route: "/flutter",
+    status: "stub"
   },
   {
     id: 15,
@@ -344,7 +345,7 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     status: "stub"
   },
   {
-    id: 19,
+    id: 20,
     title: "Best Practices",
     description: "Debugging mindset, problem-solving habits, and how to think like a developer",
     category: "Developer Skills",
