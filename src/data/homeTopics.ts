@@ -342,5 +342,24 @@ export const LANGUAGE_TOPICS: LanguageTopic[] = [
     color: "cyan",
     route: "/docker-basics",
     status: "stub"
+  },
+  {
+    id: 19,
+    title: "Best Practices",
+    description: "Debugging mindset, problem-solving habits, and how to think like a developer",
+    category: "Developer Skills",
+    topics: [
+      "Debugging Mindset",
+      "UI & Frontend Issues",
+      "Logic & Data Issues",
+      "Reading Error Messages",
+      "Browser DevTools",
+      "When You're Stuck",
+      "Good Habits"
+    ],
+    icon: "🧠",
+    color: "green",
+    route: "/best-practices",
+    status: "deep"
   }
 ];
