@@ -9,6 +9,9 @@ export interface Section {
 export interface CodeExample {
   title: string;
   code: string;
+  explanation?: string;
+  keyIdeas?: string[];
+  pitfalls?: string[];
 }
 
 export interface ContentSection {
