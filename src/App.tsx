@@ -23,6 +23,8 @@ const AsyncProgramming = lazy(() => import('./pages/AsyncProgramming'));
 const JavaPage = lazy(() => import('./pages/JavaPage'));
 const CSharpPage = lazy(() => import('./pages/CSharpPage'));
 const GoPage = lazy(() => import('./pages/GoPage'));
+const FlutterPage = lazy(() => import('./pages/FlutterPage'));
+const BestPractices = lazy(() => import('./pages/BestPractices'));
 
 function App() {
   return (
@@ -59,6 +61,8 @@ function App() {
           <Route path="/java/*" element={<JavaPage />} />
           <Route path="/csharp/*" element={<CSharpPage />} />
           <Route path="/go/*" element={<GoPage />} />
+          <Route path="/flutter/*" element={<FlutterPage />} />
+          <Route path="/best-practices/*" element={<BestPractices />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

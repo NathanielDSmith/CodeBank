@@ -55,26 +55,30 @@ const ReactCommonTasks: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: "React - the go-to library for building interactive UIs. Component-based, declarative, and has a massive ecosystem. Once you get the hang of it, you'll wonder how you built websites without it.",
-    benefits: "Reusable components save tons of time. Virtual DOM keeps things fast, and the ecosystem is huge - routing, state management, UI libraries, you name it. Plus, the job market loves React devs.",
-    difficulty: "Intermediate",
+    description: "An in-depth React reference covering the patterns and thinking that separates maintainable production apps from tutorial code — hooks, state architecture, performance, testing, and more.",
+    benefits: "React's mental model — components, state, and effects — is the foundation of modern frontend development. Understanding it deeply means you can reason about any React codebase, not just the one you wrote.",
+    difficulty: "Intermediate to Advanced",
     topics: [
-      { icon: "⚛️", text: "Components, props, and state basics" },
-      { icon: "⚛️", text: "Hooks and lifecycle stuff" },
-      { icon: "⚛️", text: "Event handling and form management" },
-      { icon: "⚛️", text: "API calls and data fetching" },
-      { icon: "⚛️", text: "Performance tips and best practices" }
+      { icon: "🎣", text: "Hooks in depth — useState, useEffect, useRef, useMemo, useCallback, and custom hooks" },
+      { icon: "🏗️", text: "State architecture — when to use useState vs useReducer, colocation, lifting state" },
+      { icon: "🧩", text: "Component design — composition, compound components, avoiding prop drilling" },
+      { icon: "🌍", text: "Context API — when to use it, how to avoid performance pitfalls" },
+      { icon: "⚡", text: "Performance — React.memo, code splitting, profiling" },
+      { icon: "🌐", text: "Data fetching — manual patterns and React Query" },
+      { icon: "🧪", text: "Testing with React Testing Library — testing behaviour, not implementation" }
     ],
     usefulLinks: [
-      { name: "React Docs", url: "https://react.dev/" },
-      { name: "React Tutorial", url: "https://react.dev/learn" },
-      { name: "React Hooks", url: "https://react.dev/reference/react" },
-      { name: "Create React App", url: "https://create-react-app.dev/" }
+      { name: "React Docs (react.dev)", url: "https://react.dev/" },
+      { name: "TanStack Query", url: "https://tanstack.com/query/latest" },
+      { name: "React Hook Form", url: "https://react-hook-form.com/" },
+      { name: "React Testing Library", url: "https://testing-library.com/docs/react-testing-library/intro/" },
+      { name: "React Router v6", url: "https://reactrouter.com/en/main" }
     ]
   };
 
   return (
     <PageLayout
+      language="jsx"
       title="React Common Tasks"
       icon="⚛️"
       sections={reactSections}

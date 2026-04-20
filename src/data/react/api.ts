@@ -1,174 +1,82 @@
 export default [
   {
-    title: 'React API Calls',
+    title: 'API Calls & Data Fetching',
     examples: [
       {
-        title: 'Basic API Call',
-        code: `import { useState, useEffect } from 'react';
+        title: 'The problems with naive useEffect fetching',
+        explanation: `Fetching data in useEffect works for simple cases, but quickly develops problems: race conditions when props change rapidly, no deduplication of identical requests, no caching, no background refetching, and awkward error/loading state management.
 
-function UserList() {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => response.json())
-      .then(data => {
-        setUsers(data);
-        setLoading(false);
-      });
-  }, []);
-  
-  if (loading) return <div>Loading...</div>;
-  
-  return (
-    <ul>
-      {users.map(user => (
-        <li key={user.id}>{user.name}</li>
-      ))}
-    </ul>
-  );
-}`
-      },
-      {
-        title: 'Error Handling',
-        code: `import { useState, useEffect } from 'react';
+For real applications, React Query (TanStack Query) or SWR solve all of these automatically. Understanding the manual approach first helps you appreciate what those libraries handle for you.`,
+        keyIdeas: [
+          'Race conditions: if userId changes twice quickly, the second response might arrive before the first — you need cleanup to cancel stale requests',
+          'Each component that fetches the same data creates its own request — no sharing',
+          'Manual fetch has no cache — navigating back to a page triggers a full refetch',
+        ],
+        pitfalls: [
+          'Not handling the case where the component unmounts before the fetch completes',
+          'Not handling non-2xx responses — fetch only rejects on network errors, not HTTP errors',
+          'Showing a blank screen instead of cached/stale data while refetching',
+        ],
+        code: `// ✅ Manual fetching — correct but verbose
+function useUser(userId: number) {
+  const [user, setUser] = useState<User | null>(null);
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [error, setError] = useState<string | null>(null);
 
-function PostList() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch posts');
-        }
-        return response.json();
+    const controller = new AbortController();
+    setStatus('loading');
+
+    fetch(\`/api/users/\${userId}\`, { signal: controller.signal })
+      .then(res => {
+        if (!res.ok) throw new Error(\`HTTP \${res.status}\`);
+        return res.json();
       })
       .then(data => {
-        setPosts(data);
-        setLoading(false);
+        setUser(data);
+        setStatus('success');
       })
       .catch(err => {
+        if (err.name === 'AbortError') return;
         setError(err.message);
-        setLoading(false);
+        setStatus('error');
       });
-  }, []);
-  
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  
-  return (
-    <div>
-      {posts.map(post => (
-        <div key={post.id}>
-          <h3>{post.title}</h3>
-          <p>{post.body}</p>
-        </div>
-      ))}
-    </div>
-  );
-}`
-      },
-      {
-        title: 'POST Request',
-        code: `import { useState } from 'react';
 
-function CreatePost() {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [loading, setLoading] = useState(false);
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    
-    try {
-      const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title, body, userId: 1 })
-      });
-      
-      const data = await response.json();
-      console.log('Post created:', data);
-      setTitle('');
-      setBody('');
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Title"
-        required
-      />
-      <textarea
-        value={body}
-        onChange={(e) => setBody(e.target.value)}
-        placeholder="Body"
-        required
-      />
-      <button type="submit" disabled={loading}>
-        {loading ? 'Creating...' : 'Create Post'}
-      </button>
-    </form>
-  );
-}`
-      },
-      {
-        title: 'Custom Hook for API',
-        code: `import { useState, useEffect } from 'react';
+    return () => controller.abort(); // cancel on userId change or unmount
+  }, [userId]);
 
-function useApi(url) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  
-  useEffect(() => {
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        setData(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [url]);
-  
-  return { data, loading, error };
+  return { user, status, error };
 }
 
-// Usage
-function TodoList() {
-  const { data: todos, loading, error } = useApi('https://jsonplaceholder.typicode.com/todos');
-  
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  
-  return (
-    <ul>
-      {todos.map(todo => (
-        <li key={todo.id}>
-          {todo.title} - {todo.completed ? 'Done' : 'Pending'}
-        </li>
-      ))}
-    </ul>
-  );
+// ✅ React Query — handles caching, deduplication, background refetch
+import { useQuery, useMutation } from '@tanstack/react-query';
+
+function useUser(userId: number) {
+  return useQuery({
+    queryKey: ['user', userId],   // cache key
+    queryFn: () => fetchUser(userId),
+    staleTime: 5 * 60 * 1000,    // consider fresh for 5 minutes
+  });
+}
+
+function useUpdateUser() {
+  return useMutation({
+    mutationFn: (data: Partial<User>) => updateUser(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user'] }); // refetch
+    },
+  });
+}
+
+function UserProfile({ userId }: { userId: number }) {
+  const { data: user, isPending, error } = useUser(userId);
+  const updateUser = useUpdateUser();
+
+  if (isPending) return <Spinner />;
+  if (error) return <p>Error: {error.message}</p>;
+  return <form onSubmit={() => updateUser.mutate({ name: 'New name' })}> ... </form>;
 }`
-      }
+      },
     ]
-  }
-]; 
+  },
+];

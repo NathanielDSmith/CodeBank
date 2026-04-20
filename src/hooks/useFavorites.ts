@@ -1,71 +1,78 @@
 import { useState, useEffect } from 'react';
 import { LanguageTopic } from '../types/index';
+import { LANGUAGE_TOPICS } from '../data/homeTopics';
 
 const STORAGE_KEY = 'codebank-favorites';
 
 export const useFavorites = () => {
-  const [favorites, setFavorites] = useState<LanguageTopic[]>([]);
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load favorites from localStorage on mount
+  // Load favorite IDs from localStorage on mount
   useEffect(() => {
     try {
-      const savedFavorites = localStorage.getItem(STORAGE_KEY);
-      
-      if (savedFavorites) {
-        const parsed = JSON.parse(savedFavorites);
-        
-        // Validate that parsed data is an array
-        if (Array.isArray(parsed)) {
-          setFavorites(parsed);
+      const saved = localStorage.getItem(STORAGE_KEY);
+
+      if (saved) {
+        const parsed = JSON.parse(saved);
+
+        if (Array.isArray(parsed) && parsed.every(item => typeof item === 'number')) {
+          setFavoriteIds(parsed);
         } else {
-          localStorage.removeItem(STORAGE_KEY);
+          // Handle legacy format: array of full LanguageTopic objects
+          if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === 'object') {
+            const ids = parsed
+              .map((item: unknown) => (item as Record<string, unknown>)?.id)
+              .filter((id: unknown): id is number => typeof id === 'number');
+            setFavoriteIds(ids);
+          } else {
+            localStorage.removeItem(STORAGE_KEY);
+          }
         }
       }
-    } catch (error) {
-      // Clear corrupted data
+    } catch {
       localStorage.removeItem(STORAGE_KEY);
     } finally {
       setIsLoaded(true);
     }
   }, []);
 
-  // Save favorites to localStorage whenever they change
+  // Save favorite IDs to localStorage whenever they change
   useEffect(() => {
     if (isLoaded) {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(favoriteIds));
       } catch (error) {
+        console.error('Failed to save favorites to localStorage:', error);
       }
     }
-  }, [favorites, isLoaded]);
+  }, [favoriteIds, isLoaded]);
+
+  // Derive full topic objects from current LANGUAGE_TOPICS data
+  const favorites: LanguageTopic[] = favoriteIds
+    .map(id => LANGUAGE_TOPICS.find(t => t.id === id))
+    .filter((t): t is LanguageTopic => t !== undefined);
 
   const addToFavorites = (topic: LanguageTopic) => {
-    setFavorites(prev => {
-      const exists = prev.find(fav => fav.id === topic.id);
-      if (!exists) {
-        return [...prev, topic];
-      }
-      return prev;
+    setFavoriteIds(prev => {
+      if (prev.includes(topic.id)) return prev;
+      return [...prev, topic.id];
     });
   };
 
   const removeFromFavorites = (topicId: number) => {
-    setFavorites(prev => prev.filter(fav => fav.id !== topicId));
+    setFavoriteIds(prev => prev.filter(id => id !== topicId));
   };
 
   const toggleFavorite = (topic: LanguageTopic) => {
-    const isFavorite = favorites.some(fav => fav.id === topic.id);
-    if (isFavorite) {
+    if (favoriteIds.includes(topic.id)) {
       removeFromFavorites(topic.id);
     } else {
       addToFavorites(topic);
     }
   };
 
-  const isFavorite = (topicId: number) => {
-    return favorites.some(fav => fav.id === topicId);
-  };
+  const isFavorite = (topicId: number) => favoriteIds.includes(topicId);
 
   return {
     favorites,
@@ -75,4 +82,4 @@ export const useFavorites = () => {
     isFavorite,
     isLoaded
   };
-}; 
+};

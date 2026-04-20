@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Section } from '../types/index';
 
-export const usePageNavigation = (defaultSection: string, sections: any[] = []) => {
+export const usePageNavigation = (defaultSection: string, sections: Section[] = []) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
@@ -38,17 +39,22 @@ export const usePageNavigation = (defaultSection: string, sections: any[] = []) 
 
   // Update active section when URL changes
   useEffect(() => {
-    const sectionFromUrl = getSectionFromUrl();
+    const pathParts = location.pathname.split('/');
+    const lastPart = pathParts[pathParts.length - 1];
+    const sectionFromUrl =
+      lastPart && pathParts.length > 2 && sections.some(s => s.id === lastPart)
+        ? lastPart
+        : defaultSection;
     if (sectionFromUrl !== activeSection) {
       setActiveSection(sectionFromUrl);
     }
-  }, [location.pathname]);
+  }, [location.pathname, sections, defaultSection, activeSection]);
 
   const handleSectionChange = (sectionId: string) => {
     setActiveSection(sectionId);
-    // Update URL to reflect the current section
-    const currentPath = location.pathname;
-    const basePath = currentPath.split('/').slice(0, -1).join('/') || currentPath;
+    // Always derive basePath from the first path segment so it stays stable
+    // regardless of how many sub-segments the current URL has.
+    const basePath = '/' + location.pathname.split('/').filter(Boolean)[0];
     navigate(`${basePath}/${sectionId}`, { replace: true });
   };
 

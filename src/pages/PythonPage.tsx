@@ -31,26 +31,28 @@ const PythonPage: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: "Python - the Swiss Army knife of programming. Easy to read, quick to write, and does pretty much everything. Web apps, data crunching, automation scripts, you name it.",
-    benefits: "Perfect for beginners but powerful enough for pros. Great for web dev (Django/Flask), data science (pandas/numpy), AI stuff, and automating boring tasks. The syntax is so clean you can almost read it like English.",
-    difficulty: "Beginner to Advanced",
+    description: "Python rewards developers who write it as it was intended — idiomatic, expressive, and direct. This reference goes beyond syntax to cover the patterns that separate beginner Python from professional Python: closures, generators, the data model, context managers, and the standard library you didn't know you had.",
+    benefits: "Python is the dominant language in data science, ML, scripting, and backend APIs (Django/FastAPI). Writing it well means understanding things like mutable defaults, reference semantics, the iterator protocol, and when to reach for dataclasses vs plain dicts vs namedtuples.",
+    difficulty: "Intermediate",
     topics: [
-      { icon: "🐍", text: "Variables, data types, and basic syntax" },
-      { icon: "🐍", text: "Functions, modules, and imports" },
-      { icon: "🐍", text: "Lists, dicts, and data structures" },
-      { icon: "🐍", text: "File handling and error catching" },
-      { icon: "🐍", text: "Classes and OOP basics" }
+      { icon: "🐍", text: "Type system, truthiness, and reference semantics" },
+      { icon: "🐍", text: "Functions — *args/**kwargs, decorators, closures" },
+      { icon: "🐍", text: "Lists, dicts, sets — comprehensions and idioms" },
+      { icon: "🐍", text: "Generators and lazy iteration with itertools" },
+      { icon: "🐍", text: "Classes, dunder methods, and dataclasses" },
+      { icon: "🐍", text: "Exceptions, context managers, and the stdlib" }
     ],
     usefulLinks: [
-      { name: "Python Docs", url: "https://docs.python.org/3/tutorial/" },
+      { name: "Python Docs", url: "https://docs.python.org/3/" },
       { name: "Real Python", url: "https://realpython.com/" },
-      { name: "Python.org", url: "https://www.python.org/" },
-      { name: "Python for Beginners", url: "https://wiki.python.org/moin/BeginnersGuide" }
+      { name: "Fluent Python (book)", url: "https://www.oreilly.com/library/view/fluent-python-2nd/9781492056348/" },
+      { name: "Python Cookbook", url: "https://www.dabeaz.com/cookbook.html" }
     ]
   };
 
   return (
     <PageLayout
+      language="python"
       title="Python"
       icon="🐍"
       sections={pythonSections}

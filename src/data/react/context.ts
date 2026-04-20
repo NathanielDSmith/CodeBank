@@ -1,163 +1,68 @@
 export default [
   {
-    title: 'React Context Basics',
+    title: 'Context API',
     examples: [
       {
-        title: 'Creating Context',
-        code: `import { createContext, useContext, useState } from 'react';
+        title: 'What Context is actually for',
+        explanation: `Context solves prop drilling — passing data through many layers of components that don't use it themselves. It's not a state management solution and shouldn't replace useState or useReducer. Think of it as a way to make a value available anywhere in a subtree without threading it through every component manually.
 
-// Create context
-const ThemeContext = createContext();
+Common use cases: current user, theme, locale, feature flags. Not a good fit for: frequently changing state (causes broad re-renders), or state that only affects a small part of the tree (just lift it instead).`,
+        keyIdeas: [
+          'Every component that calls useContext re-renders when the context value changes',
+          'Splitting context by domain (AuthContext, ThemeContext) limits which components re-render',
+          'Context + useReducer is a lightweight alternative to Redux for medium-complexity apps',
+          'Wrap the Provider at the lowest level that covers all consumers — not always at app root',
+        ],
+        pitfalls: [
+          'Putting a new object literal as the context value — it\'s a new reference every render, causing all consumers to re-render even when values haven\'t changed',
+          'Using context for state that changes frequently (e.g. mouse position) — it will cause widespread re-renders',
+        ],
+        code: `// ✅ Auth context — stable, infrequently changing
+type AuthContextValue = {
+  user: User | null;
+  login: (credentials: Credentials) => Promise<void>;
+  logout: () => void;
+};
 
-// Provider component
-function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('light');
-  
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+const AuthContext = createContext<AuthContextValue | null>(null);
+
+// Custom hook enforces that context is used inside the provider
+export function useAuth() {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error('useAuth must be used within AuthProvider');
+  return ctx;
 }
 
-// Custom hook to use context
-function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within ThemeProvider');
-  }
-  return context;
-}`
-      },
-      {
-        title: 'Using Context',
-        code: `import { useTheme } from './ThemeContext';
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
 
-function App() {
-  return (
-    <ThemeProvider>
-      <Header />
-      <Main />
-    </ThemeProvider>
-  );
+  const login = useCallback(async (credentials: Credentials) => {
+    const user = await authService.login(credentials);
+    setUser(user);
+  }, []);
+
+  const logout = useCallback(() => {
+    authService.logout();
+    setUser(null);
+  }, []);
+
+  // useMemo prevents creating a new object every render
+  const value = useMemo(() => ({ user, login, logout }), [user, login, logout]);
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-function Header() {
-  const { theme, setTheme } = useTheme();
-  
+// Any component in the tree can access auth without prop drilling
+function NavBar() {
+  const { user, logout } = useAuth();
   return (
-    <header>
-      <h1>My App</h1>
-      <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
-        Switch Theme
-      </button>
-    </header>
-  );
-}
-
-function Main() {
-  const { theme } = useTheme();
-  
-  return (
-    <main>
-      <p>Current theme: {theme}</p>
-    </main>
-  );
-}`
-      },
-      {
-        title: 'Simple User Context',
-        code: `import { createContext, useContext, useState } from 'react';
-
-const UserContext = createContext();
-
-function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
-  
-  return (
-    <UserContext.Provider value={{ user, setUser }}>
-      {children}
-    </UserContext.Provider>
-  );
-}
-
-function useUser() {
-  const context = useContext(UserContext);
-  if (!context) {
-    throw new Error('useUser must be used within UserProvider');
-  }
-  return context;
-}
-
-// Usage
-function App() {
-  return (
-    <UserProvider>
-      <Header />
-      <Main />
-    </UserProvider>
+    <nav>
+      <span>{user?.name}</span>
+      <button onClick={logout}>Log out</button>
+    </nav>
   );
 }`
       },
-      {
-        title: 'Context with Multiple Values',
-        code: `import { createContext, useContext, useState } from 'react';
-
-const AppContext = createContext();
-
-function AppProvider({ children }) {
-  const [theme, setTheme] = useState('light');
-  const [language, setLanguage] = useState('en');
-  
-  return (
-    <AppContext.Provider value={{ 
-      theme, setTheme, 
-      language, setLanguage 
-    }}>
-      {children}
-    </AppContext.Provider>
-  );
-}
-
-function useApp() {
-  const context = useContext(AppContext);
-  if (!context) {
-    throw new Error('useApp must be used within AppProvider');
-  }
-  return context;
-}`
-      },
-      {
-        title: 'Context vs Props',
-        code: `// Without Context (prop drilling)
-function App() {
-  const [user, setUser] = useState(null);
-  return (
-    <div>
-      <Header user={user} setUser={setUser} />
-      <Main user={user} />
-      <Footer user={user} />
-    </div>
-  );
-}
-
-// With Context (no prop drilling)
-function App() {
-  return (
-    <UserProvider>
-      <Header />
-      <Main />
-      <Footer />
-    </UserProvider>
-  );
-}
-
-// Components can access user directly
-function Header() {
-  const { user, setUser } = useUser();
-  return <div>Welcome, {user?.name}</div>;
-}`
-      }
     ]
-  }
-]; 
+  },
+];

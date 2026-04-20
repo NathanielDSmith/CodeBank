@@ -69,6 +69,7 @@ const ArrayOperations: React.FC = () => {
 
   return (
     <PageLayout
+      language="javascript"
       title="Array Operations"
       icon="📊"
       sections={arraySections}

@@ -75,6 +75,7 @@ const CSSLayoutTricks: React.FC = () => {
 
   return (
     <PageLayout
+      language="css"
       title="CSS Layout Tricks"
       icon="🎨"
       sections={cssSections}

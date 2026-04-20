@@ -55,26 +55,28 @@ const TypeScriptPage: React.FC = () => {
   }, [activeSection]);
 
   const fallbackContent = {
-    description: "TypeScript - JavaScript with superpowers. Adds static typing so you catch bugs before they hit production. Makes your code more predictable and your IDE way smarter.",
-    benefits: "Catch errors while you code, not when users complain. Better autocomplete, safer refactoring, and it's basically required for serious React/Angular projects these days.",
+    description: "TypeScript is JavaScript with a static type system. It catches entire categories of bugs at compile time — null dereferences, wrong argument types, missing properties — that would otherwise surface at runtime in production. Once you're used to it, untyped JS feels like coding in the dark.",
+    benefits: "Real-world TypeScript means confident refactoring, IDE completions that actually work, and errors caught before users see them. It's the difference between guessing what a function returns and knowing. Essential for any serious team codebase.",
     difficulty: "Intermediate",
     topics: [
-      { icon: "📘", text: "Basic types and interfaces" },
-      { icon: "📘", text: "Classes, generics, and enums" },
-      { icon: "📘", text: "Advanced types and utilities" },
-      { icon: "📘", text: "Modules and decorators" },
-      { icon: "📘", text: "Best practices and patterns" }
+      { icon: "🔷", text: "Type annotations, inference, and the type system fundamentals" },
+      { icon: "🔷", text: "Unions, intersections, literal types, and narrowing" },
+      { icon: "🔷", text: "Generics — writing reusable, type-safe abstractions" },
+      { icon: "🔷", text: "Utility types: Partial, Pick, Omit, ReturnType, and more" },
+      { icon: "🔷", text: "Advanced types: conditional types, mapped types, template literals" },
+      { icon: "🔷", text: "Strict mode, real-world patterns, and what to avoid" }
     ],
     usefulLinks: [
-      { name: "TypeScript Docs", url: "https://www.typescriptlang.org/docs/" },
       { name: "TypeScript Handbook", url: "https://www.typescriptlang.org/docs/handbook/intro.html" },
       { name: "TypeScript Playground", url: "https://www.typescriptlang.org/play" },
-      { name: "TypeScript Deep Dive", url: "https://basarat.gitbook.io/typescript/" }
+      { name: "TypeScript Deep Dive", url: "https://basarat.gitbook.io/typescript/" },
+      { name: "Total TypeScript", url: "https://www.totaltypescript.com/" }
     ]
   };
 
   return (
     <PageLayout
+      language="typescript"
       title="TypeScript"
       icon="🔷"
       sections={typescriptSections}

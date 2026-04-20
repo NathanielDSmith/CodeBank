@@ -9,6 +9,9 @@ export interface Section {
 export interface CodeExample {
   title: string;
   code: string;
+  explanation?: string;
+  keyIdeas?: string[];
+  pitfalls?: string[];
 }
 
 export interface ContentSection {
@@ -30,6 +33,8 @@ export interface LanguageTopic {
   color: string;
   /** Path for navigation (e.g. /javascript-basics). Single source of truth with topic config. */
   route?: string;
+  /** Content depth status. 'deep' = fully written, 'stub' = placeholder content. */
+  status?: 'deep' | 'stub';
 }
 
 export interface SidePanelProps {

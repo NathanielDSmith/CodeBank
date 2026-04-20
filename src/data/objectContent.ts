@@ -1,4 +1,4 @@
-import { Section } from '../types/index';
+import { Section, ContentSection } from '../types/index';
 
 export const objectSections: Section[] = [
   { id: 'overview', title: 'Overview', icon: '📖' },
@@ -10,7 +10,7 @@ export const objectSections: Section[] = [
 ];
 
 // Lazy loading function for object content
-export const loadObjectContent = async (sectionId: string): Promise<any[] | null> => {
+export const loadObjectContent = async (sectionId: string): Promise<ContentSection[] | null> => {
   // Return null for overview to show fallback content
   if (sectionId === 'overview') {
     return null;

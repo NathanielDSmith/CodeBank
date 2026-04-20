@@ -3,6 +3,7 @@ import PageHeader from './PageHeader';
 import SidePanel from './SidePanel';
 import ContentSection from './ContentSection';
 import CodeBlock from './CodeBlock';
+import { Section } from '../types/index';
 
 interface Example {
   title: string;
@@ -16,7 +17,7 @@ interface Example {
   pitfalls?: string[];
 }
 
-interface Section {
+interface ContentGroup {
   title: string;
   examples: Example[];
 }
@@ -24,10 +25,11 @@ interface Section {
 interface PageLayoutProps {
   title: string;
   icon: string;
-  sections: any[];
+  language?: string;
+  sections: Section[];
   activeSection: string;
   searchTerm: string;
-  content: Section[] | null;
+  content: ContentGroup[] | null;
   loading: boolean;
   error: string | null;
   isSidePanelOpen: boolean;
@@ -46,6 +48,7 @@ interface PageLayoutProps {
 const PageLayout: React.FC<PageLayoutProps> = ({
   title,
   icon,
+  language = 'javascript',
   sections,
   activeSection,
   searchTerm,
@@ -58,93 +61,103 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   onToggleSidePanel,
   fallbackContent
 }) => {
-  const [activeTab, setActiveTab] = React.useState<'notes' | 'quiz'>('notes');
+  // const [activeTab, setActiveTab] = React.useState<'notes' | 'quiz'>('notes');
 
-  React.useEffect(() => {
-    // When you switch sections, default back to Notes.
-    setActiveTab('notes');
-  }, [activeSection]);
+  // React.useEffect(() => {
+  //   // When you switch sections, default back to Notes.
+  //   setActiveTab('notes');
+  // }, [activeSection]);
 
   const renderContent = () => {
     if (loading) {
       return (
-        <div className="text-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto mb-4"></div>
-          <p className="text-green-400 font-mono">INITIALIZING...</p>
+        <div className="py-16 flex flex-col items-center gap-4">
+          <div className="flex items-center gap-3 text-green-400 font-mono">
+            <span className="text-green-500/70">&gt;</span>
+            <span className="text-sm tracking-widest uppercase">Initializing</span>
+            <span className="flex gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+            </span>
+          </div>
+          <div className="w-48 h-px bg-green-900 rounded overflow-hidden">
+            <div className="h-full bg-green-400 rounded animate-pulse" style={{ width: '60%' }} />
+          </div>
         </div>
       );
     }
 
     if (error) {
       return (
-        <div className="text-center py-12">
-          <h2 className="text-2xl font-bold text-green-400 mb-4 font-mono">
-            {sections.find(s => s.id === activeSection)?.title}
-          </h2>
-          <p className="text-red-400 mb-4 font-mono">{error}</p>
-          <button 
-            onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 font-mono transition-colors duration-300"
-          >
-            RETRY
-          </button>
-        </div>
-      );
-    }
-
-    if (activeTab === 'quiz') {
-      const sectionTitle =
-        sections.find((s) => s.id === activeSection)?.title ?? title;
-
-      return (
-        <div className="space-y-4">
-          <div className="bg-black/50 border border-green-500/30 rounded-lg p-4 sm:p-6">
-            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-green-400 mb-2 font-mono matrix-glow">
-              Quiz: {sectionTitle}
-            </h2>
-            <p className="text-green-300 font-mono leading-relaxed">
-              Quiz mode is scaffolding only for now. When you add quiz data, this panel will render questions and collect answers.
-            </p>
-          </div>
-
-          <div className="bg-black/50 border border-green-500/30 rounded-lg p-4 sm:p-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div className="text-green-400 font-mono">
-                <span className="text-xs uppercase tracking-wider text-green-500/80 block mb-1">
-                  Status
-                </span>
-                <span className="text-sm">Coming soon</span>
-              </div>
-
-              <button
-                disabled
-                className="px-4 py-2 bg-green-500/20 text-green-300 border border-green-500/30 rounded-lg font-mono opacity-80 cursor-not-allowed"
-              >
-                Start Quiz
-              </button>
-            </div>
-
-            <div className="mt-4 space-y-3">
-              {[1, 2, 3].map((n) => (
-                <div key={n} className="border border-green-500/20 rounded-lg p-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="text-green-400 font-mono text-sm">
-                      Q{n}
-                    </div>
-                    <div className="text-green-500/70 font-mono text-xs">
-                      Placeholder
-                    </div>
-                  </div>
-                  <div className="mt-2 h-3 bg-green-500/10 rounded w-full" />
-                  <div className="mt-2 h-3 bg-green-500/10 rounded w-11/12" />
-                  <div className="mt-2 h-3 bg-green-500/10 rounded w-10/12" />
-                </div>
-              ))}
-            </div>
+        <div className="py-16 flex flex-col items-center gap-4">
+          <div className="bg-black/50 border border-green-500/30 rounded-lg p-6 text-center max-w-sm w-full">
+            <p className="text-green-500/70 font-mono text-xs uppercase tracking-widest mb-2">Error</p>
+            <p className="text-green-300 font-mono text-sm mb-5">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-5 py-2 border border-green-500/50 text-green-300 rounded font-mono text-sm hover:bg-green-500/10 hover:border-green-400 hover:text-green-200 transition-all duration-300"
+            >
+              &gt; RETRY
+            </button>
           </div>
         </div>
       );
     }
+
+    // if (activeTab === 'quiz') {
+    //   const sectionTitle =
+    //     sections.find((s) => s.id === activeSection)?.title ?? title;
+    //
+    //   return (
+    //     <div className="space-y-4">
+    //       <div className="bg-black/50 border border-green-500/30 rounded-lg p-4 sm:p-6">
+    //         <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-green-400 mb-2 font-mono matrix-glow">
+    //           Quiz: {sectionTitle}
+    //         </h2>
+    //         <p className="text-green-300 font-mono leading-relaxed">
+    //           Quiz mode is scaffolding only for now. When you add quiz data, this panel will render questions and collect answers.
+    //         </p>
+    //       </div>
+    //
+    //       <div className="bg-black/50 border border-green-500/30 rounded-lg p-4 sm:p-6">
+    //         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+    //           <div className="text-green-400 font-mono">
+    //             <span className="text-xs uppercase tracking-wider text-green-500/80 block mb-1">
+    //               Status
+    //             </span>
+    //             <span className="text-sm">Coming soon</span>
+    //           </div>
+    //
+    //           <button
+    //             disabled
+    //             className="px-4 py-2 bg-green-500/20 text-green-300 border border-green-500/30 rounded-lg font-mono opacity-80 cursor-not-allowed"
+    //           >
+    //             Start Quiz
+    //           </button>
+    //         </div>
+    //
+    //         <div className="mt-4 space-y-3">
+    //           {[1, 2, 3].map((n) => (
+    //             <div key={n} className="border border-green-500/20 rounded-lg p-3">
+    //               <div className="flex items-start justify-between gap-3">
+    //                 <div className="text-green-400 font-mono text-sm">
+    //                   Q{n}
+    //                 </div>
+    //                 <div className="text-green-500/70 font-mono text-xs">
+    //                   Placeholder
+    //                 </div>
+    //               </div>
+    //               <div className="mt-2 h-3 bg-green-500/10 rounded w-full" />
+    //               <div className="mt-2 h-3 bg-green-500/10 rounded w-11/12" />
+    //               <div className="mt-2 h-3 bg-green-500/10 rounded w-10/12" />
+    //             </div>
+    //           ))}
+    //         </div>
+    //       </div>
+    //     </div>
+    //   );
+    // }
 
     if (!content) {
       if (!activeSection || activeSection === 'overview') {
@@ -174,12 +187,14 @@ const PageLayout: React.FC<PageLayoutProps> = ({
               )}
               
               {fallbackContent?.topics && (
-                <div className="bg-black/50 border border-green-500/30 rounded-lg p-6 text-left">
-                  <h3 className="text-lg font-bold text-green-400 mb-4 font-mono">What you'll learn:</h3>
-                  <ul className="space-y-2 text-green-300 font-mono">
+                <div className="bg-black/50 border border-green-500/20 rounded-lg p-5">
+                  <h3 className="text-xs font-bold text-green-400 mb-3 font-mono uppercase tracking-widest flex items-center gap-2">
+                    <span>◆</span> What's covered
+                  </h3>
+                  <ul className="space-y-2">
                     {fallbackContent.topics.map((topic, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-green-400 mr-2">{topic.icon}</span>
+                      <li key={index} className="flex items-start gap-2 text-green-300/80 font-mono text-sm">
+                        <span className="text-green-500/60 flex-shrink-0 mt-0.5">▸</span>
                         <span>{topic.text}</span>
                       </li>
                     ))}
@@ -204,25 +219,43 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                       </a>
                     ))}
                   </div>
-                </div>
-              )}
-              
-              <p className="text-green-400 font-mono mt-6 text-sm">
-                Select a topic from the sidebar to get started!
-              </p>
+                )}
+
+                {fallbackContent?.usefulLinks && (
+                  <div className="bg-black/50 border border-green-500/20 rounded-lg p-5">
+                    <h3 className="text-xs font-bold text-green-400 mb-3 font-mono uppercase tracking-widest">Resources</h3>
+                    <div className="space-y-2">
+                      {fallbackContent.usefulLinks.map((link, index) => (
+                        <a
+                          key={index}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-green-400/70 hover:text-green-300 font-mono text-sm transition-colors duration-300 group"
+                        >
+                          <span className="text-green-500/50 group-hover:text-green-400 transition-colors duration-300">→</span>
+                          <span className="group-hover:underline">{link.name}</span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
+
+            <p className="text-green-500/50 font-mono text-xs text-center pt-2">
+              ← select a section to get started
+            </p>
           </div>
         );
       }
       
       const currentSection = sections.find(s => s.id === activeSection);
       return (
-        <div className="text-center py-12">
-          <h2 className="text-2xl font-bold text-green-400 mb-4 font-mono">
-            {currentSection?.title || title}
-          </h2>
-          <p className="text-green-300 font-mono">
-            Content for {currentSection?.title} will be added here...
+        <div className="py-16 text-center">
+          <p className="text-green-500/50 font-mono text-xs uppercase tracking-widest mb-2">&gt; {currentSection?.title}</p>
+          <p className="text-green-400/60 font-mono text-sm">
+            Content coming soon...
           </p>
         </div>
       );
@@ -242,41 +275,47 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                   <h4 className="font-medium text-green-300 mb-2 font-mono">{example.title}</h4>
                   {example.explanation && (
                     <div className="bg-black/40 border border-green-500/20 rounded-lg p-3 mb-3">
-                      <h5 className="text-xs font-bold text-green-400 mb-2 font-mono uppercase tracking-wider">
-                        Concept
+                      <h5 className="text-xs font-bold text-green-400 mb-2 font-mono uppercase tracking-wider flex items-center gap-1.5">
+                        <span className="text-green-500/70">&gt;_</span> Concept
                       </h5>
-                      <p className="text-green-200 text-sm font-mono leading-relaxed whitespace-pre-wrap">
+                      <p className="text-green-200/90 text-sm font-mono leading-relaxed">
                         {example.explanation}
                       </p>
                     </div>
                   )}
 
                   {example.keyIdeas && example.keyIdeas.length > 0 && (
-                    <div className="bg-black/40 border border-green-500/20 rounded-lg p-3 mb-3">
-                      <h5 className="text-xs font-bold text-green-400 mb-2 font-mono uppercase tracking-wider">
-                        Key ideas
+                    <div className="bg-black/40 border border-green-400/20 rounded-lg p-3 mb-3">
+                      <h5 className="text-xs font-bold text-green-400 mb-2 font-mono uppercase tracking-wider flex items-center gap-1.5">
+                        <span>◆</span> Key Ideas
                       </h5>
-                      <ul className="space-y-1 text-green-200 text-sm font-mono list-disc pl-5">
+                      <ul className="space-y-1.5 text-sm font-mono">
                         {example.keyIdeas.map((idea, idx) => (
-                          <li key={idx}>{idea}</li>
+                          <li key={idx} className="flex items-start gap-2 text-green-200/90">
+                            <span className="text-green-400 flex-shrink-0 mt-0.5">→</span>
+                            <span>{idea}</span>
+                          </li>
                         ))}
                       </ul>
                     </div>
                   )}
 
                   {example.pitfalls && example.pitfalls.length > 0 && (
-                    <div className="bg-black/40 border border-green-500/20 rounded-lg p-3 mb-3">
-                      <h5 className="text-xs font-bold text-green-400 mb-2 font-mono uppercase tracking-wider">
-                        Pitfalls
+                    <div className="bg-yellow-950/20 border border-yellow-500/20 rounded-lg p-3 mb-3">
+                      <h5 className="text-xs font-bold text-yellow-400/80 mb-2 font-mono uppercase tracking-wider flex items-center gap-1.5">
+                        <span>⚠</span> Pitfalls
                       </h5>
-                      <ul className="space-y-1 text-green-200 text-sm font-mono list-disc pl-5">
+                      <ul className="space-y-1.5 text-sm font-mono">
                         {example.pitfalls.map((pitfall, idx) => (
-                          <li key={idx}>{pitfall}</li>
+                          <li key={idx} className="flex items-start gap-2 text-yellow-200/70">
+                            <span className="text-yellow-500/60 flex-shrink-0 mt-0.5">!</span>
+                            <span>{pitfall}</span>
+                          </li>
                         ))}
                       </ul>
                     </div>
                   )}
-                  <CodeBlock code={example.code} />
+                  <CodeBlock code={example.code} language={language} />
                 </div>
               ))}
             </div>
@@ -342,7 +381,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                   Quiz
                 </button>
               </div>
-            </div>
+            </div> */}
 
             {renderContent()}
           </div>
