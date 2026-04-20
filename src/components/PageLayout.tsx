@@ -147,7 +147,6 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     }
 
     if (!content) {
-      // If overview section is selected or no active section, show the enhanced landing content
       if (!activeSection || activeSection === 'overview') {
         return (
           <div className="text-center py-12">
@@ -155,12 +154,10 @@ const PageLayout: React.FC<PageLayoutProps> = ({
               {title}
             </h2>
             <div className="max-w-4xl mx-auto space-y-6">
-              {/* Description */}
               <p className="text-green-300 font-mono text-lg leading-relaxed">
                 {fallbackContent?.description || `Welcome to ${title}! This section covers essential concepts.`}
               </p>
               
-              {/* Benefits */}
               {fallbackContent?.benefits && (
                 <div className="bg-black/50 border border-green-500/30 rounded-lg p-6 text-left">
                   <h3 className="text-lg font-bold text-green-400 mb-3 font-mono">Why Learn This:</h3>
@@ -168,7 +165,6 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                 </div>
               )}
               
-              {/* Difficulty */}
               {fallbackContent?.difficulty && (
                 <div className="inline-block">
                   <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-green-600 text-black">
@@ -177,7 +173,6 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                 </div>
               )}
               
-              {/* Topics */}
               {fallbackContent?.topics && (
                 <div className="bg-black/50 border border-green-500/30 rounded-lg p-6 text-left">
                   <h3 className="text-lg font-bold text-green-400 mb-4 font-mono">What you'll learn:</h3>
@@ -192,7 +187,6 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                 </div>
               )}
               
-              {/* Useful Links */}
               {fallbackContent?.usefulLinks && (
                 <div className="bg-black/50 border border-green-500/30 rounded-lg p-6 text-left">
                   <h3 className="text-lg font-bold text-green-400 mb-4 font-mono">Useful Resources:</h3>
@@ -221,7 +215,6 @@ const PageLayout: React.FC<PageLayoutProps> = ({
         );
       }
       
-      // If there's an active section but no content, show a different message
       const currentSection = sections.find(s => s.id === activeSection);
       return (
         <div className="text-center py-12">
@@ -295,17 +288,12 @@ const PageLayout: React.FC<PageLayoutProps> = ({
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Matrix digital rain background */}
       <div className="absolute inset-0 opacity-10">
         <div className="matrix-rain"></div>
       </div>
-      
-      {/* Scan lines effect */}
       <div className="absolute inset-0 opacity-5">
         <div className="scanlines"></div>
       </div>
-      
-      {/* Grid overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-green-900/5 to-green-900/10"></div>
       
       <PageHeader title={title} icon={icon} />
@@ -323,7 +311,6 @@ const PageLayout: React.FC<PageLayoutProps> = ({
           />
           
           <div className="flex-1 min-w-0">
-            {/* Notes | Quiz scaffold */}
             <div className="mb-4">
               <div
                 role="tablist"

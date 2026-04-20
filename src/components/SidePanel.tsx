@@ -16,7 +16,6 @@ const SidePanel: React.FC<SidePanelProps> = ({
 
   return (
     <>
-      {/* Mobile Toggle Button */}
       <div className="lg:hidden fixed top-28 right-4 z-50">
         <button
           onClick={onToggle}
@@ -33,7 +32,6 @@ const SidePanel: React.FC<SidePanelProps> = ({
         </button>
       </div>
 
-      {/* Mobile Overlay */}
       {isOpen && (
         <div 
           className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
@@ -41,7 +39,6 @@ const SidePanel: React.FC<SidePanelProps> = ({
         />
       )}
 
-      {/* Side Panel */}
       <div className={`
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         lg:w-64 w-80 flex-shrink-0
@@ -65,7 +62,6 @@ const SidePanel: React.FC<SidePanelProps> = ({
           
           <h3 className="hidden lg:block text-lg font-semibold text-green-400 mb-4 font-mono">NAVIGATION</h3>
           
-          {/* Search Box */}
           <div className="mb-4">
             <label htmlFor="search-topics" className="sr-only">
               Search topics
