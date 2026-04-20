@@ -4,7 +4,6 @@ import './App.css';
 import ScrollToTop from './components/ScrollToTop';
 import NotFoundPage from './pages/NotFoundPage';
 
-// Lazy load components
 const HomePage = lazy(() => import('./pages/HomePage'));
 const JavaScriptBasics = lazy(() => import('./pages/JavaScriptBasics'));
 const ReactCommonTasks = lazy(() => import('./pages/ReactCommonTasks'));

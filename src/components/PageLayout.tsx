@@ -160,32 +160,32 @@ const PageLayout: React.FC<PageLayoutProps> = ({
     // }
 
     if (!content) {
-      // If overview section is selected or no active section, show the enhanced landing content
       if (!activeSection || activeSection === 'overview') {
         return (
-          <div className="max-w-3xl mx-auto py-8 space-y-6">
-            {/* Header */}
-            <div className="border-b border-green-500/20 pb-6">
-              <p className="text-green-500/60 font-mono text-xs uppercase tracking-widest mb-2">&gt; overview</p>
-              <h2 className="text-2xl font-bold text-green-400 font-mono mb-3">{title}</h2>
-              <p className="text-green-300/90 font-mono text-sm leading-relaxed">
+          <div className="text-center py-12">
+            <h2 className="text-2xl font-bold text-green-400 mb-4 font-mono">
+              {title}
+            </h2>
+            <div className="max-w-4xl mx-auto space-y-6">
+              <p className="text-green-300 font-mono text-lg leading-relaxed">
                 {fallbackContent?.description || `Welcome to ${title}! This section covers essential concepts.`}
               </p>
-            </div>
-
-            {/* Benefits */}
-            {fallbackContent?.benefits && (
-              <div className="bg-black/50 border border-green-500/20 rounded-lg p-5">
-                <h3 className="text-xs font-bold text-green-400 mb-3 font-mono uppercase tracking-widest flex items-center gap-2">
-                  <span className="text-green-500/60">&gt;_</span> Why this matters
-                </h3>
-                <p className="text-green-300/80 font-mono text-sm leading-relaxed">{fallbackContent.benefits}</p>
-              </div>
-            )}
-
-            {/* Topics + difficulty side by side */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Topics */}
+              
+              {fallbackContent?.benefits && (
+                <div className="bg-black/50 border border-green-500/30 rounded-lg p-6 text-left">
+                  <h3 className="text-lg font-bold text-green-400 mb-3 font-mono">Why Learn This:</h3>
+                  <p className="text-green-300 font-mono leading-relaxed">{fallbackContent.benefits}</p>
+                </div>
+              )}
+              
+              {fallbackContent?.difficulty && (
+                <div className="inline-block">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-green-600 text-black">
+                    {fallbackContent.difficulty}
+                  </span>
+                </div>
+              )}
+              
               {fallbackContent?.topics && (
                 <div className="bg-black/50 border border-green-500/20 rounded-lg p-5">
                   <h3 className="text-xs font-bold text-green-400 mb-3 font-mono uppercase tracking-widest flex items-center gap-2">
@@ -201,15 +201,23 @@ const PageLayout: React.FC<PageLayoutProps> = ({
                   </ul>
                 </div>
               )}
-
-              {/* Links + difficulty */}
-              <div className="space-y-4">
-                {fallbackContent?.difficulty && (
-                  <div className="bg-black/50 border border-green-500/20 rounded-lg px-5 py-3 flex items-center justify-between">
-                    <span className="text-xs font-mono text-green-500/60 uppercase tracking-widest">Difficulty</span>
-                    <span className="text-xs font-mono font-bold px-2.5 py-1 rounded border border-green-500/40 text-green-300 bg-green-500/10">
-                      {fallbackContent.difficulty}
-                    </span>
+              
+              {fallbackContent?.usefulLinks && (
+                <div className="bg-black/50 border border-green-500/30 rounded-lg p-6 text-left">
+                  <h3 className="text-lg font-bold text-green-400 mb-4 font-mono">Useful Resources:</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {fallbackContent.usefulLinks.map((link, index) => (
+                      <a
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center text-green-300 hover:text-green-200 font-mono transition-colors duration-300 group"
+                      >
+                        <span className="text-green-400 mr-2 group-hover:scale-110 transition-transform duration-300">🔗</span>
+                        <span className="group-hover:underline">{link.name}</span>
+                      </a>
+                    ))}
                   </div>
                 )}
 
@@ -241,8 +249,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
           </div>
         );
       }
-
-      // If there's an active section but no content, show a different message
+      
       const currentSection = sections.find(s => s.id === activeSection);
       return (
         <div className="py-16 text-center">
@@ -320,17 +327,12 @@ const PageLayout: React.FC<PageLayoutProps> = ({
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Matrix digital rain background */}
       <div className="absolute inset-0 opacity-10">
         <div className="matrix-rain"></div>
       </div>
-      
-      {/* Scan lines effect */}
       <div className="absolute inset-0 opacity-5">
         <div className="scanlines"></div>
       </div>
-      
-      {/* Grid overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-green-900/5 to-green-900/10"></div>
       
       <PageHeader title={title} icon={icon} />
@@ -348,8 +350,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
           />
           
           <div className="flex-1 min-w-0">
-            {/* Notes | Quiz scaffold — quiz hidden until feature is built */}
-            {/* <div className="mb-4">
+            <div className="mb-4">
               <div
                 role="tablist"
                 aria-label="Quiz and notes tabs"
